@@ -1,4 +1,4 @@
-import wx, conexionpostgres
+import wx, ConnSchema
 
 ########################################################################
 class dialogoregistroEstudiantes(wx.Panel):
@@ -18,8 +18,10 @@ class dialogoregistroEstudiantes(wx.Panel):
         self.father = manipulador
         self.cantdad = cantidadpregutnas
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sampleList = conexion.getestudiantes()
-
+        # Consulta de todos los estudiantes disponibles
+        query = "SELECT  Estudiante.consecEs, Estudiante.FecfaReg, (Persona.nombre || ' ' || Persona.apellido) AS NombreCompleto FROM Estudiante, Persona WHERE Estudiante.personaEs = Persona.idPersona;"
+        #sampleList = conexion.connection.ExecuteQuery(query) comentado mienstras no este creada la base ded datos
+        sampleList = [("123","10/10/2010","Rex Arias"),("124","10/10/2010","Alison C."),("125","10/10/2010","Dante T.")]
         self.listBox1 = wx.ListBox(choices=[],
               name='listBox1', parent=self, pos=wx.Point(8, 48),
               size=wx.Size(184, 256),  style =  wx.LB_HSCROLL
@@ -28,7 +30,7 @@ class dialogoregistroEstudiantes(wx.Panel):
                                            | wx.LB_SORT)
         self.listBox1.SetBackgroundColour(wx.Colour(255, 255, 128))
         self.listBox1.Bind(wx.EVT_LISTBOX, self.OnListBox1Listbox)
-        for text in conexion.getestudiantes():
+        for text in sampleList:
             item = self.listBox1.Append(text[0]+': '+text[2])
         okBtn = wx.Button(self, wx.ID_OK)
         self.Bind(wx.EVT_BUTTON, self.registro,okBtn)

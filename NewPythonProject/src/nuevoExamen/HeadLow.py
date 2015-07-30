@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 import wx
 import wx.grid
-
+import sys, os
 
 class Head(wx.Panel):
     def __init__(self,parent):
        	wx.Panel.__init__(self, parent)
        	self.SetBackgroundColour("white")
        	PanelImage1 = wx.Panel(self)
-       	self.image = wx.Image("Imagenes/Udistrital.png")
+        script_dir = sys.path[0]
+        img_path = os.path.join(script_dir, "../Imagenes/Udistrital.png")
+       	self.image = wx.Image(img_path)
        	self.image.Rescale(100, 150)
        	self.imageUd = wx.BitmapFromImage(self.image)
        	self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
@@ -27,7 +29,8 @@ class Head(wx.Panel):
        	PanelText.SetSizer(sizertext)
        	PanelText.SetBackgroundColour('white')
        	PanelImage2 = wx.Panel(self)
-       	self.image2 = wx.Image("Imagenes/Gesdatos.jpg")
+        img_path = os.path.join(script_dir, "../Imagenes/Gesdatos.jpg")
+       	self.image2 = wx.Image(img_path)
        	self.image2.Rescale(250, 200)
        	self.imageGesdatos = wx.BitmapFromImage(self.image2)
        	self.imagen2 = wx.StaticBitmap(PanelImage2, -1, self.imageGesdatos, style=wx.BITMAP_TYPE_PNG)
@@ -62,7 +65,9 @@ class Low(wx.Panel):
         Paneltext.SetSizer(sizertext)
         Paneltext.SetBackgroundColour("white")
         PanelImage1 = wx.Panel(self)
-        self.image = wx.Image("Imagenes/simbolo.png")
+        script_dir = sys.path[0]
+        img_path = os.path.join(script_dir, "../Imagenes/simbolo.png")
+        self.image = wx.Image(img_path)
         self.image.Rescale(60, 60)
         self.imageUd = wx.BitmapFromImage(self.image)
         self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
