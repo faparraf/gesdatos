@@ -6,7 +6,7 @@ import psycopg2, psycopg2.extras
 class Conexion:                  #Clase que permitira la comunicacion con la base de datos     
     host = "localhost"           
     user = "postgres"
-    passwd = "miclave"
+    passwd = "pass"
     db = "ExamenDB"
     
     def __init__(self):
@@ -16,22 +16,19 @@ class Conexion:                  #Clase que permitira la comunicacion con la bas
                                            host= self.host)
         self.cur = self.connection.cursor()  #cursor
 
-    def insertQuery(self,txtsql):                 #funcion querry para interactuar con la BD
-        #print  texto
-        self.cur.execute(txtsql)#"insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario)  values  (3, 'juan','peres',25262525,'1995-01-03','dsadsa@ggs',1,'affwaf','juanito')");
-        self.connection.commit()
-        
-        #return self.cur.fetchall()
+    def insertQuery(self,txtsql):                 #funcion querry para interactuar con la BD       
+        self.cur.execute(txtsql)
+        self.connection.commit()               
+            #print 'Error %s' % e
+            
     def selectQuery(self,txtsql):
         self.cur.execute(txtsql)        
-        datos = self.cur.fetchall()    
+        datos = self.cur.fetchall() 
         return datos
     
     def finalizarConexion(selfself):
         self.cur.close()
-        self.connection.close()
-    #def __del__(self):             #funcion para finalizar conexion OP
-       # self.connection.close()    
+        self.connection.close()    
 
 #if __name__ == "__main__":              #ejemplo 
     #dbe = Database()   

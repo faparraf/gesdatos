@@ -11,36 +11,45 @@ class Request():
     def registrarPersona (self,nombre,apellido,documento,fechaNac,correo,correoUni,universidad,usuario,categoria):
         personaid= int("%s" %(self.conn.selectQuery("select count(*) from persona")[0]))+1
         universidadid=int("%s" %(self.conn.selectQuery("select id_uni from universidad where nom_uni ='"+universidad+"'")[0]))
-        if categoria == 0:   
-            datos=(personaid,nombre,apellido,documento,fechaNac,correo,correoUni,universidadid,usuario)
-            txtsql= "insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo,correo_universidad,uni,usuario) values (%s, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s' )" %datos
-            self.conn.insertQuery(txtsql)
+        datos=(personaid,nombre,apellido,documento,fechaNac,correo,correoUni,universidadid,usuario)        
+        self.conn.insertQuery("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo,correo_universidad,uni,usuario) values (%s, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s' )" %datos)
         
-        
-        
-        
-                
+        if categoria == 0:
+            estudianteid= int("%s" %(self.conn.selectQuery("select count(*) from estudiante")[0]))+1
+            datosEstudiante=(estudianteid,personaid,'now',documento)            
+            self.conn.insertQuery("insert into estudiante (id_est,id_persn,fecha_reg,pass_estu) values (%s, %s, '%s', '%s' )"%datosEstudiante)
             
-            #print int("%s" %(self.conn.selectQuery("select count(*) from persona")[0]))+1
-        
+        else:
+            docenteid= int("%s" %(self.conn.selectQuery("select count(*) from docente")[0]))+1
+            datosDocente=(docenteid,personaid,'now',documento)            
+            self.conn.insertQuery("insert into docente (id_docente,id_persona,reg_fecha,pass_docente) values (%s, %s, '%s', '%s' )"%datosDocente)
+                   
         #datos=(nombre,apellido,documento,fechaNac,telefono,correo,correoUni,universidad,usuario)
         #sql="insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario) values"
         #nuevo = Conexion()
         #self.conn.insertQuery(txtsql)
        # print "'%s', '%s', %s, %s, '%s', %s, %s, %s, %s, %s" %datos
         
-    def verUniversidad(self):
-        lista= self.conn.selectQuery("select id_uni,nom_uni from universidad")
+    def verUniversidad(self,pais):
+        #pais="colombia"
+        idpais="%s" %(self.conn.selectQuery("select id_pais from pais where nom_pais ='"+pais+"'"))[0]        
+        lista= self.conn.selectQuery("select id_uni,nom_uni from universidad where id_paisuni ="+idpais)
         uni=[]
         for row in lista:
             uni.append( "%s " % row[1])            
-        return uni        
-        #nuevo = Conexion()
-        #print(self.conn.selectQuery(txtsql))
+        return uni
+        #return idpais
+    
+    def verPais(self):
+        listap= self.conn.selectQuery("select id_pais,nom_pais from pais")
+        pais=[]
+        for row in listap:
+            pais.append( "%s " % row[1])            
+        return pais
         
-if __name__ == "__main__":              #ejemplo 
-   # dbe = Database()   
-   nuevos = Request()
-   #nuevos.registrar("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario)  values  (7, 'jmari','peres',25262525,'1995-01-03','dsadsa@ggs',1,'affwaf','juanito')")
-   #print nuevos.verUniversidad()
-   nuevos.registrarPersona ('nombre','apellido','documento','fechaNac','correo','correoUni','Universidad Distrital         ','usuario',0)
+if __name__ == "__main__":              #ejemplo y pruebas
+    #dbe = Database()   
+    nuevos = Request()
+#nuevos.registrar("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario)  values  (7, 'jmari','peres',25262525,'1995-01-03','dsadsa@ggs',1,'affwaf','juanito')")
+    print nuevos.verUniversidad("1")
+#nuevos.registrarPersona ('nombre','apellido','documento','fechaNac','correo','correoUni','Universidad Distrital         ','usuario',0)

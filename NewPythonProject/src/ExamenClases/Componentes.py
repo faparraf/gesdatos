@@ -9,6 +9,14 @@ class Component(wx.Panel):
 	def __init__(self,parent):
 	        wx.Panel.__init__(self,parent)  
 #-----------------Creación de Label------------
+
+#-----------------Creación de CalendarCtrl------------      
+	def CreateCalendarCtrl(self,parent,pos,size):   #nuevo componente pal ingreso de datos
+		#self.calc = wx.CalendarCtrl(parent,date=DefaultDateTime, pos=(pos[0], pos[1]), size=(size, -1), style=wx.WANTS_CHARS)
+                self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
+		return self.calc
+
+#-----------------Creación de Label------------
 	def CreateLabel(self,parent,fonsize,pos,label):  
 		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
 		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
@@ -24,6 +32,7 @@ class Component(wx.Panel):
 	def CreateTextArea(self,parent,pos,size):   
 		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
 		return self.txtarea
+
 #-----------------Creación de InputText------------ 
 
         def CreateImputText (self,parent,pos,size):
