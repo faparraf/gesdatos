@@ -3,6 +3,7 @@
 import wx
 import wx.grid
 import pprint
+import  wx.lib.intctrl
 
 
 class Component(wx.Panel):
@@ -10,8 +11,13 @@ class Component(wx.Panel):
 	        wx.Panel.__init__(self,parent)  
 #-----------------Creación de Label------------
 
+#-----------------Creación de TextAreapara int------------    permite solo el ingreso de numeros
+	def CreateIntCtrl(self,parent,pos,size):   
+		self.intctrl = wx.lib.intctrl.IntCtrl( parent,pos=(pos[0], pos[1]),value = None, allow_none =True,allow_long = False, size=(size[0],size[1]) )
+		return self.intctrl
+
 #-----------------Creación de CalendarCtrl------------      
-	def CreateCalendarCtrl(self,parent,pos,size):   #nuevo componente pal ingreso de datos
+	def CreateCalendarCtrl(self,parent,pos,size):   
 		#self.calc = wx.CalendarCtrl(parent,date=DefaultDateTime, pos=(pos[0], pos[1]), size=(size, -1), style=wx.WANTS_CHARS)
                 self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
 		return self.calc

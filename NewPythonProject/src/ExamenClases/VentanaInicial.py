@@ -57,7 +57,7 @@ class Body(wx.Panel):
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsDocumento = wx.Panel(self) #Creacion padre hijo
 		self.labelDocumento = Component.CreateLabel(PanelComponentsDocumento,15,pos=(0,0),label="Documento:   ")
-		self.TxtAreaDocumento = Component.CreateImputText(PanelComponentsDocumento,pos=(0,0),size=(250,22))
+		self.TxtAreaDocumento = Component.CreateIntCtrl(PanelComponentsDocumento,pos=(0,0),size=(250,22))   #tipo intctrl
                 self.Bind(wx.EVT_TEXT, self.EvtPanelDocumento, self.TxtAreaDocumento)
 		sizerPanelDocumento = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelDocumento.Add(self.labelDocumento , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
@@ -175,31 +175,33 @@ class Body(wx.Panel):
 		self.SetSizer(sizer)
                 
         def EvtComboBox(self, event):
-                self.CbUniversidad.Clear()    #pruebas
+                self.CbUniversidad.Clear()
                 self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
                 #print cate		
         
         def EvtRadioBox(self, event):
-            print self.ClcFechaNac.GetValue().FormatISODate()  #pruebas
+            print self.ClcFechaNac.GetValue().FormatISODate()
             #self.datetime=wx.DateTimeFromDMY(self.ClcFechaNac.GetValue())
             ##print self.fecha
             #print self.ClcFechaNac.GetValue()
             #print self.datetime
 		#self.TxtArea1.AppendText("Evento RabioBox")
                 
-        def EvtPanelDocumento(self, event):       #sin funcionar aun
-            if (self.TxtAreaDocumento.GetValue()[-1] == "0" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="1" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="2" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="3" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="4" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="5" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="6" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="7" or  
-                self.TxtAreaDocumento.GetValue()[-1] =="8" or
-                self.TxtAreaDocumento.GetValue()[-1] =="9" or
-                self.TxtAreaDocumento.GetValue()[-1] ==""):
-                print "pot"                
+        def EvtPanelDocumento(self, event):  
+           # if (self.TxtAreaDocumento.GetValue()[-1] == "0" or  
+            #    self.TxtAreaDocumento.GetValue()[-1] =="1" or  
+             #   self.TxtAreaDocumento.GetValue()[-1] =="2" or  
+              #  self.TxtAreaDocumento.GetValue()[-1] =="3" or  
+               # self.TxtAreaDocumento.GetValue()[-1] =="4" or  
+                #self.TxtAreaDocumento.GetValue()[-1] =="5" or  
+                #self.TxtAreaDocumento.GetValue()[-1] =="6" or  
+                #self.TxtAreaDocumento.GetValue()[-1] =="7" or  
+                #self.TxtAreaDocumento.GetValue()[-1] =="8" or
+                #self.TxtAreaDocumento.GetValue()[-1] =="9" or
+                #self.TxtAreaDocumento.GetValue()[-1] ==""):
+                print "pot"   
+            #else:   
+                #self.TxtAreaDocumento.DiscardEdits()
             #else:
                # self.TxtAreaDocumento
                # self.TxtAreaNombre.Remove(0,1)
