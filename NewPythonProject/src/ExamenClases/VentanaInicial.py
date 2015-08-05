@@ -236,13 +236,18 @@ class Body(wx.Panel):
             else:
                 if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
                     print "picho ok"                    
-                else:                    
-                    self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
-                                                    self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
-                                                    self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
-                                                    self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
-                                                    self.RbCategoria.GetSelection())
-                    
+                else:
+                    try:
+                        self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
+                                                        self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
+                                                        self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
+                                                        self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
+                                                        self.RbCategoria.GetSelection())
+                    except :
+                        wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
+                        self.solicitud = Request()   
+                        
+                        
                     
                
 ##-----------------------------------------------------------
