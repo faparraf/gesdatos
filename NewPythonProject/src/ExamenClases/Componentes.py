@@ -11,7 +11,7 @@ class Component(wx.Panel):
 	        wx.Panel.__init__(self,parent)  
 #-----------------Creación de Label------------
 
-#-----------------Creación de TextAreapara int------------    permite solo el ingreso de numeros
+#-----------------Creación de TextArea------------ 
 	def CreateIntCtrl(self,parent,pos,size):   
 		self.intctrl = wx.lib.intctrl.IntCtrl( parent,pos=(pos[0], pos[1]),value = None, allow_none =True,allow_long = False, size=(size[0],size[1]) )
 		return self.intctrl
@@ -31,7 +31,7 @@ class Component(wx.Panel):
 
 #-----------------Creación de ComboBox------------      
 	def CreateComboBox(self,parent,pos,size,List):   
-		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
+		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_READONLY)
 		return self.cbx
     
 #-----------------Creación de TextArea------------ 
@@ -59,8 +59,8 @@ class Component(wx.Panel):
 		return self.Grid
 
 #-----------------Creación de Boton------------ 	
-	def CreateButton(self,parent,label,size):
-		self.Button =wx.Button(parent,label=label,size=(size[0],size[1]))
+	def CreateButton(self,parent,label):
+		self.Button =wx.Button(parent,label=label)
 		return self.Button
 
 #-----------------Creación de CheckBox------------ 	

@@ -57,7 +57,7 @@ class Body(wx.Panel):
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsDocumento = wx.Panel(self) #Creacion padre hijo
 		self.labelDocumento = Component.CreateLabel(PanelComponentsDocumento,15,pos=(0,0),label="Documento:   ")
-		self.TxtAreaDocumento = Component.CreateIntCtrl(PanelComponentsDocumento,pos=(0,0),size=(250,22))   #tipo intctrl
+		self.TxtAreaDocumento = Component.CreateIntCtrl(PanelComponentsDocumento,pos=(0,0),size=(250,22))
                 self.Bind(wx.EVT_TEXT, self.EvtPanelDocumento, self.TxtAreaDocumento)
 		sizerPanelDocumento = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelDocumento.Add(self.labelDocumento , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
@@ -142,7 +142,7 @@ class Body(wx.Panel):
                 
 #----Creación de un panel de Buttons, e inclusión  del objeto Buttons y su Label
 		PanelComponentsBConfirmar = wx.Panel(self) #Creacion padre hijo		
-		self.BConfirmar = Component.CreateButton(PanelComponentsBConfirmar,"Confirmar",(80,50))
+		self.BConfirmar = Component.CreateButton(PanelComponentsBConfirmar,"Confirmar")
 		self.Bind(wx.EVT_BUTTON, self.OnClick,self.BConfirmar)#Creación de Evento
 		sizerPanelButton = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelButton.Add(self.BConfirmar , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -215,18 +215,35 @@ class Body(wx.Panel):
             
                 
         def OnClick(self,event):
-             
-		Nombre = self.TxtAreaNombre.GetValue()
-                exito=self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
-                                                self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
-                                                self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
-                                                self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
-                                                self.RbCategoria.GetSelection())
-                if exito == False:
-                    wx.MessageBox('Por favor verifica que todas las casillas esten con los datops correctos', 'Advertencia', 
-                            wx.OK | wx.ICON_INFORMATION)
-                    print "algo esta mal"
-                #print Nombre
+            #
+            if self.TxtAreaNombre.GetValue() == "": 
+                wx.MessageBox("El area de Nombre esta vacia ","Gesdatos")#,wx.OK|wx.CANCEL)
+            elif self.TxtAreaApellido.GetValue()=="":
+                 wx.MessageBox("El area de Apellido esta vacia ","Gesdatos")
+            elif self.TxtAreaDocumento.GetValue()==None:
+                wx.MessageBox("El area de Documento esta vacia ","Gesdatos")            
+            elif self.TxtAreaCorreo.GetValue()=="":
+                wx.MessageBox("El area de Correo esta vacia ","Gesdatos")
+            elif self.TxtAreaCorreoUni.GetValue()=="":
+                wx.MessageBox("El area de Correo Universidad esta vacia ","Gesdatos")
+            elif self.CbPais.GetValue()=="":
+                wx.MessageBox("El area de Pais esta sin seleccionar ","Gesdatos")
+            elif self.CbUniversidad.GetValue()=="":
+                wx.MessageBox("El area de Universidad esta sin seleccionar ","Gesdatos")
+            elif self.TxtAreaUsuario.GetValue()=="":
+                wx.MessageBox("El area de Usuario esta vacia ","Gesdatos")
+                        
+            else:
+                if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
+                    print "picho ok"                    
+                else:                    
+                    self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
+                                                    self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
+                                                    self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
+                                                    self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
+                                                    self.RbCategoria.GetSelection())
+                    
+                    
                
 ##-----------------------------------------------------------
 class Low(wx.Panel):

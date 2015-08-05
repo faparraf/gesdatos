@@ -47,7 +47,7 @@ class Request():
             pais.append( "%s " % row[1])            
         return pais
         
-if __name__ == "__main__":              #ejemplo y pruebas
+if __name__ == "__main__":              #ejemplo 
     #dbe = Database()   
     nuevos = Request()
 #nuevos.registrar("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario)  values  (7, 'jmari','peres',25262525,'1995-01-03','dsadsa@ggs',1,'affwaf','juanito')")
