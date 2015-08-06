@@ -86,7 +86,7 @@ class interfazpanelpaso():
             self.topanel = topPanel
             self.sizer = sizertopPanel
             self.nuevoexamen = examen.examen(iddocente)
-            self.conectordatabase = ConnectionDataBase.Connection("localhost","basededatos","postgres","paswword")#se rquerie de datos para conexion a motor
+            self.conectordatabase = ConnectionDataBase.Connection("localhost","mundiales","postgres","dans123")#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
         def registrarExamen(self,e,panel):
@@ -202,6 +202,7 @@ class interfazpanelpaso():
             sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
             sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
             sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
+            self.topanel.SetSizer(self.sizer)
             self.father.SetSizer(sizer)
             self.father.GetSizer().Layout()
             self.father.Fit()
@@ -209,7 +210,8 @@ class interfazpanelpaso():
 
 
 app=wx.App(False)
-frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(900,900))
+displaySize= wx.DisplaySize()
+frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
 menubar = wx.MenuBar()
 topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)

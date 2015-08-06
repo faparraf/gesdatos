@@ -33,6 +33,8 @@ class dialogoregistroEstudiantes(wx.Panel):
         for text in sampleList:
             item = self.listBox1.Append(text[0]+': '+text[2])
         okBtn = wx.Button(self, wx.ID_OK)
+        for i in range(self.listBox1.GetCount()):
+            self.listBox1.SetSelection(i)
         self.Bind(wx.EVT_BUTTON, self.registro,okBtn)
         sizer.Add(self.listBox1, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
