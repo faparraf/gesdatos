@@ -86,7 +86,7 @@ class interfazpanelpaso():
             self.topanel = topPanel
             self.sizer = sizertopPanel
             self.nuevoexamen = examen.examen(iddocente)
-            self.conectordatabase = ConnectionDataBase.Connection("localhost","mundiales","postgres","dans123")#se rquerie de datos para conexion a motor
+            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
         def registrarExamen(self,e,panel):
@@ -144,13 +144,17 @@ class interfazpanelpaso():
             y el numero de pregunta que se esta registrando"""
             sirespeusta = False;
             opcionespreguntas = self.opcionespreguntas
-            if Tipo == opcionespreguntas[1][1]:#falso verdadero
+            print("tipo de respuesta elegido "+Tipo+" , "+str(opcionespreguntas))
+            if Tipo == opcionespreguntas[0][1]:#falso verdadero
+                print("elegido respuesta falso verdadero")
                 sirespeusta = True
                 dlgres = interfazregistrarpregunta.dialogoregistrorespuestafalseoverdadero(self.topanel,self,i)
-            elif Tipo == opcionespreguntas[2][1]:#Opcion multiple unica respuesta
+            elif Tipo == opcionespreguntas[1][1]:#Opcion multiple unica respuesta
+                print("elegido Opcion multiple unica respuesta")
                 sirespeusta = True
                 dlgres = interfazregistrarpregunta.dialogoregistrorespuestaopcionmultipleunico(self.topanel,self,i)
-            elif Tipo == opcionespreguntas[3][1]:#Opcion multiple multiple respuesta
+            elif Tipo == opcionespreguntas[2][1]:#Opcion multiple multiple respuesta
+                print("elegido Opcion multiple multiple respuesta")
                 sirespeusta = True
                 dlgres = interfazregistrarpregunta.dialogoregistrorespuestaopcionmultiplemultiple(self.topanel,self,i)
             if sirespeusta:
@@ -178,9 +182,9 @@ class interfazpanelpaso():
             EstudiantesAsignados = panel.estudiantesescogidos
             self.nuevoexamen.setidestudiantes(EstudiantesAsignados)
             print("valor "+str(EstudiantesAsignados) ) 
-            query ="SELECT * FROM TipoPregunta"            
-            #opcionespreguntas = conexion.connection.ExecuteQuery(query) comentado mienstras no este creada la base ded datos
-            opcionespreguntas = [(1,"PreguntaAbierta"),(2,"Falso Verdadero"),(3,"Opcion Multiple Unica Respuesta"),(4,"Opcion Multiple Multiple Respuesta")]
+            query ="SELECT * FROM tipopegrunta;"            
+            opcionespreguntas = self.conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
+            #opcionespreguntas = [(1,"PreguntaAbierta"),(2,"Falso Verdadero"),(3,"Opcion Multiple Unica Respuesta"),(4,"Opcion Multiple Multiple Respuesta")]
             self.cantidadpreguntas = cantidadpreguntas
             self.opcionespreguntas = opcionespreguntas
             self.generarpanelespreguntas(opcionespreguntas,0)

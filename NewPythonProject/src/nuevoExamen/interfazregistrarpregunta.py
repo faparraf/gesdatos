@@ -22,9 +22,10 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         self.lblTipo = wx.StaticText(self, label="Tipo Pregunta :")
         #self.editTipo = wx.TextCtrl(self, value="")
         self.sampleList = []
+        print("consutla sql de tipos de pregunta "+str(opcionespreguntas))
         for a in opcionespreguntas:
             self.sampleList.append(a[1])
-        print(str(self.sampleList))
+        print("lista resultante "+str(self.sampleList))
         self.editTipo = wx.ComboBox(self, choices=self.sampleList, style=wx.CB_DROPDOWN)
         
         okBtn = wx.Button(self, wx.ID_OK)
