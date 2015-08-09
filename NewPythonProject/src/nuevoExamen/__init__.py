@@ -145,18 +145,18 @@ class interfazpanelpaso():
             sirespeusta = False;
             opcionespreguntas = self.opcionespreguntas
             print("tipo de respuesta elegido "+Tipo+" , "+str(opcionespreguntas))
-            if Tipo == opcionespreguntas[0][1]:#falso verdadero
+            if Tipo == opcionespreguntas[0][1]:#Opcion multiple unica respuesta
                 print("elegido respuesta falso verdadero")
                 sirespeusta = True
                 dlgres = interfazregistrarpregunta.dialogoregistrorespuestafalseoverdadero(self.topanel,self,i)
-            elif Tipo == opcionespreguntas[1][1]:#Opcion multiple unica respuesta
-                print("elegido Opcion multiple unica respuesta")
-                sirespeusta = True
-                dlgres = interfazregistrarpregunta.dialogoregistrorespuestaopcionmultipleunico(self.topanel,self,i)
-            elif Tipo == opcionespreguntas[2][1]:#Opcion multiple multiple respuesta
+            elif Tipo == opcionespreguntas[1][1]:#falso verdadero
                 print("elegido Opcion multiple multiple respuesta")
                 sirespeusta = True
                 dlgres = interfazregistrarpregunta.dialogoregistrorespuestaopcionmultiplemultiple(self.topanel,self,i)
+            elif Tipo == opcionespreguntas[2][1]:#Opcion multiple multiple respuesta
+                print("elegido Opcion multiple unica respuesta")
+                sirespeusta = True
+                dlgres = interfazregistrarpregunta.dialogoregistrorespuestaopcionmultipleunico(self.topanel,self,i)
             if sirespeusta:
                 self.cambiarpanel(dlgres)
             else:

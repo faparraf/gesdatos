@@ -63,7 +63,7 @@ class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
         self.cantidadropciones = 5
         for it in range(self.cantidadropciones):
             self.editRespuesta.append(wx.TextCtrl(self, value=""))
-            self.editOpcion.append(wx.ComboBox(self, choices=self.sampleList, style=wx.CB_DROPDOWN))
+            self.editOpcion.append(wx.ComboBox(self, value="Incorrecto", choices=self.sampleList, style=wx.CB_DROPDOWN))
         
         okBtn = wx.Button(self, wx.ID_OK)
         self.Bind(wx.EVT_BUTTON, self.registro,okBtn)
@@ -71,12 +71,12 @@ class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         for it in range(self.cantidadropciones):
             sizerit = wx.BoxSizer(wx.HORIZONTAL)
+            self.lblRespuesta = wx.StaticText(self, label="Opcion:")
+            sizerit.Add(self.lblRespuesta, 0, wx.ALL|wx.CENTER, 5)
+            sizerit.Add(self.editRespuesta[it], 0, wx.ALL|wx.CENTER, 5)
             self.lblOpcion = wx.StaticText(self, label="Opcion Respuesta:")
             sizerit.Add(self.lblOpcion, 0, wx.ALL|wx.CENTER, 5)
             sizerit.Add(self.editOpcion[it], 0, wx.ALL|wx.CENTER, 5)
-            self.lblRespuesta = wx.StaticText(self, label="Respuesta:")
-            sizerit.Add(self.lblRespuesta, 0, wx.ALL|wx.CENTER, 5)
-            sizerit.Add(self.editRespuesta[it], 0, wx.ALL|wx.CENTER, 5)
             sizer.Add(sizerit, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
@@ -148,13 +148,13 @@ class dialogoregistrorespuestaopcionmultipleunico(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         for it in range(self.cantidadropciones):
             sizerit = wx.BoxSizer(wx.HORIZONTAL)
+            self.lblRespuesta = wx.StaticText(self, label="Opcion:")
+            sizerit.Add(self.lblRespuesta, 0, wx.ALL|wx.CENTER, 5)
+            sizerit.Add(self.editRespuesta[it], 0, wx.ALL|wx.CENTER, 5)
             self.lblOpcion = wx.StaticText(self, label="Opcion Respuesta:")
             sizerit.Add(self.lblOpcion, 0, wx.ALL|wx.CENTER, 5)
             sizerit.Add(self.editOpcion[it], 0, wx.ALL|wx.CENTER, 5)
             self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.editOpcion[it])
-            self.lblRespuesta = wx.StaticText(self, label="Respuesta:")
-            sizerit.Add(self.lblRespuesta, 0, wx.ALL|wx.CENTER, 5)
-            sizerit.Add(self.editRespuesta[it], 0, wx.ALL|wx.CENTER, 5)
             sizer.Add(sizerit, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
