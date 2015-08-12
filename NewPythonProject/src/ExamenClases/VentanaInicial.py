@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import re
 import wx
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 from Requests import Request
-import datetime 
+
 
 class Head(wx.Panel):
 	def __init__(self,parent):
@@ -79,12 +79,22 @@ class Body(wx.Panel):
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsCorreo = wx.Panel(self) #Creacion padre hijo
 		self.labelCorreo = Component.CreateLabel(PanelComponentsCorreo,15,pos=(0,0),label="Correo:                    ")
-		self.TxtAreaCorreo = Component.CreateImputText(PanelComponentsCorreo,pos=(0,0),size=(250,22))
-		sizerPanelCorreo = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
+		self.TxtAreaCorreo = Component.CreateImputText(PanelComponentsCorreo,pos=(0,0),size=(250,22))		
+                sizerPanelCorreo = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelCorreo.Add(self.labelCorreo , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelCorreo.Add(self.TxtAreaCorreo , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		PanelComponentsCorreo.SetSizer(sizerPanelCorreo)
 		PanelComponentsCorreo.SetBackgroundColour("white")
+                
+#----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
+		PanelComponentsOtrau = wx.Panel(self) #Creacion padre hijo
+		self.labelOtrau = Component.CreateLabel(PanelComponentsOtrau,15,pos=(0,0),label="          Otra:             ")
+		self.TxtAreaOtrau = Component.CreateImputText(PanelComponentsOtrau,pos=(0,0),size=(250,22))
+		sizerPanelOtrau = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
+		sizerPanelOtrau.Add(self.labelOtrau , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
+		sizerPanelOtrau.Add(self.TxtAreaOtrau , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+		PanelComponentsOtrau.SetSizer(sizerPanelOtrau)
+		PanelComponentsOtrau.SetBackgroundColour("white")
                 
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsCorreoUni = wx.Panel(self) #Creacion padre hijo
@@ -121,7 +131,7 @@ class Body(wx.Panel):
 		PanelComponentsCbxUniversidad = wx.Panel(self) #Creacion padre hijo
 		self.labelCbxUniversidad = Component.CreateLabel(PanelComponentsCbxUniversidad,15,pos=(0,0),label="Universidad:             ")                
 		self.CbUniversidad = Component.CreateComboBox(PanelComponentsCbxUniversidad,pos=(0,0),size=250,List="")
-		#self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbUniversidad) #Creación de Evento
+		self.Bind(wx.EVT_COMBOBOX, self.EvtCbUniversidad, self.CbUniversidad) #Creación de Evento
 		sizerPanelCbxUniversidad = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
 		sizerPanelCbxUniversidad.Add(self.labelCbxUniversidad , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
 		sizerPanelCbxUniversidad.Add(self.CbUniversidad , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -159,10 +169,10 @@ class Body(wx.Panel):
                             (PanelComponentsApellido, 1, 0), (PanelComponentsDocumento, 1, 0),(PanelComponentsFechaNac, 0, 0),
                             (PanelComponentsCbxPais,0,0)])
                 gs2.AddMany([(PanelComponentsCorreo, 0, 0),(PanelComponentsCorreoUni, 0, 0),(PanelComponentsUsuario, 0, 0),
-                            (PanelComponentsCbxUniversidad,0,0),(PanelComponentsRCategoria,0,0)])
+                            (PanelComponentsCbxUniversidad,0,0),(PanelComponentsOtrau,0,0)])
                 gs3.AddMany([gs1,gs2])
                 gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER),(gs3,0,wx.ALIGN_CENTER),
-                            (PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
+                            (PanelComponentsRCategoria,0,wx.ALIGN_CENTER),(PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
                             
                 #gs2 = wx.GridSizer(3, 1, 7, 7)
                 #gs2.AddMany([(PanelComponentsTitulo,0,wx.ALIGN_CENTER,0,0),(gs)])
@@ -170,54 +180,32 @@ class Body(wx.Panel):
                 #gs3 = wx.GridSizer(1, 2, 7, 7)
                 #gs3.AddMany([(PanelComponentsTitulo,0,wx.ALIGN_CENTER)])
      
-		sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
+                sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
 		sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(sizer)
                 
         def EvtComboBox(self, event):
-                self.CbUniversidad.Clear()
-                self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
-                #print cate		
-        
+            self.CbUniversidad.Clear()
+            self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
+            self.CbUniversidad.Append("Otra...")
+                #print cate	
+                        
+        def EvtCbUniversidad(self, event):
+            if self.CbUniversidad.GetValue() == "Otra...":               
+                print "ad"
+            
         def EvtRadioBox(self, event):
             print self.ClcFechaNac.GetValue().FormatISODate()
-            #self.datetime=wx.DateTimeFromDMY(self.ClcFechaNac.GetValue())
-            ##print self.fecha
-            #print self.ClcFechaNac.GetValue()
-            #print self.datetime
-		#self.TxtArea1.AppendText("Evento RabioBox")
-                
-        def EvtPanelDocumento(self, event):  
-           # if (self.TxtAreaDocumento.GetValue()[-1] == "0" or  
-            #    self.TxtAreaDocumento.GetValue()[-1] =="1" or  
-             #   self.TxtAreaDocumento.GetValue()[-1] =="2" or  
-              #  self.TxtAreaDocumento.GetValue()[-1] =="3" or  
-               # self.TxtAreaDocumento.GetValue()[-1] =="4" or  
-                #self.TxtAreaDocumento.GetValue()[-1] =="5" or  
-                #self.TxtAreaDocumento.GetValue()[-1] =="6" or  
-                #self.TxtAreaDocumento.GetValue()[-1] =="7" or  
-                #self.TxtAreaDocumento.GetValue()[-1] =="8" or
-                #self.TxtAreaDocumento.GetValue()[-1] =="9" or
-                #self.TxtAreaDocumento.GetValue()[-1] ==""):
+                           
+        def EvtPanelDocumento(self, event):             
                 print "pot"   
-            #else:   
-                #self.TxtAreaDocumento.DiscardEdits()
-            #else:
-               # self.TxtAreaDocumento
-               # self.TxtAreaNombre.Remove(0,1)
-                #print "da"
-            #for any in self.TxtAreaNombre.GetValue():
-             #   if any[-1] == "0" and "9":
-              #      print "pot"
-               # if self.TxtAreaNombre.GetValue()== "a":
-                #    print "1"
-            #print self.TxtAreaNombre.GetValue()[-1]
-            
+                    
                 
-        def OnClick(self,event):
+        def OnClick(self,event):            
             #
             if self.TxtAreaNombre.GetValue() == "": 
                 wx.MessageBox("El area de Nombre esta vacia ","Gesdatos")#,wx.OK|wx.CANCEL)
+            
             elif self.TxtAreaApellido.GetValue()=="":
                  wx.MessageBox("El area de Apellido esta vacia ","Gesdatos")
             elif self.TxtAreaDocumento.GetValue()==None:
@@ -232,24 +220,29 @@ class Body(wx.Panel):
                 wx.MessageBox("El area de Universidad esta sin seleccionar ","Gesdatos")
             elif self.TxtAreaUsuario.GetValue()=="":
                 wx.MessageBox("El area de Usuario esta vacia ","Gesdatos")
+                      
                         
             else:
-                if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
-                    print "picho ok"                    
-                else:
-                    try:
-                        self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
-                                                        self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
-                                                        self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
-                                                        self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
-                                                        self.RbCategoria.GetSelection())
-                    except :
-                        wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
-                        self.solicitud = Request()   
-                        
-                        
+                if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',self.TxtAreaCorreo.GetValue().lower()):
+                
+                    if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',self.TxtAreaCorreoUni.GetValue().lower()):
                     
-               
+                        if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
+                            print "picho ok"                        
+                        else:
+                            try:
+                                self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
+                                                                self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
+                                                                self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
+                                                                self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
+                                                                self.RbCategoria.GetSelection())
+                            except :
+                                wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
+                                self.solicitud = Request()   
+                    else:
+                        wx.MessageBox("El area Correo Universidad ingresado no es valido ","Gesdatos")   
+                else:                
+                    wx.MessageBox("El area Correo ingresado no es valido ","Gesdatos")                
 ##-----------------------------------------------------------
 class Low(wx.Panel):
 	def __init__(self,parent):

@@ -6,7 +6,7 @@ import psycopg2, psycopg2.extras
 class Conexion:                  #Clase que permitira la comunicacion con la base de datos     
     host = "localhost"           
     user = "postgres"
-    passwd = "1234"
+    passwd = "2648618"
     db = "ExamenDB"
     
     def __init__(self):
