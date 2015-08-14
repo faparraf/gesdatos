@@ -19,9 +19,10 @@ class dialogoregistroEstudiantes(wx.Panel):
         self.cantdad = cantidadpregutnas
         sizer = wx.BoxSizer(wx.VERTICAL)
         # Consulta de todos los estudiantes disponibles
-        query = "SELECT  Estudiante.consecEs, Estudiante.FecfaReg, (Persona.nombre || ' ' || Persona.apellido) AS NombreCompleto FROM Estudiante, Persona WHERE Estudiante.personaEs = Persona.idPersona;"
-        #sampleList = conexion.connection.ExecuteQuery(query) comentado mienstras no este creada la base ded datos
-        sampleList = [("123","10/10/2010","Rex Arias"),("124","10/10/2010","Alison C."),("125","10/10/2010","Dante T.")]
+        query = "SELECT  estudiante.id_est, estudiante.fecha_reg, (persona.nom_pers || ' ' || persona.apellido_pers) AS nombrecompleto FROM estudiante, persona WHERE estudiante.id_persn = persona.id_persona;"
+        sampleList = conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
+        print(str(sampleList))
+        #sampleList = [("123","10/10/2010","Rex Arias"),("124","10/10/2010","Alison C."),("125","10/10/2010","Dante T.")]
         self.listBox1 = wx.ListBox(choices=[],
               name='listBox1', parent=self, pos=wx.Point(8, 48),
               size=wx.Size(184, 256),  style =  wx.LB_HSCROLL
@@ -31,7 +32,7 @@ class dialogoregistroEstudiantes(wx.Panel):
         self.listBox1.SetBackgroundColour(wx.Colour(255, 255, 128))
         self.listBox1.Bind(wx.EVT_LISTBOX, self.OnListBox1Listbox)
         for text in sampleList:
-            item = self.listBox1.Append(text[0]+': '+text[2])
+            item = self.listBox1.Append(str(text[0])+': '+str(text[2]))
         okBtn = wx.Button(self, wx.ID_OK)
         for i in range(self.listBox1.GetCount()):
             self.listBox1.SetSelection(i)
