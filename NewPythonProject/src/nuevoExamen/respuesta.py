@@ -5,7 +5,7 @@ class respuesta():
     """ Una clase donde se amacenara la informacion de
     una respuesta a una pregunta por medio de atributos """
     def __init__(self):
-        self.descripcionOpcion = [];
+        self.tipoOpcion = '';
         self.opcionpregunta = "";
         self.idprespuesta = 0;
         self.respuesta = "";
@@ -20,3 +20,7 @@ class respuesta():
     def setrespuesta(self,respuesta):
         'cambia el valor de la respuesta con valor del parametro respuesta'
         self.respuesta = respuesta
+        
+    def settipoOpcion(self,nuevotipo):
+        'cambia el valor de lel tipo de opcion con valor del parametro nuevotipo'
+        self.tipoOpcion = nuevotipo

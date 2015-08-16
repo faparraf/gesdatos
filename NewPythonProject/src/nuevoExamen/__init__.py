@@ -33,7 +33,16 @@ class Body(wx.Panel):
         self.lblpuntjae = wx.StaticText(self, label="Puntaje Extra Examen :", pos=(100,95))
         self.editpuntjae = wx.TextCtrl(self, value="", pos=(0, 95), size=(140,-1))
         self.lbltipo = wx.StaticText(self, label="Tipo Examen :", pos=(100,120))
-        self.edittipo = wx.TextCtrl(self, value="", pos=(0, 120), size=(140,-1))
+        self.sampleListTipo = []
+        query ="SELECT * FROM tipoexamen;"    
+        self.temaescogido = ''#se almacenara el identificador del tema escogido
+        self.opcionesexamenTema = (self.father.getconexion()).ExecuteQuery(query) #consulta de todos los tipos de examen
+        print("consutla sql de tipos de examen "+str(self.opcionesexamenTema))
+        for a in self.opcionesexamenTema:
+            self.sampleListTipo.append(a[1])
+        self.edittipo = wx.ComboBox(self, choices=self.sampleListTipo, style=wx.CB_DROPDOWN)
+        self.edittipo.Bind(wx.EVT_COMBOBOX, self.idtemaescogido)
+        #self.edittipo = wx.TextCtrl(self, value="", pos=(0, 120), size=(140,-1))
         self.lblcantidad = wx.StaticText(self, label="Cantidad de Preguntas :", pos=(100,150))
         self.editcantidad = wx.TextCtrl(self, value="1", pos=(0, 150), size=(140,-1))
         
@@ -57,6 +66,16 @@ class Body(wx.Panel):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el docente'
         # Definimos los métodos de los eventos
         self.father.registrarExamen(e,self)
+    
+    def idtemaescogido(self,e):
+        'metodo escucha de evento de escoger un tema con fin de saber  el valor de la llave del tema escogido'
+        temaexamen = e.GetString()
+        fila = 0
+        for it in self.sampleListTipo:
+            if it == temaexamen:
+                self.temaescogido = self.opcionesexamenTema[fila][0]
+                break
+            fila=fila+1
 
 ##-----------------------------------------------------------
 
@@ -85,7 +104,7 @@ class interfazpanelpaso():
             self.father = parent
             self.topanel = topPanel
             self.sizer = sizertopPanel
-            self.nuevoexamen = examen.examen(iddocente)
+            self.nuevoexamen = examen.examen(str(iddocente))
             self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
@@ -98,7 +117,7 @@ class interfazpanelpaso():
             nombre = panel.editname.GetValue()
             fecha = panel.editfecha.GetValue()
             puntaje = panel.editpuntjae.GetValue()
-            tipo = panel.edittipo.GetValue()
+            tipo = str(panel.temaescogido)
             cantidadpreguntas = panel.editcantidad.GetValue()
             self.nuevoexamen.settitulo(nombre)
             self.nuevoexamen.setfechaexamen(fecha)
@@ -110,7 +129,41 @@ class interfazpanelpaso():
             conexion = self.conexion
             dlg = dialogoregistroEstudiantes.dialogoregistroEstudiantes(conexion,self.topanel,self,cantidadpreguntas)
             self.cambiarpanel(dlg)
-
+        
+        def registrarexamenbasedatos(self):
+            """Parte final de registro de examen, subirlo a la base de datos una vez
+            se hallan ingresado todos los datos"""
+            #registro de generalidades del examen
+            queryidexamen = "select count(*) from examen;"
+            idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
+            idexamen = (idexamen[0][0])+1
+            insert = 'INSERT INTO examen ("id_exa","id_dcnte","titulo_exa","tiempo_exa","tipoexa")VALUES ('
+            insert +=str(idexamen)+','+self.nuevoexamen.docente+',"'+self.nuevoexamen.docente
+            insert +='","'+self.nuevoexamen.fechaexamen+'",'+self.nuevoexamen.tipoExamen+');'
+            print(insert)
+            #registro de preguntas y opciones de preguntas
+            queryidpregunta = "select count(*) from pregunta;"
+            idpregunta = self.conexion.connection.ExecuteQuery(queryidpregunta)
+            idpregunta = (idpregunta[0][0])
+            queryidrespuesta = "select count(*) from opcionpreg;"
+            idrespuesta = self.conexion.connection.ExecuteQuery(queryidrespuesta)
+            idrespuesta = (idrespuesta[0][0])
+            for pregunta in self.nuevoexamen.preguntas:
+                idpregunta = idpregunta+1
+                insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","imagen","tema","id_pregunta")'
+                insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
+                insertpregunta += "','',"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                print (insertpregunta)
+                for respuesta in pregunta.respuestas:
+                    idrespuesta = idrespuesta+1
+                    insertrespuesta = 'INSERT INTO opcionpreg ("id_opc_pre","tipo_op","id_pregunta","desc_opcion","respuesta")'
+                    insertrespuesta += "VALUES ('"+str(idrespuesta)+"',"+str(respuesta.tipoOpcion)+","+str(idpregunta)+",'"+respuesta.opcionpregunta+"','"+respuesta.respuesta+"');"
+                    print (insertrespuesta)
+                #union entre el examen y las preguntas
+                insertexapreg = 'INSERT INTO examenpreg ("id_prgnta","puntaje_preg","id_examen")'
+                insertexapreg += "VALUES ("+str(idrespuesta)+","+str(pregunta.puntaje)+","+str(idexamen)+");"
+                print (insertexapreg)
+        
         def generarpanelespreguntas(self,opcionespreguntas,it):
             """ usado para cada una de las preguntas que el examen
                 necesita, opcionespreguntas es la lista  de los tipos de preguntas
@@ -120,6 +173,7 @@ class interfazpanelpaso():
                 dlg = interfazregistrarpregunta.dialogoregistropregunta(self.topanel,self,i=it,opcionespreguntas=opcionespreguntas)
                 self.cambiarpanel(dlg)
             else:
+                self.registrarexamenbasedatos()
                 termino = wx.Panel(self.topanel)
                 sizer = wx.BoxSizer(wx.VERTICAL)
                 sizer.Add(wx.StaticText(termino, label="Registro Termino Exitosamente"))
@@ -132,10 +186,14 @@ class interfazpanelpaso():
             el evento e del boton que llamo a este metodo y el numero de pregunta registrada"""
             #self.quote = wx.StaticText(self, label=dlg.comboBox1.GetValue(), pos=(20, 30))
             Enunciado = panel.editEnunciado.GetValue()
-            Tema = panel.editTema.GetValue()
+            Tema = str(panel.temaescogido)
             Tipo = panel.editTipo.GetValue()
             print ("hola "+Enunciado+" "+Tema+" "+Tipo)
-            self.nuevoexamen.ingresardatosesmaen(i,Enunciado, Tema, Tipo)
+            self.tiporespuestaelegido = ''
+            for tiposbasedatos in self.opcionespreguntas:
+                if tiposbasedatos[1] == Tipo:
+                    self.tiporespuestaelegido = tiposbasedatos[0] 
+            self.nuevoexamen.ingresardatosesmaen(i,Enunciado, Tema, self.tiporespuestaelegido)
             self.generarpanelrespuesta(Tipo,i)
                 
         def generarpanelrespuesta(self,Tipo,i):
@@ -171,7 +229,7 @@ class interfazpanelpaso():
                 Opcion = panel.editOpcion[it].GetValue()
                 Respuesta = panel.editRespuesta[it].GetValue()
                 print ("hola "+Opcion+" "+Respuesta)
-                self.nuevoexamen.registrarrespuesta(i,Opcion, Respuesta)
+                self.nuevoexamen.registrarrespuesta(i,Opcion, Respuesta,self.tiporespuestaelegido)
             self.generarpanelespreguntas(self.opcionespreguntas,i+1)
 
         def registrarEstudiantes(self,e,panel,cantidadpreguntas):
@@ -183,11 +241,14 @@ class interfazpanelpaso():
             self.nuevoexamen.setidestudiantes(EstudiantesAsignados)
             print("valor "+str(EstudiantesAsignados) ) 
             query ="SELECT * FROM tipopegrunta;"            
-            opcionespreguntas = self.conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
+            self.opcionespreguntas = self.conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
             #opcionespreguntas = [(1,"PreguntaAbierta"),(2,"Falso Verdadero"),(3,"Opcion Multiple Unica Respuesta"),(4,"Opcion Multiple Multiple Respuesta")]
             self.cantidadpreguntas = cantidadpreguntas
-            self.opcionespreguntas = opcionespreguntas
-            self.generarpanelespreguntas(opcionespreguntas,0)
+            self.generarpanelespreguntas(self.opcionespreguntas,0)
+            
+        def getconexion(self):
+            """consutlor que retorna la clase administradora de la base de datos"""
+            return self.conexion.connection
 
         def cambiarpanel(self,nuevopanel):
             """Metodo usado para cambiar un panel en el que ya se
@@ -221,9 +282,10 @@ topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)
 topPanel.SetBackgroundColour("white")
 sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-interfaz = interfazpanelpaso(frame,"111000",topPanel,sizertopPanel)
+iddocente = "1"
+interfaz = interfazpanelpaso(frame,iddocente,topPanel,sizertopPanel)
 sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-sizertopPanel.Add(Body(topPanel,interfaz,"111000"),0,wx.EXPAND|wx.ALL,border=10)
+sizertopPanel.Add(Body(topPanel,interfaz,iddocente),0,wx.EXPAND|wx.ALL,border=10)
 sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
 topPanel.SetSizer(sizertopPanel)
 frame.Show()

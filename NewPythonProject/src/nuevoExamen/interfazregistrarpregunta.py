@@ -18,7 +18,17 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         self.lblEnunciado = wx.StaticText(self, label="Enunciado :")
         self.editEnunciado = wx.TextCtrl(self, value="")
         self.lblTema = wx.StaticText(self, label="Tema :")
-        self.editTema = wx.TextCtrl(self, value="")
+        #self.editTema = wx.TextCtrl(self, value="")
+        self.sampleListTema = []
+        self.temaescogido = ""
+        query ="SELECT * FROM tema;"            
+        self.opcionespreguntasTema = (self.father.getconexion()).ExecuteQuery(query) #consulta de todos los temas registrados
+        print("consutla sql de temas de pregunta "+str(self.opcionespreguntasTema))
+        for a in self.opcionespreguntasTema:
+            self.sampleListTema.append(a[2])
+        print("lista resultante "+str(self.sampleListTema))
+        self.editTema = wx.ComboBox(self, choices=self.sampleListTema, style=wx.CB_DROPDOWN)
+        self.editTema.Bind(wx.EVT_COMBOBOX, self.idtemaescogido)
         self.lblTipo = wx.StaticText(self, label="Tipo Pregunta :")
         #self.editTipo = wx.TextCtrl(self, value="")
         self.sampleList = []
@@ -40,6 +50,17 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.Bind(wx.EVT_BUTTON, self.registro,okBtn)
         self.SetSizer(sizer)
+    
+    def idtemaescogido(self,e):
+        'metodo escucha de evento de escoger un tema con fin de saber  el valor de la llave del tema escogido'
+        temapregunta = e.GetString()
+        fila = 0
+        for it in self.sampleListTema:
+            if it == temapregunta:
+                self.temaescogido = self.opcionespreguntasTema[fila][0]
+                break
+            fila=fila+1
+    
     def registro(self, e):
         'oyente del boton para registrar las preguntas'
         # Definimos los metodos de los eventos

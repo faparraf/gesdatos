@@ -12,7 +12,7 @@ class pregunta():
         self.tema = ""
         self.idpregunta = 0
         self.puntaje = 0
-        self.respuesta = respuesta.respuesta()
+        self.respuestas = []
         self.tipoPregunta = ""
         self.imagen = ""
      
@@ -25,10 +25,13 @@ class pregunta():
         self.tema = Tema
         self.tipoPregunta = Tipo
 
-    def registrarrespuesta(self,Opcion,Respuesta):
+    def registrarrespuesta(self,Opcion,Respuesta,TipoRespuesta):
         'registra respuesta como la opcion de la respuesta y el valor de la respuesta'
-        self.respuesta.setopcionpregunta(Opcion)
-        self.respuesta.setrespuesta(Respuesta)
+        nuevarespuesta = respuesta.respuesta()
+        nuevarespuesta.setopcionpregunta(Opcion)
+        nuevarespuesta.setrespuesta(Respuesta)
+        nuevarespuesta.settipoOpcion(TipoRespuesta)
+        self.respuestas.append(nuevarespuesta)
 
     def gettuplapreguntacrear(self):
         """retorna una tupla con el identificador de la pregunta, la fecha de creacion,

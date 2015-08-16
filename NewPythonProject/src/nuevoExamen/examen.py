@@ -54,9 +54,9 @@ class examen():
         'agrega informacion de una pregunta del examen de numero posicion'
         self.preguntas[posicion].registrardatosgenerales(Enunciado, Tema, Tipo)
 
-    def registrarrespuesta (self,i,Opcion, Respuesta):
+    def registrarrespuesta (self,i,Opcion, Respuesta,TipoOpcion):
         'agrega informacion de una pregunta del examen de numero i'
-        self.preguntas[i].registrarrespuesta(Opcion, Respuesta)
+        self.preguntas[i].registrarrespuesta(Opcion, Respuesta,TipoOpcion)
 
     def getidEstudi(self,it):
         'retorna identificador de estudiante de posicion it en la lista'
