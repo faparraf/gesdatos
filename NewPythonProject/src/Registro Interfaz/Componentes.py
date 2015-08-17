@@ -2,14 +2,18 @@
 # -*- coding: utf-8 -*-
 import wx
 import wx.grid
+import wx.lib.agw.hyperlink as hl
 import pprint
-import  wx.lib.intctrl
-
 
 class Component(wx.Panel):
 	def __init__(self,parent):
 	        wx.Panel.__init__(self,parent)  
-#-----------------Creaci髇 de Label------------
+#-----------------Creaci贸n de Label------------
+	def CreateLabel(self,parent,fonsize,pos,label):  
+		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
+		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
+		self.label.SetFont(self.font)
+		return self.label
 
 #-----------------Creaci髇 de TextArea------------ 
 	def CreateIntCtrl(self,parent,pos,size):   
@@ -22,48 +26,54 @@ class Component(wx.Panel):
                 self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
 		return self.calc
 
-#-----------------Creaci髇 de Label------------
-	def CreateLabel(self,parent,fonsize,pos,label):  
-		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
-		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
-		self.label.SetFont(self.font)
-		return self.label
-
-#-----------------Creaci髇 de ComboBox------------      
-	def CreateComboBox(self,parent,pos,size,List):   
-		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_READONLY)
-		return self.cbx
-    
-#-----------------Creaci髇 de TextArea------------ 
-	def CreateTextArea(self,parent,pos,size):   
-		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
-		return self.txtarea
-
 #-----------------Creaci髇 de InputText------------ 
-
         def CreateImputText (self,parent,pos,size):
                 self.txtimp = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=0)
 		return self.txtimp
-#-----------------Creaci髇 de RadioBox------------ 
+
+
+#-----------------Creaci贸n de ComboBox------------      
+	def CreateComboBox(self,parent,pos,size,List):   
+		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
+		return self.cbx
+    
+#-----------------Creaci贸n de TextArea------------ 
+	def CreateTextArea(self,parent,pos,size):   
+		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
+		return self.txtarea
+#-----------------Creaci贸n de Hyperlink-----------
+
+	def CreateHyperLink(self,parent,name,link):
+		self.hyper = hl.HyperLinkCtrl(parent, -1, name, pos=(100, 100),URL=link)
+		return self.hyper
+
+#-----------------Creaci贸n de RadioBox------------ 
 	def CreateRadioBox(self,parent,label,radioList):
 		self.RadioBox = wx.RadioBox(parent, -1, label, (10, 10), wx.DefaultSize,radioList, 2, wx.RA_SPECIFY_COLS)
 		return self.RadioBox
 
-#-----------------Creaci髇 de Grilla------------ 	
+#-----------------Creaci贸n de Grilla------------ 	
 	def CreateGrid(self,parent,rows,colums,titles,width):
 		self.Grid=wx.grid.Grid(parent)
 		self.Grid.CreateGrid(rows,colums)
 		for i in range(0,colums):
-			self.Grid.SetColLabelValue(i,titles[0])
+			self.Grid.SetColLabelValue(i,titles[i])
 			self.Grid.SetColSize(i,width)	
 		return self.Grid
 
-#-----------------Creaci髇 de Boton------------ 	
+#-----------------------------------------------
+	def CreateListctrl(self,parent,titles,lenghs,size):
+		self.listctrl = wx.ListCtrl(parent, size=(size[0],size[1]), style=wx.LC_REPORT | wx.BORDER_SUNKEN)
+		for i in range(len(titles)):
+			self.listctrl.InsertColumn(i, titles[i], width=lenghs[i])
+		return self.listctrl
+
+#-----------------Creaci贸n de Boton------------ 	
 	def CreateButton(self,parent,label):
 		self.Button =wx.Button(parent,label=label)
 		return self.Button
 
-#-----------------Creaci髇 de CheckBox------------ 	
+#-----------------Creaci贸n de CheckBox------------ 	
 	def CreateCheckBox(self,number,parent,labels,size):
 		CheckBoxList=[]
 		if number>=1 :
@@ -82,10 +92,20 @@ class Component(wx.Panel):
 				for k in range(len(CheckBoxList)):
 					gridCheckBox.AddMany([(CheckBoxList[k], 0, wx.ALIGN_CENTER)])
 		return gridCheckBox
+#-----------------------------------------------------redireccion-c------------
 
-	
+	def setpanel(self,panel):
+		panel.Show(True)
+		
+		
+		
+		
 	def EventComboBox(self, event):
-		print("Mi evento")	
+		print("Mi evento")
+	
+	
+            
+             
 
 	def EvtComboBox(self, event):
 		print('Evento de combo box: %s' % event.GetString())
@@ -95,3 +115,7 @@ class Component(wx.Panel):
 
 	def EvtComboBoxTable(self, event):
 		print('Evento de combo box: %s' % event.GetString())
+
+   
+    
+        
