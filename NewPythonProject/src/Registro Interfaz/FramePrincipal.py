@@ -5,7 +5,7 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
-import panel1
+import VentanaRegistroUsuarios
 
 ## Head
 ##-----------------------------------------------------------
@@ -25,8 +25,8 @@ class Body(wx.Panel):
 	def __init__(self,parent):
 		self.parent=parent
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-		self.panel=panel1.VentanaRegistroUsuarios(self) ## En esta linea se Agrega el Panel de inicio
-		self.SetBackgroundColour("#696969") # Color de Fondo del panel
+		self.panel=VentanaRegistroUsuarios.VentanaRegistroUsuarios(self) ## En esta linea se Agrega el Panel de inicio
+		self.SetBackgroundColour("white") # Color de Fondo del panel
 		self.sizerbody=wx.BoxSizer(wx.VERTICAL)
 		self.sizerbody.Add(self.panel,0,wx.EXPAND|wx.ALL,border=5)
 		self.SetSizer(self.sizerbody)

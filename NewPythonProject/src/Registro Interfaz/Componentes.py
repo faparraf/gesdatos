@@ -3,6 +3,7 @@
 import wx
 import wx.grid
 import wx.lib.agw.hyperlink as hl
+import  wx.lib.intctrl
 import pprint
 
 class Component(wx.Panel):
