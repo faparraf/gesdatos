@@ -188,12 +188,15 @@ class interfazpanelpaso():
             Enunciado = panel.editEnunciado.GetValue()
             Tema = str(panel.temaescogido)
             Tipo = panel.editTipo.GetValue()
-            print ("hola "+Enunciado+" "+Tema+" "+Tipo)
+            #ingreso de variable
+            Imagen = panel.lblImagenR.GetValue()
+            print ("hola "+Enunciado+" "+Tema+" "+Tipo+" "+Imagen)
             self.tiporespuestaelegido = ''
             for tiposbasedatos in self.opcionespreguntas:
                 if tiposbasedatos[1] == Tipo:
                     self.tiporespuestaelegido = tiposbasedatos[0] 
-            self.nuevoexamen.ingresardatosesmaen(i,Enunciado, Tema, self.tiporespuestaelegido)
+                    #ingreso de variable
+            self.nuevoexamen.ingresardatosesmaen(i,Enunciado, Tema, self.tiporespuestaelegido,Imagen)
             self.generarpanelrespuesta(Tipo,i)
                 
         def generarpanelrespuesta(self,Tipo,i):

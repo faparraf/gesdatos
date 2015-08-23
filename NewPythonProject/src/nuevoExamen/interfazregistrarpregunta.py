@@ -29,15 +29,20 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         print("lista resultante "+str(self.sampleListTema))
         self.editTema = wx.ComboBox(self, choices=self.sampleListTema, style=wx.CB_DROPDOWN)
         self.editTema.Bind(wx.EVT_COMBOBOX, self.idtemaescogido)
-        self.lblTipo = wx.StaticText(self, label="Tipo Pregunta :")
+        self.lblTipo = wx.StaticText(self, label="Tipo Pregunta: ")
+        
         #self.editTipo = wx.TextCtrl(self, value="")
         self.sampleList = []
+       
         print("consutla sql de tipos de pregunta "+str(opcionespreguntas))
         for a in opcionespreguntas:
             self.sampleList.append(a[1])
         print("lista resultante "+str(self.sampleList))
         self.editTipo = wx.ComboBox(self, choices=self.sampleList, style=wx.CB_DROPDOWN)
-        
+        #creacion de file chooser
+        self.lblImagen = wx.StaticText(self, label="Ilustracion de Imagen: ")
+        self.lblImagenRu = wx.StaticText(self, label="...")
+        self.btnImagen = wx.Button(self, wx.ID_OK, label="Agregar", pos=(50, 170))
         okBtn = wx.Button(self, wx.ID_OK)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -47,8 +52,13 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         sizer.Add(self.editTema, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(self.lblTipo, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(self.editTipo, 0, wx.ALL|wx.CENTER, 5)
+        #ingreso de elementos
+        sizer.Add(self.lblImagen, 0, wx.ALL|wx.CENTER, 5)
+        sizer.Add(self.lblImagenRu, 0, wx.ALL|wx.CENTER, 5)
+        sizer.Add(self.btnImagen, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.Bind(wx.EVT_BUTTON, self.registro,okBtn)
+        self.Bind(wx.EVT_BUTTON, self.agregarImagen,self.btnImagen)
         self.SetSizer(sizer)
     
     def idtemaescogido(self,e):
@@ -65,6 +75,16 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         'oyente del boton para registrar las preguntas'
         # Definimos los metodos de los eventos
         self.father.registrarpreguntas(self,e,self.it)
+         
+    def agregarImagen(self, e):
+        'oyente del boton para agragar la imagen de la pregunta'
+        # Acivamos el File Chooser
+        openFileDialog = wx.FileDialog(self, "Buscar Imagen", "", "",
+                                       "Archivos JGP (*.jpg)|*.jpg|Archivos PNG (*.png)|*.png|Archivos GIF (*.gif)|*.gif", wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+        openFileDialog.ShowModal()
+        print(str(openFileDialog.GetPath()))
+        self.lblImagenRu.SetLabel(str(openFileDialog.GetPath()))
+        
         
 class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
     """panel de registro de respuesta de tipo opcion multiple con multiple
