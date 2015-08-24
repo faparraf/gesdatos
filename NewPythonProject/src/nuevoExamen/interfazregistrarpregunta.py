@@ -42,7 +42,7 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         #creacion de file chooser
         self.lblImagen = wx.StaticText(self, label="Ilustracion de Imagen: ")
         self.lblImagenRu = wx.StaticText(self, label="...")
-        self.btnImagen = wx.Button(self, wx.ID_OK, label="Agregar", pos=(50, 170))
+        btnImagen = wx.Button(self, wx.ID_OK, label="Agregar", pos=(50, 170))
         okBtn = wx.Button(self, wx.ID_OK)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -55,10 +55,10 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         #ingreso de elementos
         sizer.Add(self.lblImagen, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(self.lblImagenRu, 0, wx.ALL|wx.CENTER, 5)
-        sizer.Add(self.btnImagen, 0, wx.ALL|wx.CENTER, 5)
+        sizer.Add(btnImagen, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
-        self.Bind(wx.EVT_BUTTON, self.registro,okBtn)
-        self.Bind(wx.EVT_BUTTON, self.agregarImagen,self.btnImagen)
+        okBtn.Bind(wx.EVT_BUTTON, self.registro)
+        btnImagen.Bind(wx.EVT_BUTTON, self.agregarImagen)
         self.SetSizer(sizer)
     
     def idtemaescogido(self,e):
@@ -75,7 +75,7 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         'oyente del boton para registrar las preguntas'
         # Definimos los metodos de los eventos
         self.father.registrarpreguntas(self,e,self.it)
-         
+    
     def agregarImagen(self, e):
         'oyente del boton para agragar la imagen de la pregunta'
         # Acivamos el File Chooser

@@ -50,9 +50,9 @@ class examen():
         nuevoexamen = pregunta.pregunta()
         self.preguntas.append(nuevoexamen)
 
-    def ingresardatosesmaen(self,posicion,Enunciado, Tema, Tipo):
+    def ingresardatosesmaen(self,posicion,Enunciado, Tema, Tipo,Imagen):
         'agrega informacion de una pregunta del examen de numero posicion'
-        self.preguntas[posicion].registrardatosgenerales(Enunciado, Tema, Tipo)
+        self.preguntas[posicion].registrardatosgenerales(Enunciado, Tema, Tipo,Imagen)
 
     def registrarrespuesta (self,i,Opcion, Respuesta,TipoOpcion):
         'agrega informacion de una pregunta del examen de numero i'

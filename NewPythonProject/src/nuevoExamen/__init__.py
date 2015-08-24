@@ -189,7 +189,7 @@ class interfazpanelpaso():
             Tema = str(panel.temaescogido)
             Tipo = panel.editTipo.GetValue()
             #ingreso de variable
-            Imagen = panel.lblImagenR.GetValue()
+            Imagen = panel.lblImagenRu.GetLabel()
             print ("hola "+Enunciado+" "+Tema+" "+Tipo+" "+Imagen)
             self.tiporespuestaelegido = ''
             for tiposbasedatos in self.opcionespreguntas:
