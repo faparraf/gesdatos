@@ -15,7 +15,7 @@ class pregunta():
         self.respuestas = []
         self.tipoPregunta = ""
         #ingreso de variable
-        self.imagen = "url"
+        self.imagen = ""
      
     # Definimos los métodos de los eventos
      

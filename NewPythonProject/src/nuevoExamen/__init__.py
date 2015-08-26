@@ -30,6 +30,10 @@ class Body(wx.Panel):
         self.editname = wx.TextCtrl(self, value="", pos=(0, 35), size=(140,-1))
         self.lblfecha = wx.StaticText(self, label="Fecha Examen :", pos=(100,65))
         self.editfecha = wx.TextCtrl(self, value="", pos=(0, 65), size=(140,-1))
+        self.lblhoraini = wx.StaticText(self, label="Hora Inicio :", pos=(100,65))
+        self.edithoraini = wx.TextCtrl(self, value="", pos=(0, 65), size=(140,-1))
+        self.lblhorafin = wx.StaticText(self, label="Hora Fin :", pos=(100,65))
+        self.edithorafin = wx.TextCtrl(self, value="", pos=(0, 65), size=(140,-1))
         self.lblpuntjae = wx.StaticText(self, label="Puntaje Extra Examen :", pos=(100,95))
         self.editpuntjae = wx.TextCtrl(self, value="", pos=(0, 95), size=(140,-1))
         self.lbltipo = wx.StaticText(self, label="Tipo Examen :", pos=(100,120))
@@ -49,11 +53,13 @@ class Body(wx.Panel):
         #como crear un boton agregando su evento
         self.button =wx.Button(self, wx.ID_OK, label="Siguiente", pos=(50, 170))
         self.Bind(wx.EVT_BUTTON, self.registro,self.button)
-        gs = wx.GridSizer(7, 2, 5, 5) #Creacion grilla de tamaño
+        gs = wx.GridSizer(9, 2, 5, 5) #Creacion grilla de tamaño
         #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
         gs.AddMany([(self.quote, 0, wx.ALIGN_CENTER),(self.aparte, 0, wx.ALIGN_CENTER),
                     (self.lblname, 0, wx.ALIGN_CENTER),(self.editname, 0, wx.ALIGN_CENTER),
                     (self.lblfecha, 0, wx.ALIGN_CENTER),(self.editfecha, 0, wx.ALIGN_CENTER),
+                    (self.lblhoraini, 0, wx.ALIGN_CENTER),(self.edithoraini, 0, wx.ALIGN_CENTER),
+                    (self.lblhorafin, 0, wx.ALIGN_CENTER),(self.edithorafin, 0, wx.ALIGN_CENTER),
                     (self.lblpuntjae, 0, wx.ALIGN_CENTER),(self.editpuntjae, 0, wx.ALIGN_CENTER),
                     (self.lbltipo, 0, wx.ALIGN_CENTER),(self.edittipo, 0, wx.ALIGN_CENTER),
                     (self.lblcantidad, 0, wx.ALIGN_CENTER),(self.editcantidad, 0, wx.ALIGN_CENTER),
@@ -118,11 +124,15 @@ class interfazpanelpaso():
             fecha = panel.editfecha.GetValue()
             puntaje = panel.editpuntjae.GetValue()
             tipo = str(panel.temaescogido)
+            horaini = panel.edithoraini.GetValue()
+            horafin = panel.edithorafin.GetValue()
             cantidadpreguntas = panel.editcantidad.GetValue()
             self.nuevoexamen.settitulo(nombre)
             self.nuevoexamen.setfechaexamen(fecha)
             self.nuevoexamen.setpuntajeExtra(puntaje)
             self.nuevoexamen.settipoExamen(tipo)
+            self.nuevoexamen.sethoraini(horaini)
+            self.nuevoexamen.sethorafin(horafin)
             print ("hola "+nombre+" "+fecha+" "+puntaje+" "+tipo)
             #self.registrarEstudiantes(cantidadpreguntas)
             #registrar estudiante
@@ -137,10 +147,12 @@ class interfazpanelpaso():
             queryidexamen = "select count(*) from examen;"
             idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
             idexamen = (idexamen[0][0])+1
-            insert = 'INSERT INTO examen ("id_exa","id_dcnte","titulo_exa","tiempo_exa","tipoexa")VALUES ('
-            insert +=str(idexamen)+','+self.nuevoexamen.docente+',"'+self.nuevoexamen.docente
-            insert +='","'+self.nuevoexamen.fechaexamen+'",'+self.nuevoexamen.tipoExamen+');'
+            insert = 'INSERT INTO examen ("id_exa","id_dcnte","titulo_exa","fecha","tipoexa","tiempo_exa_inicio","tiempo_exa_fin")VALUES ('
+            insert +=str(idexamen)+","+self.nuevoexamen.docente+",'"+self.nuevoexamen.titulo
+            insert +="','"+self.nuevoexamen.fechaexamen+"',"+self.nuevoexamen.tipoExamen
+            insert +=",'"+str(self.nuevoexamen.horainicio)+"','"+str(self.nuevoexamen.horafin)+"');"
             print(insert)
+            self.conexion.connection.ExecuteQuery(insert)
             #registro de preguntas y opciones de preguntas
             queryidpregunta = "select count(*) from pregunta;"
             idpregunta = self.conexion.connection.ExecuteQuery(queryidpregunta)
@@ -150,19 +162,27 @@ class interfazpanelpaso():
             idrespuesta = (idrespuesta[0][0])
             for pregunta in self.nuevoexamen.preguntas:
                 idpregunta = idpregunta+1
-                insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","imagen","tema","id_pregunta")'
-                insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
-                insertpregunta += "','',"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                if (pregunta.imagen!='...'):
+                    insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","imagen","tema","id_pregunta")'
+                    insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
+                    insertpregunta += "',lo_import('"+str(pregunta.imagen)+"'),"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                else:
+                    insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","tema","id_pregunta")'
+                    insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
+                    insertpregunta += "',"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                self.conexion.connection.ExecuteQuery(insertpregunta)
                 print (insertpregunta)
                 for respuesta in pregunta.respuestas:
                     idrespuesta = idrespuesta+1
                     insertrespuesta = 'INSERT INTO opcionpreg ("id_opc_pre","tipo_op","id_pregunta","desc_opcion","respuesta")'
                     insertrespuesta += "VALUES ('"+str(idrespuesta)+"',"+str(respuesta.tipoOpcion)+","+str(idpregunta)+",'"+respuesta.opcionpregunta+"','"+respuesta.respuesta+"');"
                     print (insertrespuesta)
+                    self.conexion.connection.ExecuteQuery(insertrespuesta)
                 #union entre el examen y las preguntas
                 insertexapreg = 'INSERT INTO examenpreg ("id_prgnta","puntaje_preg","id_examen")'
                 insertexapreg += "VALUES ("+str(idrespuesta)+","+str(pregunta.puntaje)+","+str(idexamen)+");"
                 print (insertexapreg)
+                self.conexion.connection.ExecuteQuery(insertexapreg)
         
         def generarpanelespreguntas(self,opcionespreguntas,it):
             """ usado para cada una de las preguntas que el examen

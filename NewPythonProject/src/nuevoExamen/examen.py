@@ -10,6 +10,8 @@ class examen():
         print("en docencia con nuevo examen")
         self.docente = iddocente
         self.fechaexamen = [0,0,0]
+        self.horainicio = ""
+        self.horafin = ""
         self.idestudiantes = []
         self.fechaPresEstu = []
         self.puntajeEstu = []
@@ -24,7 +26,15 @@ class examen():
     def settitulo(self,nuevotitulo):
         'cambia titulo de examen con valor de nuevotitulo'
         self.titulo = nuevotitulo
-
+    
+    def sethoraini(self,nuevahoraini):
+        'cambia la hora de inicio con valor de nuevahoraini'
+        self.horainicio = nuevahoraini
+        
+    def sethorafin(self,nuevahorafin):
+        'cambia la hora de fin con valor de nuevahorafin'
+        self.horafin = nuevahorafin
+    
     def settipoExamen(self,tipoExamen):
         'cambia tipo de examen con valor de tipoExamen'
         self.tipoExamen = tipoExamen
