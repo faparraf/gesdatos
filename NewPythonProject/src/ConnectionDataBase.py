@@ -8,7 +8,7 @@ class Connection():
         print "Connnecting to database\n ->%s"% (conn_string)
         self.conn = psycopg2.connect(conn_string)
         self.querys = self.conn.cursor()
-        print "Connected!\n"
+        print "Connected !\n"
 
     def ExecuteQuery(self, queryString):
         self.querys.execute(queryString)
