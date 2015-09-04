@@ -165,13 +165,15 @@ class interfazpanelpaso():
                 if (pregunta.imagen!='...'):
                     insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","imagen","tema","id_pregunta")'
                     insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
-                    insertpregunta += "', pg_read_file('"+str(pregunta.imagen)+"')::bytea,"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                    insertpregunta += "',%s,"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                    print (insertpregunta)
+                    self.conexion.connection.InsertwithaImage(insertpregunta,str(pregunta.imagen))
                 else:
                     insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","tema","id_pregunta")'
                     insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
                     insertpregunta += "',"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
-                self.conexion.connection.ExecuteQueryWithoutreturn(insertpregunta)
-                print (insertpregunta)
+                    print (insertpregunta)
+                    self.conexion.connection.ExecuteQueryWithoutreturn(insertpregunta)
                 for respuesta in pregunta.respuestas:
                     idrespuesta = idrespuesta+1
                     insertrespuesta = 'INSERT INTO opcionpreg ("id_opc_pre","tipo_op","id_pregunta","desc_opcion","respuesta")'
