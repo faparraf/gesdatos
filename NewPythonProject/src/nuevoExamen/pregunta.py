@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding=utf-8
 import respuesta
+import time
  
 class pregunta():
     """ Una clase donde se amacenara la informacion de
@@ -8,7 +9,7 @@ class pregunta():
     def __init__(self):
         'constructor de la clase'
         self.Enunciado = ""
-        self.fechaCreacion = [0,0,0]
+        self.fechaCreacion = ""
         self.tema = ""
         self.idpregunta = 0
         self.puntaje = 0
@@ -27,6 +28,7 @@ class pregunta():
         self.tipoPregunta = Tipo
         #ingreso de variable
         self.imagen = Url
+        self.fechaCreacion = time.strftime("%Y-%m-%d")
 
     def registrarrespuesta(self,Opcion,Respuesta,TipoRespuesta):
         'registra respuesta como la opcion de la respuesta y el valor de la respuesta'

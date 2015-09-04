@@ -14,3 +14,8 @@ class Connection():
         self.querys.execute(queryString)
         return self.querys.fetchall()
     
+    def ExecuteQueryWithoutreturn(self, queryString):
+        self.querys.execute(queryString)
+        self.conn.commit()               
+            #print 'Error %s' % e
+    

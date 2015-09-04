@@ -149,10 +149,10 @@ class interfazpanelpaso():
             idexamen = (idexamen[0][0])+1
             insert = 'INSERT INTO examen ("id_exa","id_dcnte","titulo_exa","fecha","tipoexa","tiempo_exa_inicio","tiempo_exa_fin")VALUES ('
             insert +=str(idexamen)+","+self.nuevoexamen.docente+",'"+self.nuevoexamen.titulo
-            insert +="','"+self.nuevoexamen.fechaexamen+"',"+self.nuevoexamen.tipoExamen
+            insert +="',to_date('"+self.nuevoexamen.fechaexamen+"', 'YYYY-MM-DD'),"+self.nuevoexamen.tipoExamen
             insert +=",'"+str(self.nuevoexamen.horainicio)+"','"+str(self.nuevoexamen.horafin)+"');"
             print(insert)
-            self.conexion.connection.ExecuteQuery(insert)
+            self.conexion.connection.ExecuteQueryWithoutreturn(insert)
             #registro de preguntas y opciones de preguntas
             queryidpregunta = "select count(*) from pregunta;"
             idpregunta = self.conexion.connection.ExecuteQuery(queryidpregunta)
@@ -165,24 +165,24 @@ class interfazpanelpaso():
                 if (pregunta.imagen!='...'):
                     insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","imagen","tema","id_pregunta")'
                     insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
-                    insertpregunta += "',lo_import('"+str(pregunta.imagen)+"'),"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
+                    insertpregunta += "', pg_read_file('"+str(pregunta.imagen)+"')::bytea,"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
                 else:
                     insertpregunta = 'INSERT INTO pregunta ("tipopre","fecha_cre","enunciado","tema","id_pregunta")'
                     insertpregunta += "VALUES ("+str(pregunta.tipoPregunta)+",'"+str(pregunta.fechaCreacion)+"','"+str(pregunta.Enunciado)
                     insertpregunta += "',"+str(pregunta.tema)+",'"+str(idpregunta)+"');"
-                self.conexion.connection.ExecuteQuery(insertpregunta)
+                self.conexion.connection.ExecuteQueryWithoutreturn(insertpregunta)
                 print (insertpregunta)
                 for respuesta in pregunta.respuestas:
                     idrespuesta = idrespuesta+1
                     insertrespuesta = 'INSERT INTO opcionpreg ("id_opc_pre","tipo_op","id_pregunta","desc_opcion","respuesta")'
                     insertrespuesta += "VALUES ('"+str(idrespuesta)+"',"+str(respuesta.tipoOpcion)+","+str(idpregunta)+",'"+respuesta.opcionpregunta+"','"+respuesta.respuesta+"');"
                     print (insertrespuesta)
-                    self.conexion.connection.ExecuteQuery(insertrespuesta)
+                    self.conexion.connection.ExecuteQueryWithoutreturn(insertrespuesta)
                 #union entre el examen y las preguntas
                 insertexapreg = 'INSERT INTO examenpreg ("id_prgnta","puntaje_preg","id_examen")'
                 insertexapreg += "VALUES ("+str(idrespuesta)+","+str(pregunta.puntaje)+","+str(idexamen)+");"
                 print (insertexapreg)
-                self.conexion.connection.ExecuteQuery(insertexapreg)
+                self.conexion.connection.ExecuteQueryWithoutreturn(insertexapreg)
         
         def generarpanelespreguntas(self,opcionespreguntas,it):
             """ usado para cada una de las preguntas que el examen
@@ -305,7 +305,7 @@ topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)
 topPanel.SetBackgroundColour("white")
 sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-iddocente = "1"
+iddocente = "4"
 interfaz = interfazpanelpaso(frame,iddocente,topPanel,sizertopPanel)
 sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
 sizertopPanel.Add(Body(topPanel,interfaz,iddocente),0,wx.EXPAND|wx.ALL,border=10)

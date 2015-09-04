@@ -19,7 +19,7 @@ class dialogoregistroEstudiantes(wx.Panel):
         self.cantdad = cantidadpregutnas
         sizer = wx.BoxSizer(wx.VERTICAL)
         # Consulta de todos los estudiantes disponibles
-        query = "SELECT  estudiante.id_est, estudiante.fecha_reg, (persona.nom_pers || ' ' || persona.apellido_pers) AS nombrecompleto FROM estudiante, persona WHERE estudiante.id_persn = persona.id_persona;"
+        query = "SELECT  estudiante.id_persn, estudiante.fecha_reg, (persona.nom_pers || ' ' || persona.apellido_pers) AS nombrecompleto FROM estudiante, persona WHERE estudiante.id_persn = persona.id_persona;"
         sampleList = conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
         print(str(sampleList))
         #sampleList = [("123","10/10/2010","Rex Arias"),("124","10/10/2010","Alison C."),("125","10/10/2010","Dante T.")]
