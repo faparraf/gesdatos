@@ -20,6 +20,6 @@ class Connection():
             #print 'Error %s' % e
     def InsertwithaImage(self, queryString,file):
         mypic=open(file,'rb').read()
-        self.querys.execute(queryString,(psycopg2.Binary(mypic)))
+        self.querys.execute(queryString,(psycopg2.Binary(mypic),))
         self.conn.commit()               
             #print 'Error %s' % e

@@ -139,7 +139,7 @@ class dialogoregistrorespuestafalseoverdadero(wx.Panel):
         self.it = i
         self.lblOpcion = wx.StaticText(self, label="Opcion Respuesta:")
         self.editOpcion = []
-        self.editOpcion.append(wx.TextCtrl(self, value="Correcta"))
+        self.editOpcion.append(wx.TextCtrl(self, value="Correcto"))
         self.lblRespuesta = wx.StaticText(self, label="Respuesta:")
         self.sampleList = ['Falso', 'Verdadero']
         self.editRespuesta = []

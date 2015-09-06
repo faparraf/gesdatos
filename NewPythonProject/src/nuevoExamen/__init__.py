@@ -4,6 +4,7 @@ __author__ = "Daniel Romero, Jhoan Villa"
 __date__ = "$20-jul-2015 18:52:55$"
 import wx, os, examen, interfazregistrarpregunta, ConnSchema,ConnectionDataBase, dialogoregistroEstudiantes
 import wx
+import InterfazExamen.__init__
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
@@ -19,7 +20,7 @@ class Body(wx.Panel):
     def __init__(self, parent, manipulador, iddocente):
         'contructor requiere de parent como inrfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour("white")
+        self.SetBackgroundColour('3399FF')
         self.father = manipulador
         self.quote = wx.StaticText(self, label="Docente: "+iddocente, pos=(140, 10))
         self.aparte = wx.StaticText(self, label="", pos=(140, 10))
@@ -113,6 +114,9 @@ class interfazpanelpaso():
             self.nuevoexamen = examen.examen(str(iddocente))
             self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
+            queryidexamen = "select count(*) from examen;"
+            self.idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
+            self.idexamen = (self.idexamen[0][0])+1
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
         def registrarExamen(self,e,panel):
             """ Utilizado para extraer la información del panel de registro general
@@ -144,11 +148,8 @@ class interfazpanelpaso():
             """Parte final de registro de examen, subirlo a la base de datos una vez
             se hallan ingresado todos los datos"""
             #registro de generalidades del examen
-            queryidexamen = "select count(*) from examen;"
-            idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
-            idexamen = (idexamen[0][0])+1
             insert = 'INSERT INTO examen ("id_exa","id_dcnte","titulo_exa","fecha","tipoexa","tiempo_exa_inicio","tiempo_exa_fin")VALUES ('
-            insert +=str(idexamen)+","+self.nuevoexamen.docente+",'"+self.nuevoexamen.titulo
+            insert +=str(self.idexamen)+","+self.nuevoexamen.docente+",'"+self.nuevoexamen.titulo
             insert +="',to_date('"+self.nuevoexamen.fechaexamen+"', 'YYYY-MM-DD'),"+self.nuevoexamen.tipoExamen
             insert +=",'"+str(self.nuevoexamen.horainicio)+"','"+str(self.nuevoexamen.horafin)+"');"
             print(insert)
@@ -182,7 +183,7 @@ class interfazpanelpaso():
                     self.conexion.connection.ExecuteQueryWithoutreturn(insertrespuesta)
                 #union entre el examen y las preguntas
                 insertexapreg = 'INSERT INTO examenpreg ("id_prgnta","puntaje_preg","id_examen")'
-                insertexapreg += "VALUES ("+str(idrespuesta)+","+str(pregunta.puntaje)+","+str(idexamen)+");"
+                insertexapreg += "VALUES ("+str(idpregunta)+","+str(pregunta.puntaje)+","+str(self.idexamen)+");"
                 print (insertexapreg)
                 self.conexion.connection.ExecuteQueryWithoutreturn(insertexapreg)
         
@@ -198,10 +199,17 @@ class interfazpanelpaso():
                 self.registrarexamenbasedatos()
                 termino = wx.Panel(self.topanel)
                 sizer = wx.BoxSizer(wx.VERTICAL)
+                enviar = wx.Button(termino, wx.ID_OK,label="Ver Examen")
+                enviar.Bind(wx.EVT_BUTTON, self.verexamen,enviar)
                 sizer.Add(wx.StaticText(termino, label="Registro Termino Exitosamente"))
+                sizer.Add(enviar)
                 termino.SetSizer(sizer)
                 self.cambiarpanel(termino)
         
+        def verexamen(self,e):
+            verexamen = InterfazExamen.__init__.iniciarverexamen(self.idexamen)
+            #verexamen = InterfazExamen.__init__.DialogoExamen(self.father,1)
+            #res = verexamen.ShowModal()
         def registrarpreguntas(self,panel,e,i):
             """ Utilizado para extraer la información del panel de registro de preguntas
             para almacenarlos en la clase nuevoexamen requiere del panel donde se ingreso la informacion,
@@ -305,7 +313,7 @@ frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(display
 menubar = wx.MenuBar()
 topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)
-topPanel.SetBackgroundColour("white")
+topPanel.SetBackgroundColour('3399FF')
 sizertopPanel=wx.BoxSizer(wx.VERTICAL)
 iddocente = "4"
 interfaz = interfazpanelpaso(frame,iddocente,topPanel,sizertopPanel)
