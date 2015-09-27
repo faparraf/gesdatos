@@ -3,12 +3,14 @@
 import wx
 import wx.grid
 import pprint
-
+import wx.lib.intctrl
+import wx.lib.agw.hyperlink as hl
+import wx.lib.intctrl
 
 class Component(wx.Panel):
 	def __init__(self,parent):
 	        wx.Panel.__init__(self,parent)  
-#-----------------Creaci√≥n de Label------------
+#-----------------Creaci√≥n de Label------------ 
 	def CreateLabel(self,parent,fonsize,pos,label):  
 		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
 		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
@@ -19,6 +21,11 @@ class Component(wx.Panel):
 	def CreateComboBox(self,parent,pos,size,List):   
 		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
 		return self.cbx
+
+#-----------------CreaciÛn de CalendarCtrl------------      
+	def CreateCalendarCtrl(self,parent,pos,size):   
+                self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
+		return self.calc
     
 #-----------------Creaci√≥n de TextArea------------ 
 	def CreateTextArea(self,parent,pos,size):   
@@ -64,23 +71,19 @@ class Component(wx.Panel):
 					gridCheckBox.AddMany([(CheckBoxList[k], 0, wx.ALIGN_CENTER)])
 		return gridCheckBox
 
-	
+#-----------------ConfiguraciÛn del evento del ComboBox------------ 	
 	def EventComboBox(self, event):
 		print("Mi evento")
 	
-	
-            
-             
-
+#-----------------Configuracion del evento para ComboBox------------ 	
 	def EvtComboBox(self, event):
 		print('Evento de combo box: %s' % event.GetString())
 
+#-----------------Configuracion del evento para ComboBox2------------
 	def EvtComboBoxSchema(self, event):
 		print('Evento de combo box: %s' % event.GetString())
 
+#-----------------Configuracion del evento para ComboBox3------------
 	def EvtComboBoxTable(self, event):
 		print('Evento de combo box: %s' % event.GetString())
-
-   
-    
-        
+ 

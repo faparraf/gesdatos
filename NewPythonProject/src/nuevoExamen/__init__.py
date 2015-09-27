@@ -30,7 +30,7 @@ class Body(wx.Panel):
         self.lblname = wx.StaticText(self, label="Nombre Examen :", pos=(100,35))
         self.editname = wx.TextCtrl(self, value="", pos=(0, 35), size=(140,-1))
         self.lblfecha = wx.StaticText(self, label="Fecha Examen :", pos=(100,65))
-        self.editfecha = wx.TextCtrl(self, value="", pos=(0, 65), size=(140,-1))
+        self.editfecha = wx.DatePickerCtrl(self,pos=(0,65), size=(140,22), style=wx.DP_DROPDOWN)
         self.lblhoraini = wx.StaticText(self, label="Hora Inicio :", pos=(100,65))
         self.edithoraini = wx.TextCtrl(self, value="", pos=(0, 65), size=(140,-1))
         self.lblhorafin = wx.StaticText(self, label="Hora Fin :", pos=(100,65))
@@ -125,7 +125,7 @@ class interfazpanelpaso():
             # Creamos una ventana de diálogo con un botón de ok. wx.OK es una ID estàndard de wxWidgets.
             print ("registrando 1 paso")
             nombre = panel.editname.GetValue()
-            fecha = panel.editfecha.GetValue()
+            fecha = panel.editfecha.GetValue().FormatISODate()
             puntaje = panel.editpuntjae.GetValue()
             tipo = str(panel.temaescogido)
             horaini = panel.edithoraini.GetValue()

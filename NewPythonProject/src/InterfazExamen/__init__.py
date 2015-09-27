@@ -84,3 +84,5 @@ class InterfazExamen(wx.Panel):
         return self.cantimgtemp
     def setcantimgtemp(self,nuevacant):
         self.cantimgtemp = nuevacant
+        
+#iniciarverexamen("4")

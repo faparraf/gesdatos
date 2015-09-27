@@ -3,6 +3,9 @@
 import wx
 import wx.grid
 import pprint
+import wx.lib.intctrl
+import wx.lib.agw.hyperlink as hl
+import wx.lib.intctrl
 
 
 class Component(wx.Panel):
@@ -19,7 +22,12 @@ class Component(wx.Panel):
 	def CreateComboBox(self,parent,pos,size,List):   
 		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
 		return self.cbx
-    
+            
+#-----------------Creación de CalendarCtrl------------      
+	def CreateCalendarCtrl(self,parent,pos,size):   
+                self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
+		return self.calc
+        
 #-----------------CreaciÃ³n de TextArea------------ 
 	def CreateTextArea(self,parent,pos,size):   
 		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
