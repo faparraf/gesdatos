@@ -1,5 +1,7 @@
-#!#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import ConnectionDataBase
@@ -8,9 +10,9 @@ import pprint
 import pruebashell
 
 
-
 class Panel4(wx.Panel,):
     def __init__(self, parent,connection,*args, **kwds):
+        'Constructor para crear un panel que recibe como parámetro su contenedor y la conexión'
         self.conn = connection
         self.connSchema = ConnSchema.ConnSchema(self.conn)
         #Interfaz
@@ -18,15 +20,12 @@ class Panel4(wx.Panel,):
         self.fila = 0
         wx.Panel.__init__(self, parent)
 
-                
         self.button = wx.Button(self, label="Agregar", pos=(25, 110), size=(80,50))
         self.Bind(wx.EVT_BUTTON, self.Agregar,self.button)
 
         self.button_2 = wx.Button(self, label="Eliminar", pos=(25, 170),size=(80,50))
         self.Bind(wx.EVT_BUTTON, self.Eliminar,self.button_2)
         
-        
-
         self.grid_panel = wx.Panel(self,pos=(200,20),size=(620,300))
         self.grid = wx.grid.Grid(self.grid_panel,pos=(5,5))
         self.grid.CreateGrid(0, 5)
@@ -47,37 +46,33 @@ class Panel4(wx.Panel,):
         pp = pprint.PrettyPrinter(indent=4)
         
         #DataBase
-        
-        
         #pp.pprint(self.connCategoria.GetCategorias())
       
-        
-
     def on_edit_cell(self, event):
-        
+        'Envia un mensaje inidcando la modificación de las celdas'
         print "CELL EDITING", event.GetString()
 
     def EvtComboBoxTbOrigen(self, event):
+        'Maneja el evento del ComboBox'
         sampleList3 = self.connSchema.GetPrimaryKeys("DBPrueba",event.GetString())
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(sampleList3)
         self.cbxClOrigen.SetItems(sampleList3)
 
     def EvtComboBoxClOrigen(self, event):
+        'Maneja el evento del ComboBox'
         print('Evento de combo box: %s' % event.GetString())
 
     def EvtComboBoxTbDestino(self, event):
+        'Maneja el evento del ComboBox'
         print('Evento de combo box: %s' % event.GetString())
              
-
     def EvtComboBoxClDestino(self, event):
+        'Maneja el evento del ComboBox'
         print('Evento de combo box: %s' % event.GetString())
 
-        
-   
-
     def Agregar(self,event):
-
+        'Agrega nuevos campos a las tablas'
         self.grid.AppendRows()
         self.tChoiceEditor1 = wx.grid.GridCellChoiceEditor(["And","OR"], allowOthers=True)
         self.grid.SetCellEditor(self.fila, 0, self.tChoiceEditor1)
@@ -96,15 +91,12 @@ class Panel4(wx.Panel,):
         
         self.grid.MakeCellVisible(self.rows, 0)
         self.grid.ForceRefresh()
-        
 
     def Eliminar(self,event):
-        
+        'Elimina campos de las tablas'
         if self.rows > 0: 
             self.grid.DeleteRows(self.rows-1)
             self.rows -= 1
             self.fila -= 1
             self.grid.ForceRefresh()
             
-    
-

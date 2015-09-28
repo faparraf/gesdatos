@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import re
 import wx
 import wx.lib.scrolledpanel as scrolled
@@ -10,6 +11,7 @@ from RegistroUsuarios.Requests import Request
 class VentanaRegistroUsuarios(wx.Panel):   
     
 	def __init__(self,parent):
+                'contructor requiere de parent como interfaz contenedor'
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
@@ -17,8 +19,7 @@ class VentanaRegistroUsuarios(wx.Panel):
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
-		self.labelTitulo = Component.CreateLabel(PanelComponentsTitulo,25,pos=(0,0),label="Registro de usuarios\n")
-                
+		self.labelTitulo = Component.CreateLabel(PanelComponentsTitulo,25,pos=(0,0),label="Registro de usuarios\n") 
 		                
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsNombre = wx.Panel(self) #Creacion padre hijo
@@ -60,7 +61,6 @@ class VentanaRegistroUsuarios(wx.Panel):
 		sizerPanelFechaNac.Add(self.ClcFechaNac , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		PanelComponentsFechaNac.SetSizer(sizerPanelFechaNac)
 		PanelComponentsFechaNac.SetBackgroundColour("white") #Asignación de Color de Fondo 
-                
                
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsCorreo = wx.Panel(self) #Creacion padre hijo
@@ -125,7 +125,6 @@ class VentanaRegistroUsuarios(wx.Panel):
 		PanelComponentsRCategoria.SetSizer(sizerPanelRadioBox)
 		PanelComponentsRCategoria.SetBackgroundColour("white")
                 
-                
 #----Creación de un panel de Buttons, e inclusión  del objeto Buttons y su Label
 		PanelComponentsBConfirmar = wx.Panel(self) #Creacion padre hijo		
 		self.BConfirmar = Component.CreateButton(PanelComponentsBConfirmar,"Confirmar")
@@ -134,7 +133,6 @@ class VentanaRegistroUsuarios(wx.Panel):
 		sizerPanelButton.Add(self.BConfirmar , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		PanelComponentsBConfirmar.SetSizer(sizerPanelButton) 
 		PanelComponentsBConfirmar.SetBackgroundColour("white") #Asignación de Color de Fondo 
-                
                 
                 gs = wx.BoxSizer(wx.VERTICAL) #Creacion grilla de tamaño
                 gs1 = wx.BoxSizer(wx.VERTICAL) #Creacion grilla de tamaño
@@ -149,8 +147,7 @@ class VentanaRegistroUsuarios(wx.Panel):
                 gs3.AddMany([gs1,gs2])
                 gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER),(gs3,0,wx.ALIGN_CENTER),
                             (PanelComponentsRCategoria,0,wx.ALIGN_CENTER),(PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
-                            
-                                           
+                                
                 #gs2 = wx.GridSizer(3, 1, 7, 7)
                 #gs2.AddMany([(PanelComponentsTitulo,0,wx.ALIGN_CENTER,0,0),(gs)])
                 #
@@ -160,30 +157,32 @@ class VentanaRegistroUsuarios(wx.Panel):
                 sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
 		sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(sizer)
-               
                 
         def EvtComboBox(self, event):
+            'Maneja el evento que realiza el ComboBox'
             self.CbUniversidad.Clear()
             self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
             self.CbUniversidad.Append("Otra...")
                 #print cate	
                         
         def EvtCbUniversidad(self, event):
+            'Maneja el evento que realiza el ComboBox con las universidades'
             if self.CbUniversidad.GetValue() == "Otra...":               
                 print "ad"
             
         def EvtRadioBox(self, event):
+            'Maneja el evento que realiza el RadioBox'
             print self.ClcFechaNac.GetValue().FormatISODate()
                            
-        def EvtPanelDocumento(self, event):             
+        def EvtPanelDocumento(self, event):
+                'Maneja el evento que realiza el panel'
                 print "pot"   
                     
-                
-        def OnClick(self,event):            
+        def OnClick(self,event):
+            'Maneja el evento que realiza el Botón'
             #
             if self.TxtAreaNombre.GetValue() == "": 
                 wx.MessageBox("El area de Nombre esta vacia ","Gesdatos")#,wx.OK|wx.CANCEL)
-            
             elif self.TxtAreaApellido.GetValue()=="":
                  wx.MessageBox("El area de Apellido esta vacia ","Gesdatos")
             elif self.TxtAreaDocumento.GetValue()==None:
@@ -198,8 +197,6 @@ class VentanaRegistroUsuarios(wx.Panel):
                 wx.MessageBox("El area de Universidad esta sin seleccionar ","Gesdatos")
             elif self.TxtAreaUsuario.GetValue()=="":
                 wx.MessageBox("El area de Usuario esta vacia ","Gesdatos")
-                      
-                        
             else:
                 if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',self.TxtAreaCorreo.GetValue().lower()):
                 

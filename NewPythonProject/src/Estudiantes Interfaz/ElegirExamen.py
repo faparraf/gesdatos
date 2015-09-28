@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import Componentes
 
 class ElegirExamen(wx.Panel):
 	def __init__(self,parent):
+                'Constructor de la interfaz que recibe su contenedor'
  #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent)
 		self.SetBackgroundColour("3399FF")
 #--------------Instancia Clase Componente--------------
 		Component = Componentes.Component(self) 
-		self.parent=parent
+        	self.parent=parent
 #--------------Instancia Clase ComponenteTitulo--------------
 
 #--------------Creacion padre hijo--------------
@@ -63,6 +66,7 @@ class ElegirExamen(wx.Panel):
 		self.SetSizer(sizer)
 
 	def OnClick(self,event):
+                'Permite establecer el evento del Botón'
 		#from ElegirExamen import elegirExamen 
 		#ElegirExamen = elegirExamen()
 		#ElegirExamen.Show()

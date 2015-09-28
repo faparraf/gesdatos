@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.lib.scrolledpanel as scrolled
 import Componentes
@@ -7,6 +9,7 @@ import IniciarSesion
 
 class IngresarComo(wx.Panel):
 	def __init__(self,parent):
+                'Inicio la interfaz, que recibe a parent como contenedor'
 #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent) 
 		self.SetBackgroundColour("3399FF")
@@ -101,19 +104,18 @@ class IngresarComo(wx.Panel):
 			
 ##------------------------------Funciones de evento-----------------------------
 	def OnClickE(self,event):
+                'Permite el manejo del evento del Botón'
 		self.parent.setpanel(IniciarSesion.IniciarSesionEstudiante(self.parent))
 		
 	def OnClickI(self,event):
-
+                'Permite el manejo del evento del Botón'
 		self.parent.setpanel(IniciarSesion.IniciarSesionEstudiante(self.parent))
+                
 	def OnClickP(self,event):
-
+                'Permite el manejo del evento del Botón'
 		self.parent.setpanel(IniciarSesion.IniciarSesionEstudiante(self.parent))
+                
 	def OnClickR(self,event):
-
+                'Permite el manejo del evento del Botón'
 		self.parent.setpanel(IniciarSesion.IniciarSesionEstudiante(self.parent))
 		
-
-		
-
-

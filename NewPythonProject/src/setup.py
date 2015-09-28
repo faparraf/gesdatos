@@ -1,4 +1,4 @@
-__author__ = "user"
+__author__ = "Gesdatos"
 __date__ = "$05-sep-2015 19:07:57$"
 
 from setuptools import setup, find_packages
@@ -23,5 +23,4 @@ setup (
 
        # could also include long_description, download_url, classifiers, etc.
 
-  
        )

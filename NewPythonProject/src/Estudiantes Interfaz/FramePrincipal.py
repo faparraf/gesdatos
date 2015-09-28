@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
@@ -11,6 +13,7 @@ import IniciarSesion
 ##-----------------------------------------------------------
 class Head(wx.Panel):
 	def __init__(self,parent):
+                'Inicio del encabezado de la interfaz'
 		wx.Panel.__init__(self, parent)
 		self.SetBackgroundColour("3399FF")
 		head = HeadLow.Head(self)
@@ -23,6 +26,7 @@ class Head(wx.Panel):
 ##-----------------------------------------------------------
 class Body(wx.Panel):
 	def __init__(self,parent):
+                'Inicio del cuerpo de la interfaz'
 		self.parent=parent
 		wx.Panel.__init__(self,parent) # InicializaciÃ³n Panel Padre
 		self.panel=IngresarComo.IngresarComo(self) ## En esta linea se Agrega el Panel de inicio
@@ -33,6 +37,7 @@ class Body(wx.Panel):
 		
 	#metodo setpanel, se encarga de reemplazar el panel actual por otro
 	def setpanel(self,paneltemp):
+                'Permite la visualización del panel'
 		self.panel.Hide()
 		self.panel=paneltemp
 		self.sizerbody.Add(self.panel,0,wx.EXPAND|wx.ALL,border=0)
@@ -47,6 +52,7 @@ class Body(wx.Panel):
 ##-----------------------------------------------------------
 class Low(wx.Panel):
 	def __init__(self,parent):
+                'Inicio del pie de página de la interfaz'
 		wx.Panel.__init__(self,parent)
 		self.SetBackgroundColour("#696969")
 		sizerlow = wx.BoxSizer(wx.VERTICAL)
@@ -54,9 +60,7 @@ class Low(wx.Panel):
 		sizerlow.Add(low,0,wx.EXPAND|wx.ALL,border=0)
 		self.SetSizer(sizerlow)
 
-
 ##-----------------------------------------------------------
-
 
 app=wx.App(False)
 frame = wx.Frame(None, wx.ID_ANY, 'ZUHÃ‰ - UD', pos=(0, 0), size=(900,500))
@@ -74,7 +78,3 @@ frame.Show()
 frame.Update()
 frame.Layout()
 app.MainLoop()
-
-
-
-

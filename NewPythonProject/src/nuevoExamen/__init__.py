@@ -10,7 +10,6 @@ import HeadLow
 import Componentes
 
 
-
 ## Body
 ##-----------------------------------------------------------el):
 class Body(wx.Panel):
@@ -18,7 +17,7 @@ class Body(wx.Panel):
         podra ingresar datos como el nombre del examen, la fecha del examen,
         el puntaje extra del examen, el tipo del examen y la cantidad de preguntas que este tendra."""
     def __init__(self, parent, manipulador, iddocente):
-        'contructor requiere de parent como inrfaz contenedor y manipulador como clase que accedera a la informacion'
+        'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
         self.SetBackgroundColour('3399FF')
         self.father = manipulador
@@ -86,7 +85,6 @@ class Body(wx.Panel):
 
 ##-----------------------------------------------------------
 
-
 class interfazpanelpaso():
         """ Interfaz general utilizado para llamar a los paneles
         con el fin de que con cada panel el usuario pueda
@@ -99,6 +97,7 @@ class interfazpanelpaso():
         examen a registrar las preguntas que conformaran el mismo es necesario
         cambiar el panel del interfaz para mantenerse en la estructura Body
         ubicado entre Head y Low."""
+        
         def __init__(self, parent,iddocente,topPanel,sizertopPanel):
             """ Metodo usado para iniciar el registro de un nuevo examen
             en sus parametros generales se encuentra el interfaz parent causante
@@ -118,6 +117,7 @@ class interfazpanelpaso():
             self.idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
             self.idexamen = (self.idexamen[0][0])+1
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
+            
         def registrarExamen(self,e,panel):
             """ Utilizado para extraer la información del panel de registro general
             de datos generales de un nuevo examen para almacenarlos en la clase nuevoexamen
@@ -210,6 +210,7 @@ class interfazpanelpaso():
             verexamen = InterfazExamen.__init__.iniciarverexamen(self.idexamen)
             #verexamen = InterfazExamen.__init__.DialogoExamen(self.father,1)
             #res = verexamen.ShowModal()
+            
         def registrarpreguntas(self,panel,e,i):
             """ Utilizado para extraer la información del panel de registro de preguntas
             para almacenarlos en la clase nuevoexamen requiere del panel donde se ingreso la informacion,
@@ -305,8 +306,6 @@ class interfazpanelpaso():
             self.father.GetSizer().Layout()
             self.father.Fit()
             
-
-
 app=wx.App(False)
 displaySize= wx.DisplaySize()
 frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
@@ -323,4 +322,3 @@ sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
 topPanel.SetSizer(sizertopPanel)
 frame.Show()
 app.MainLoop()
-

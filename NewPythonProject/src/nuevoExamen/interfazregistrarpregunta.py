@@ -1,9 +1,13 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = "Daniel Romero"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 
 ########################################################################
 class dialogoregistropregunta(wx.Panel):
     """panel de registro de pregunta donde se solicitar informacion por cada
-pregunta como el enuniado, el tema y el tipo de pregunta que es"""
+    pregunta como el enuniado, el tema y el tipo de pregunta que es"""
 
     #----------------------------------------------------------------------
     def __init__(self,parent,manipulador,i,opcionespreguntas):
@@ -84,7 +88,8 @@ pregunta como el enuniado, el tema y el tipo de pregunta que es"""
         openFileDialog.ShowModal()
         print(str(openFileDialog.GetPath()))
         self.lblImagenRu.SetLabel(str(openFileDialog.GetPath()))
-        
+
+##-----------------------------------------------------------        
         
 class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
     """panel de registro de respuesta de tipo opcion multiple con multiple
@@ -121,10 +126,13 @@ class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
             sizer.Add(sizerit, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
+        
     def registro(self, e):
         'oyente del boton para registrar las repsuestas'
         # Definimos los metodos de los eventos
         self.father.registrarrespuesta(e,self,self.it)
+
+##-----------------------------------------------------------
 
 class dialogoregistrorespuestafalseoverdadero(wx.Panel):
     """panel de registro de respuesta de tipo falso verdadero"""
@@ -158,10 +166,13 @@ class dialogoregistrorespuestafalseoverdadero(wx.Panel):
             sizer.Add(it, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
+        
     def registro(self, e):
         'oyente del boton para registrar las repsuestas'
         # Definimos los metodos de los eventos
         self.father.registrarrespuesta(e,self,self.it)
+
+##-----------------------------------------------------------
 
 class dialogoregistrorespuestaopcionmultipleunico(wx.Panel):
     """panel de registro de respuesta de tipo opcion multiple con unica
@@ -199,6 +210,7 @@ class dialogoregistrorespuestaopcionmultipleunico(wx.Panel):
             sizer.Add(sizerit, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
+        
     def EvtComboBox(self, event):
         if (event.GetString()=='Correcto'):
             opcion = 'Incorrecto'
@@ -207,6 +219,7 @@ class dialogoregistrorespuestaopcionmultipleunico(wx.Panel):
         for it in range(self.cantidadropciones):
             if (self.editOpcion[it].GetValue()!=event.GetString()):
                 self.editOpcion[it].SetValue(opcion)
+                
     def registro(self, e):
         'oyente del boton para registrar las repsuestas'
         # Definimos los metodos de los eventos

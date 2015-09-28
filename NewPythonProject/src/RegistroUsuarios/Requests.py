@@ -5,10 +5,12 @@ from Conexion import Conexion
 
 class Request():    
     #conn= Conexion()
-    def __init__(self):  
+    def __init__(self): 
+        'Inicia la ejecución de la clase'
         self.conn= Conexion()
            
     def registrarPersona (self,nombre,apellido,documento,fechaNac,correo,correoUni,universidad,usuario,categoria):
+        'Registra las personas en la base de datos'         
         personaid= int("%s" %(self.conn.selectQuery("select count(*) from persona")[0]))+1
         universidadid=int("%s" %(self.conn.selectQuery("select id_uni from universidad where nom_uni ='"+universidad+"'")[0]))
         datos=(personaid,nombre,apellido,documento,fechaNac,correo,correoUni,universidadid,usuario)        
@@ -31,6 +33,7 @@ class Request():
        # print "'%s', '%s', %s, %s, '%s', %s, %s, %s, %s, %s" %datos
         
     def verUniversidad(self,pais):
+        'Consulta el listado de universidades' 
         #pais="colombia"
         idpais="%s" %(self.conn.selectQuery("select id_pais from pais where nom_pais ='"+pais+"'"))[0]        
         lista= self.conn.selectQuery("select id_uni,nom_uni from universidad where id_paisuni ="+idpais)
@@ -41,6 +44,7 @@ class Request():
         #return idpais
     
     def verPais(self):
+        'Consulta el listado de paises'
         listap= self.conn.selectQuery("select id_pais,nom_pais from pais")
         pais=[]
         for row in listap:

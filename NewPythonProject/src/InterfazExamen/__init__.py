@@ -2,19 +2,21 @@
 # -*- coding: utf-8 -*-
 __author__ = "Daniel Romero"
 __date__ = "$04-sep-2015 21:39:54$"
-
 import ConnSchema,ConnectionDataBase,wx, panelPregunta
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 
 def iniciarverexamen(idexamen):
+    'Permite ver el examen creado'
     app=wx.App(False)
     displaySize= wx.DisplaySize()
     frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
     DialogoExamen(frame,idexamen)
     frame.Show()
     app.MainLoop()
+
+#----------------------------------------------------------------------------
 
 class DialogoExamen(wx.Dialog):
     #----------------------------------------------------------------------
@@ -56,7 +58,7 @@ class DialogoExamen(wx.Dialog):
 
 class InterfazExamen(wx.Panel):
     def __init__(self,parent,idexamen,conectordatabase,conexion):
-        # Creamos el bloc de notas o menu de pestañas
+        'Se crea el menu de pestañas'
         wx.Panel.__init__(self, parent=parent)
         self.cantimgtemp =0
         nb = wx.Notebook(self)
@@ -81,8 +83,10 @@ class InterfazExamen(wx.Panel):
         """consutlor que retorna la clase administradora de la base de datos"""
         return self.conexion.connection
     def getcantimgtemp(self):
+        'Obtiene la imagen'
         return self.cantimgtemp
     def setcantimgtemp(self,nuevacant):
+        'Se asigna la imagen'
         self.cantimgtemp = nuevacant
         
 #iniciarverexamen("4")

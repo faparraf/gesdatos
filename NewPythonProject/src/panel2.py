@@ -1,5 +1,7 @@
-#!/usr/bin/python
-#-*- coding: latin-1 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import ConnectionDataBase
@@ -9,6 +11,7 @@ import pprint
 
 class Panel2(wx.Panel,):
     def __init__(self, parent,connection,*args, **kwds):
+        'Constructor para crear un panel que recibe como parámetro su contenedor y la conexión'
         self.conn = connection
         self.connSchema = ConnSchema.ConnSchema(self.conn)
         #Interfaz
@@ -36,7 +39,6 @@ class Panel2(wx.Panel,):
         self.lblClDestino = wx.StaticText(self, label="Clave Destino:", pos=(20, 230))
         self.cbxClDestino = wx.ComboBox(self, pos=(20, 250), size=(100, -1), choices=self.sampleList4, style=wx.CB_DROPDOWN)
         self.Bind(wx.EVT_COMBOBOX, self.EvtComboBoxClDestino, self.cbxClDestino)
-        
 
         self.button = wx.Button(self, label="Agregar", pos=(25, 300), size=(70,30))
         self.Bind(wx.EVT_BUTTON, self.Agregar,self.button)
@@ -44,8 +46,6 @@ class Panel2(wx.Panel,):
         self.button_2 = wx.Button(self, label="Eliminar", pos=(100, 300),size=(70,30))
         self.Bind(wx.EVT_BUTTON, self.Eliminar,self.button_2)
         
-        
-
         self.grid_panel = wx.Panel(self,pos=(200,20),size=(620,300))
         self.grid = wx.grid.Grid(self.grid_panel,pos=(5,5))
         self.grid.CreateGrid(0, 5)
@@ -67,29 +67,28 @@ class Panel2(wx.Panel,):
         pp = pprint.PrettyPrinter(indent=4)
         
         #DataBase
-        
-        
         #pp.pprint(self.connCategoria.GetCategorias())
-      
-        
 
     def on_edit_cell(self, event):
-        
+        'Envia un mensaje inidcando la modificación de las celdas'
         print "CELL EDITING", event.GetString()
 
     def EvtComboBoxTbOrigen(self, event):
+        'Maneja el evento del ComboBox'
         sampleList3 = self.connSchema.GetPrimaryKeys("DBPrueba",event.GetString())
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(sampleList3)
         self.cbxClOrigen.SetItems(sampleList3)
 
     def EvtComboBoxClOrigen(self, event):
+        'Maneja el evento del ComboBox'
         sampleList4 = self.connSchema.GetForeignTables("DBPrueba",self.cbxTbOrigen.GetValue(),event.GetString())
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(sampleList4)
         self.cbxTbDestino.SetItems(sampleList4)
 
     def EvtComboBoxTbDestino(self, event):
+        'Maneja el evento del ComboBox'
         sampleList5 = self.connSchema.GetForeignKeys("DBPrueba",self.cbxTbOrigen.GetValue(),self.cbxClOrigen.GetValue(),event.GetString())
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(sampleList5)
@@ -97,12 +96,11 @@ class Panel2(wx.Panel,):
              
 
     def EvtComboBoxClDestino(self, event):
+        'Maneja el evento del ComboBox'
         print('Evento de combo box: %s' % event.GetString())
 
-
     def OnClick(self,event):
-
-        
+        'Maneja el evento del Botón'        
         self.grid.GetTable().AddRow([''] * self.grid.GetTable().GetNumberCols())
         try:
             print "Valor de 1,1"+str(self.grid.GetTable().GetValue(1,1))
@@ -110,29 +108,25 @@ class Panel2(wx.Panel,):
             print("no hay valor")
 
     def Agregar(self,event):
-
+        'Agrega nuevos campos a las tablas'
         if self.cbxTbOrigen.GetValue() != "":
             self.grid.AppendRows()
             self.tChoiceEditor = wx.grid.GridCellChoiceEditor(["INNER JOIN","LEFT JOIN","RIGHT JOIN"], allowOthers=True)
             self.grid.SetCellEditor(self.fila, 4, self.tChoiceEditor)
-            
             #self.grid.SetCellValue(self.rows-1, 0,self.cbxTbOrigen.GetValue())
             #self.grid.SetCellValue(self.rows-1, 1,self.cbxClOrigen.GetValue())
             #self.grid.SetCellValue(self.rows-1, 2,self.cbxTbDestino.GetValue())
             #self.grid.SetCellValue(self.rows-1, 3,self.cbxClDestino.GetValue())
-
             self.fila += 1
             self.rows += 1
             self.grid.MakeCellVisible(self.rows, 0)
             self.grid.ForceRefresh()
-        
 
     def Eliminar(self,event):
-        
+        'Elimina campos de las tablas'
         if self.rows > 0: 
             self.grid.DeleteRows(self.rows-1)
             self.rows -= 1
             self.fila -= 1
             self.grid.ForceRefresh()
             
-    

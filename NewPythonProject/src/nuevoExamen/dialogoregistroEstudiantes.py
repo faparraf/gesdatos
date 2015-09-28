@@ -1,4 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = "Daniel Romero"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx, ConnSchema
+
 
 ########################################################################
 class dialogoregistroEstudiantes(wx.Panel):
@@ -40,6 +45,7 @@ class dialogoregistroEstudiantes(wx.Panel):
         sizer.Add(self.listBox1, 0, wx.ALL|wx.CENTER, 5)
         sizer.Add(okBtn, 0, wx.ALL|wx.CENTER, 5)
         self.SetSizer(sizer)
+        
     def OnListBox1Listbox(self,e):
         'oyente de la lista de estudiantes para saber cuantos estan escogidos'
         estudiante = e.GetString()
@@ -50,6 +56,7 @@ class dialogoregistroEstudiantes(wx.Panel):
         else:
             self.estudiantesescogidos.append(str(caracestudiantes[0]))
         #print(e.GetString())
+        
     def registro(self, e):
         'oyente del boton aceptar para gestionar la informacion escogida'
         # Definimos los metodos de los eventos

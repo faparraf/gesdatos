@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# To change this license header, choose License Headers in Project Properties.
-# To change this template file, choose Tools | Templates
-# and open the template in the editor.
-
-__author__ = "user"
+__author__ = "Gesdatos"
 __date__ = "$04-sep-2015 21:40:31$"
-
 import wx,sys,os
 import Componentes
 
 class panelpregunta(wx.Panel):
     def __init__(self,parent,manipulador,idpregunta):
+        'Inicia la interfaz'
         self.padre = parent
         wx.Panel.__init__(self, parent=parent)
         self.manipulador = manipulador
@@ -62,9 +58,12 @@ class panelpregunta(wx.Panel):
     def getconexion(self):
         """consutlor que retorna la clase administradora de la base de datos"""
         return self.manipulador.getconexion()
+
+#-----------------------------------------------------------------------------------------
+
 class PanelAbierto(wx.Panel):
     def __init__(self,parent):
-        # Creamos el bloc de notas o menu de pestañas
+        'Se crea el bloc de notas o menu de pestañas'
         wx.Panel.__init__(self, parent=parent)
         componentes = Componentes.Component(self)
         self.textarea = componentes.CreateTextArea(self,[0, 35],[100,100])
@@ -72,9 +71,11 @@ class PanelAbierto(wx.Panel):
         sizer.Add(self.textarea, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
 
+#---------------------------------------------------------------------------------------
+
 class panelFalsoVerdadero(wx.Panel):
     def __init__(self,parent):
-        # Creamos el bloc de notas o menu de pestañas
+        'Se crea el bloc de notas o menu de pestañas'
         wx.Panel.__init__(self, parent=parent)
         componentes = Componentes.Component(self)
         self.opciones = ["Falso","Verdadero"]
@@ -86,9 +87,11 @@ class panelFalsoVerdadero(wx.Panel):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
 
+#---------------------------------------------------------------------------------------
+
 class PanelOpcionMultiple(wx.Panel):
     def __init__(self,parent,idpregunta):
-        # Creamos el bloc de notas o menu de pestañas
+        'Se crea el bloc de notas o menu de pestañas'
         wx.Panel.__init__(self, parent=parent)
         componentes = Componentes.Component(self)
         gs = wx.GridSizer(4, 2, 1, 1) #Creacion grilla de tamaÃ±o

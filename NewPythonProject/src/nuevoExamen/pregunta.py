@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-#coding=utf-8
+# -*- coding: utf-8 -*-
+__author__ = "Daniel Romero"
+__date__ = "$20-jul-2015 18:52:55$"
 import respuesta
 import time
  

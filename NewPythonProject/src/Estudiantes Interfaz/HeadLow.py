@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import wx.animate
 
-
-
 class Head(wx.Panel,):
     def __init__(self,parent):
+        'Inicia la parte del encabezado.'
         #Encabezado
        	wx.Panel.__init__(self, parent)
 	self.SetBackgroundColour('3399FF')
@@ -51,9 +52,11 @@ class Head(wx.Panel,):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 	self.SetSizer(sizer)
 
+#---------------------------------------------------------------------------------
 
 class Low(wx.Panel,):
     def __init__(self,parent):
+        'Inicia la parte del pie de página.'
         #Pie de Pagina
       	wx.Panel.__init__(self, parent)
 	self.SetBackgroundColour("3399FF")
@@ -84,7 +87,6 @@ class Low(wx.Panel,):
 	self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
 	PanelImage1.SetBackgroundColour('3399FF')
 	
-	
 	gs = wx.GridSizer(2, 1, 5, 5)
 
         gs.AddMany([(Paneltext, 0, wx.ALIGN_CENTER),(PanelImage1, 0, wx.ALIGN_CENTER)])
@@ -92,10 +94,3 @@ class Low(wx.Panel,):
 	sizerPanel = wx.BoxSizer(wx.VERTICAL)
 	sizerPanel.Add(gs, 0, wx.ALIGN_CENTER)
 	self.SetSizer(sizerPanel)
-
-
-
-
-
-
-

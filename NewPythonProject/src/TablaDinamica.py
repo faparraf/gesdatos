@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 from wx import Frame, Panel, BoxSizer, VERTICAL, GROW, ALL, PySimpleApp 
 from wx.grid import PyGridTableBase, GridTableMessage, GRIDTABLE_NOTIFY_ROWS_APPENDED, Grid 
@@ -10,8 +14,7 @@ import os, shelve
 class DynamicTable(PyGridTableBase): 
     """ 
        DynamicTable: A table with dynamic column names, types and data. 
-       Data is retrieved from a shelved file, specified in the 
-constructor. 
+       Data is retrieved from a shelved file, specified in the constructor. 
        The table can be configured using: 
            AddColumn 
            DeleteColumn 
@@ -19,7 +22,8 @@ constructor.
            SaveDataToFile 
     """ 
 
-    def __init__(self,parent_grid, file_name): 
+    def __init__(self,parent_grid, file_name):
+        'Inicia las carateristicas de las tablas dinámicas'
         PyGridTableBase.__init__(self) 
         self.file_name = file_name 
         self.parent_grid = parent_grid 
@@ -27,16 +31,15 @@ constructor.
         self.column_names, self.column_types, self.column_configs, self.grid_data = self.GetDataFromFile(file_name) 
         #print "Filas: "+str(self.GetNumberRows())
     def __del__(self): 
+        'Permite conservar los datos dentro de las tablas'
         self.SaveDataToFile(self.file_name) 
 
     def GetDataFromFile(self, file_name): 
         """ 
-        GetDataFromFile(self, file_name) returns a tuple of data from the 
-file 
+        GetDataFromFile(self, file_name) returns a tuple of data from the file 
         in the following format: 
         (list of column names, list of column types, list of column config 
-data, list of data) 
-        """  
+        data, list of data)  """  
         if not False: #os.path.exists(file_name): 
             return [],[],[], [] 
 
@@ -50,8 +53,7 @@ data, list of data)
 
     def SaveDataToFile(self, file_name): 
         """ 
-        SaveDataToFile(self, file_name) saves the column name list, column 
-type list, 
+        SaveDataToFile(self, file_name) saves the column name list, column type list, 
         column config data and data list to the file specified. 
         """ """ 
         if file_name == '': 
@@ -63,6 +65,7 @@ type list,
         shelf['grid_data'] = self.grid_data 
         shelf.close() 
         """ 
+        
     def GetNumberRows(self): 
         "GetNumberRows is required by the PyGridTableBase interface." 
         return len(self.grid_data) + 1 
@@ -93,8 +96,6 @@ type list,
             self.grid_data[row][col] = value
             
             print str(row)+"---- "+str(col)+" "+str(value)
-         
-
     
         #except IndexError:
             print str(row)+"+++++ "+str(col)+" "+str(value)
@@ -161,6 +162,7 @@ type list,
                 
 
     def DeleteRow(self, row_number): 
+        'Borra las filas que se desean descartar de la interfaz'
         assert row_number < self.GetNumberRows(), "Cannot delete a non-existant row." 
         self.grid_data.pop(row_number) 
         tbl_msg = GridTableMessage(self, GRIDTABLE_NOTIFY_ROWS_DELETED, 1) 
@@ -175,6 +177,7 @@ type list,
 
 class DynamicGrid(Grid): 
     def __init__(self, parent, file_name): 
+        'Inicia las tablas dinámicas'
         Grid.__init__(self, parent, -1) 
 
         table = DynamicTable(self,file_name) 

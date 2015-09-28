@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import Componentes
 import Curso 
@@ -7,6 +9,7 @@ import Curso
 
 class IniciarSesionEstudiante(wx.Panel):
 	def __init__(self,parent):
+                'Inicia el panel junto con su contenedor'
 #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent) 
 		self.SetBackgroundColour("3399FF")
@@ -87,5 +90,5 @@ class IniciarSesionEstudiante(wx.Panel):
 		self.SetSizer(sizer)
 
 	def OnClick(self,event):
+                'Permite el manejo de venetos del Botón'
 		self.parent.setpanel(Curso.Cursos(self.parent))
-

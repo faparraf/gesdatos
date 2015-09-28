@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import panel1
 import panel2
@@ -8,6 +12,7 @@ import Tabla
 import wx.lib.scrolledpanel as scrolled
 import ConnectionDataBase
 
+"""Realiza una prueba y manejo de las interfaces de este módulo"""
 conn = ConnectionDataBase.Connection("localhost","DBPrueba","postgres","12345")
 app=wx.App(False)
 frame = wx.Frame(None,-1, title="Consultas", size=(900,900))
@@ -35,6 +40,3 @@ topPanela.SetSizer(sizer)
 
 frame.Show()
 app.MainLoop()
-
-
-

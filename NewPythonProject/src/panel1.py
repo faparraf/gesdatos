@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import ConnectionDataBase
@@ -9,6 +11,7 @@ import pprint
 
 class Panel1(wx.Panel,):
     def __init__(self, parent,connection,*args, **kwds):
+        'Constructor para crear un panel que recibe como parámetro su contenedor y la conexión'
         self.conn = connection
         #Interfaz
         self.rows = 0
@@ -57,33 +60,31 @@ class Panel1(wx.Panel,):
         self.grid.SetColAttr(0, attr)
         self.grid.SetColAttr(1, attr)
         
-        
         #DataBase
         
         self.connSchema = ConnSchema.ConnSchema(self.conn)
         #pp.pprint(self.connCategoria.GetCategorias())
       
-        
-
     def on_edit_cell(self, event):
-        
+        'Envia un mensaje inidcando la modificación de las celdas'
         print "CELL EDITING", event.GetString()
              
-
     def EvtComboBox(self, event):
+        'Maneja el evento del ComboBox'
         print('Evento de combo box: %s' % event.GetString())
 
     def EvtComboBoxSchema(self, event):
+        'Maneja el evento del ComboBox'
         self.sampleList2 = self.connSchema.GetTables(event.GetString())
         self.cbxTables.SetItems(self.sampleList2)
 
     def EvtComboBoxTable(self, event):
+        'Maneja el evento del ComboBox'
         self.sampleList3 = self.connSchema.GetColumns(self.cbxSchema.GetValue(),event.GetString())
         self.cbxColumns.SetItems(self.sampleList3)
 
     def OnClick(self,event):
-
-        
+        'Maneja el evento del Botón'
         self.grid.GetTable().AddRow([''] * self.grid.GetTable().GetNumberCols())
         try:
             print "Valor de 1,1"+str(self.grid.GetTable().GetValue(1,1))
@@ -91,6 +92,7 @@ class Panel1(wx.Panel,):
             print("no hay valor")
 
     def Agregar(self,event):
+        'Agrega nuevos campos a las tablas'
         if self.cbxColumns.GetValue() != "":
             self.grid.AppendRows()
             self.tChoiceEditor = wx.grid.GridCellChoiceEditor(["Sum","Media","Max"], allowOthers=True)
@@ -103,10 +105,10 @@ class Panel1(wx.Panel,):
             self.grid.ForceRefresh()
 
     def Eliminar(self,event):
+        'Elimina campos de las tablas'
         if self.rows > 0: 
             self.grid.DeleteRows(self.rows-1)
             self.rows -= 1
             self.fila -= 1
             self.grid.ForceRefresh()
-        
         
