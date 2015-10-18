@@ -75,7 +75,7 @@ class Body(wx.Panel):
         self.sampleList = []
         self.listBox1.Clear()
         query ="SELECT DISTINCT id_exa, titulo_exa FROM examen,examenpreg, pregunta where id_prgnta=id_pregunta"
-        query+= " and id_exa=id_examen and  CAST(tema AS TEXT) LIKE '"+self.edittipo.GetValue()+"%'"
+        query+= " and id_exa=id_examen and  CAST(tema AS TEXT) LIKE '"+str(self.temaescogido)+"%'"
         query+= " and  CAST(id_exa AS TEXT) LIKE '"+self.editcod.GetValue()+"%';"    
         print(query)
         self.sampleList = (self.father.getconexion()).ExecuteQuery(query) #consulta de todos los tipos de examen
