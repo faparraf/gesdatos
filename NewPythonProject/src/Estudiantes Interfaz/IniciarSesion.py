@@ -80,7 +80,7 @@ class IniciarSesionEstudiante(wx.Panel):
 		PanelComponentsButtons.SetBackgroundColour("white")  
 		
 #--------------Creacion grilla de tamano 4 filas 1 columna--------------
-		gs = wx.GridSizer(3, 1, 30, 30) 
+		gs = wx.GridSizer(4, 1, 30, 30) 
 #--------------Adicion de Paneles a la Grilla--------------
 		gs.AddMany([(PanelComponentsLabel, 0, wx.ALIGN_CENTER),(PanelComponentsTxtArea1, 0, wx.ALIGN_CENTER),
 		(PanelComponentsTxtArea2, 0, wx.ALIGN_CENTER), (PanelComponentsButtons, 0, wx.ALIGN_CENTER)])
