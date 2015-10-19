@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 class TipoPersona:
     __idTipoPersona=0
     __tipo="asedeeeeeee"
@@ -5,6 +8,9 @@ class TipoPersona:
     def __init__(self):
         self.__idTipoPersona
         self.__tipo
+    
+    def __str__(self):
+        return str(self.__idTipoPersona) +".  "+ self.__tipo
     
     def set_IdTipoPersona(self,idtipopersona):
         self.__idTipoPersona=idtipopersona

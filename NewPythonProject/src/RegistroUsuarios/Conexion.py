@@ -12,7 +12,7 @@ class Conexion:
     host = "localhost"           
     user = "postgres"
     passwd = "2648618"
-    db = "ExamenDB"
+    db = "examen"
     
     def __init__(self):
         'Constructor que inicia las funciones de la clase'  

@@ -6,7 +6,9 @@ import re
 import wx
 import wx.lib.scrolledpanel as scrolled
 import Componentes
-from RegistroUsuarios.Requests import Request
+#from RegistroUsuarios.Requests import Request
+import RequestTipoPersona
+import TipoPersona
 
 class VentanaRoles(wx.Panel):   
     
@@ -15,33 +17,42 @@ class VentanaRoles(wx.Panel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.solicitud = Request()                             
+                self.rTipoPersona = RequestTipoPersona.RequestTipoPersona()                             
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
 		self.labelTitulo = Component.CreateLabel(PanelComponentsTitulo,25,pos=(0,0),label="Asignacion de Permisos\n") 
 		                
-  #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
-		PanelComponentsCbxUniversidad = wx.Panel(self) #Creacion padre hijo
-		self.labelCbxUniversidad = Component.CreateLabel(PanelComponentsCbxUniversidad,15,pos=(0,0),label="Universidad:             ")                
-		self.CbUniversidad = Component.CreateComboBox(PanelComponentsCbxUniversidad,pos=(0,0),size=250,List="")
-		self.Bind(wx.EVT_COMBOBOX, self.EvtCbUniversidad, self.CbUniversidad) #Creación de Evento
-		sizerPanelCbxUniversidad = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
-		sizerPanelCbxUniversidad.Add(self.labelCbxUniversidad , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
-		sizerPanelCbxUniversidad.Add(self.CbUniversidad , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
-		PanelComponentsCbxUniversidad.SetSizer(sizerPanelCbxUniversidad)
-		PanelComponentsCbxUniversidad.SetBackgroundColour("white") #Asignación de Color de Fondo               
+                #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
+		PanelComponentsCbxRol = wx.Panel(self) #Creacion padre hijo
+		self.labelCbxRol = Component.CreateLabel(PanelComponentsCbxRol,15,pos=(0,0),label="                 Rol:              ")
+                listica=[]
+                for tip in self.rTipoPersona.verTipos():
+                    listica.append(str(tip.get_Tipo()))
+		self.CbRol = Component.CreateComboBox(PanelComponentsCbxRol,pos=(0,0),size=250,List=listica)#self.solicitud.verPais())
+		self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbRol) #Creación de Evento
+		sizerPanelCbxRol = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
+		sizerPanelCbxRol.Add(self.labelCbxRol , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
+		sizerPanelCbxRol.Add(self.CbRol , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+		PanelComponentsCbxRol.SetSizer(sizerPanelCbxRol)
+		PanelComponentsCbxRol.SetBackgroundColour("white") #Asignación de Color de Fondo 
+                
+                 #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
+		PanelComponentsCbxTabla = wx.Panel(self) #Creacion padre hijo
+		self.labelCbxTabla = Component.CreateLabel(PanelComponentsCbxTabla,15,pos=(0,0),label="              Tabla:              ")
+                self.CbTabla = Component.CreateComboBox(PanelComponentsCbxTabla,pos=(0,0),size=250,List=[])#self.solicitud.verPais())
+		#self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbTabla) #Creación de Evento
+		sizerPanelCbxTabla = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
+		sizerPanelCbxTabla.Add(self.labelCbxTabla , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
+		sizerPanelCbxTabla.Add(self.CbTabla , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+		PanelComponentsCbxTabla.SetSizer(sizerPanelCbxTabla)
+		PanelComponentsCbxTabla.SetBackgroundColour("white") #Asignación de Color de Fondo 
                          
 #----CreaciÃ³n de un panel de CheckBox, e inclusiÃ³n  del objeto CheckBox y su Label
                 PanelComponentsCheckBox = wx.Panel(self) #Creacion padre hijo
-                self.labelCheckBox = Component.CreateLabel(PanelComponentsCheckBox,15,pos=(0,0),label="My CheckBox:")
-                labels=[]
-                x=1
-                while(x<4):                   
-                    labels.append("Label1")
-                    x=x+1 
-                    #print x
-                self.CheckBox = Component.CreateCheckBox(3,PanelComponentsCheckBox,labels,size=(70,30))
+                self.labelCheckBox = Component.CreateLabel(PanelComponentsCheckBox,15,pos=(0,0),label="                                                                       Prioridad:")
+                labels=["Insertar","Seleccionar","Eliminar","Actualizar"]                
+                self.CheckBox = Component.CreateCheckBox(4,PanelComponentsCheckBox,labels,size=(70,30))
                 sizerPanelCheckBox = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaÃ±os
                 sizerPanelCheckBox.Add(self.labelCheckBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
                 sizerPanelCheckBox.Add(self.CheckBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -66,7 +77,7 @@ class VentanaRoles(wx.Panel):
                 gs1 = wx.BoxSizer(wx.VERTICAL) #Creacion grilla de tamaño
                 
       #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
-		gs1.AddMany([ (PanelComponentsCbxUniversidad,1,0),(PanelComponentsCheckBox,1,0)])
+		gs1.AddMany([ (PanelComponentsCbxRol,1,wx.ALIGN_CENTER),(PanelComponentsCbxTabla,1,0),(PanelComponentsCheckBox,1,0)])
                 
                 gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER),(gs1,0,0),
                             (PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
@@ -82,62 +93,27 @@ class VentanaRoles(wx.Panel):
 		self.SetSizer(sizer)
                 
         def EvtComboBox(self, event):
-            'Maneja el evento que realiza el ComboBox'
-            self.CbUniversidad.Clear()
-            self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
-            self.CbUniversidad.Append("Otra...")
-                #print cate	
-                        
-        def EvtCbUniversidad(self, event):
-            'Maneja el evento que realiza el ComboBox con las universidades'
-            if self.CbUniversidad.GetValue() == "Otra...":               
-                print "ad"
+            self.CbTabla.Clear()
+            #self.CbTabla.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
+            'Maneja el evento que realiza el panel'
+            lista=[]
+            print self.CbRol.GetCurrentSelection()+1 
+            for tab in self.rTipoPersona.verTablas():
+                lista.append(tab.get_Tipo())
+            self.CbTabla.AppendItems(lista)
             
-        def EvtRadioBox(self, event):
-            'Maneja el evento que realiza el RadioBox'
-            print self.ClcFechaNac.GetValue().FormatISODate()
-                           
-        def EvtPanelDocumento(self, event):
-                'Maneja el evento que realiza el panel'
-                print "pot"   
+            
+                
+            #print "pot"   
                     
         def OnClick(self,event):
             'Maneja el evento que realiza el Botón'
-            #
-            if self.TxtAreaNombre.GetValue() == "": 
-                wx.MessageBox("El area de Nombre esta vacia ","Gesdatos")#,wx.OK|wx.CANCEL)
-            elif self.TxtAreaApellido.GetValue()=="":
-                 wx.MessageBox("El area de Apellido esta vacia ","Gesdatos")
-            elif self.TxtAreaDocumento.GetValue()==None:
-                wx.MessageBox("El area de Documento esta vacia ","Gesdatos")            
-            elif self.TxtAreaCorreo.GetValue()=="":
-                wx.MessageBox("El area de Correo esta vacia ","Gesdatos")
-            elif self.TxtAreaCorreoUni.GetValue()=="":
-                wx.MessageBox("El area de Correo Universidad esta vacia ","Gesdatos")
-            elif self.CbPais.GetValue()=="":
-                wx.MessageBox("El area de Pais esta sin seleccionar ","Gesdatos")
-            elif self.CbUniversidad.GetValue()=="":
-                wx.MessageBox("El area de Universidad esta sin seleccionar ","Gesdatos")
-            elif self.TxtAreaUsuario.GetValue()=="":
-                wx.MessageBox("El area de Usuario esta vacia ","Gesdatos")
+            #           
+            if self.CbRol.GetValue()=="":
+                wx.MessageBox("El area de Rol esta sin seleccionar ","Gesdatos")
+            elif self.CbTablaUniversidad.GetValue()=="":
+                wx.MessageBox("El area de Tabla esta sin seleccionar ","Gesdatos")
             else:
-                if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',self.TxtAreaCorreo.GetValue().lower()):
+                a
+            
                 
-                    if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',self.TxtAreaCorreoUni.GetValue().lower()):
-                    
-                        if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
-                            print "picho ok"                        
-                        else:
-                            try:
-                                self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
-                                                                self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
-                                                                self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
-                                                                self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
-                                                                self.RbCategoria.GetSelection())
-                            except :
-                                wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
-                                self.solicitud = Request()   
-                    else:
-                        wx.MessageBox("El area Correo Universidad ingresado no es valido ","Gesdatos")   
-                else:                
-                    wx.MessageBox("El area Correo ingresado no es valido ","Gesdatos")
