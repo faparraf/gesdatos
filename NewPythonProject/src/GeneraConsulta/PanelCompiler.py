@@ -1,7 +1,5 @@
-#!/usr/bin/env python
+#!#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = "Gesdatos"
-__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import ConnectionDataBase
@@ -10,11 +8,12 @@ import pprint
 from wx.py.shell import Shell as PyShell
 
 
-class Panel5(wx.Panel,):
+class PanelCompiler(wx.Panel,):
     def __init__(self, parent):
-        'Constructor para crear un panel que recibe como parámetro su contenedor'
+        
         wx.Panel.__init__(self, parent)
-     
+	self.SetBackgroundColour("3399FF")
+                
         self.button = wx.Button(self, label="Compilar", pos=(35, 110), size=(80,50))
         self.Bind(wx.EVT_BUTTON, self.Compilar,self.button)
 
@@ -29,11 +28,13 @@ class Panel5(wx.Panel,):
         dimensionador.Add(self.shell,1 ,wx.EXPAND| wx.ALL,border=10)
         self.grid_panel.SetSizer(dimensionador)
      
+
     def Compilar(self,event):
-        'Retorna un mensaje indicando la compilación'
         print "Compilando"
 
+       
+
     def Enviar(self,event):
-        'Retorna un mensaje indicando el envio'
         print "Enviado"
-    
+        
+      

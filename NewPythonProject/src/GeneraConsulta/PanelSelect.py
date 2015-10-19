@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__author__ = "Gesdatos"
-__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import ConnectionDataBase
@@ -9,18 +7,18 @@ import ConnSchema
 import pprint
 
 
-class Panel1(wx.Panel,):
+class PanelSelect(wx.Panel,):
     def __init__(self, parent,connection,*args, **kwds):
-        'Constructor para crear un panel que recibe como parámetro su contenedor y la conexión'
         self.conn = connection
         #Interfaz
         self.rows = 0
         self.fila = 0
         kwds["style"] = wx.DEFAULT_FRAME_STYLE
         wx.Panel.__init__(self, parent)
-        self.sampleList = ['DBPrueba']
+	self.SetBackgroundColour("3399FF")
+        self.sampleList = ['db_avitours']
         self.lblSchema = wx.StaticText(self, label="Seleccione el Modelo:", pos=(20, 20))
-        self.cbxSchema = wx.ComboBox(self, pos=(20, 45), size=(100, -1), choices=self.sampleList, style=wx.CB_DROPDOWN)
+        self.cbxSchema = wx.ComboBox(self, pos=(20, 45), size=(100, 100), choices=self.sampleList, style=wx.CB_DROPDOWN)
         self.Bind(wx.EVT_COMBOBOX, self.EvtComboBoxSchema, self.cbxSchema)
 
         self.sampleList2 = []
@@ -38,9 +36,14 @@ class Panel1(wx.Panel,):
 
         self.button_2 = wx.Button(self, label="Eliminar", pos=(100, 230),size=(70,30))
         self.Bind(wx.EVT_BUTTON, self.Eliminar,self.button_2)
+
+	self.button_3 = wx.Button(self, label="Subir", pos=(50, 300),size=(30,30))
+        self.Bind(wx.EVT_BUTTON, self.Subir,self.button_3)
         
-        self.grid_panel = wx.Panel(self,pos=(200,20),size=(620,300))
-        self.grid = wx.grid.Grid(self.grid_panel,pos=(5,5))
+
+
+	self.grid_panel = wx.Panel(self,pos=(200,20),size=(620,300))
+        self.grid = wx.grid.Grid(self.grid_panel,pos=(5,5),size=(580,180))
         self.grid.CreateGrid(0, 4)
         self.grid.SetColLabelValue(0,"Tabla")
         self.grid.SetColLabelValue(1,"Columna")
@@ -60,31 +63,76 @@ class Panel1(wx.Panel,):
         self.grid.SetColAttr(0, attr)
         self.grid.SetColAttr(1, attr)
         
+        
         #DataBase
         
         self.connSchema = ConnSchema.ConnSchema(self.conn)
         #pp.pprint(self.connCategoria.GetCategorias())
       
-    def on_edit_cell(self, event):
-        'Envia un mensaje inidcando la modificación de las celdas'
-        print "CELL EDITING", event.GetString()
+        
+
+    def Subir(self, event):
+	
+	#Values=[]
+	self.Seleccion = self.grid.GetSelectedRows()
+  	#Values[0]=self.grid.GetCellValue(self,self.Seleccion[0] , 0)
+	#Values[1]=self.grid.GetCellValue(self,self.Seleccion[0] , 1)
+	#Values[2]=self.grid.GetCellValue(self,self.Seleccion[0] , 2)
+	#Values[3]=self.grid.GetCellValue(self,self.Seleccion[0] , 3)
+
+	if self.Seleccion[0] >= 1:
+		self.grid.DeleteRows(self.Seleccion[0])
+		self.grid.SetRowPos(self, self.Seleccion[0], self.Seleccion[0]-1)
+ 		self.grid.ForceRefresh()
+		
+
+        
+    def MoveRow(self,frm,to):
+        grid = self.grid
+
+        if grid:
+            # Move the rowLabels and data rows
+            oldLabel = self.grid.rowLabels[frm]
+            oldData = self.grid.data[frm]
+            del self.grid.rowLabels[frm]
+            del self.grid.data[frm]
+
+            if to > frm:
+                self.grid.rowLabels.insert(to-1,oldLabel)
+                self.grid.data.insert(to-1,oldData)
+            else:
+                self.grid.rowLabels.insert(to,oldLabel)
+                self.grid.data.insert(to,oldData)
+
+            # Notify the grid
+            grid.BeginBatch()
+
+            msg = wx.grid.GridTableMessage(
+                    self.grid, wx.grid.GRIDTABLE_NOTIFY_ROWS_DELETED, frm, 1
+                    )
+
+            grid.ProcessTableMessage(msg)
+
+            msg = wx.grid.GridTableMessage(
+                    self.grid, wx.grid.GRIDTABLE_NOTIFY_ROWS_INSERTED, to, 1
+                    )
+
+            grid.ProcessTableMessage(msg)
+            grid.EndBatch()
              
+
     def EvtComboBox(self, event):
-        'Maneja el evento del ComboBox'
-        print('Evento de combo box: %s' % event.GetString())
+        print('')#Evento de combo box: %s' % event.GetString())
 
     def EvtComboBoxSchema(self, event):
-        'Maneja el evento del ComboBox'
         self.sampleList2 = self.connSchema.GetTables(event.GetString())
         self.cbxTables.SetItems(self.sampleList2)
 
     def EvtComboBoxTable(self, event):
-        'Maneja el evento del ComboBox'
         self.sampleList3 = self.connSchema.GetColumns(self.cbxSchema.GetValue(),event.GetString())
         self.cbxColumns.SetItems(self.sampleList3)
 
     def OnClick(self,event):
-        'Maneja el evento del Botón'
         self.grid.GetTable().AddRow([''] * self.grid.GetTable().GetNumberCols())
         try:
             print "Valor de 1,1"+str(self.grid.GetTable().GetValue(1,1))
@@ -92,10 +140,9 @@ class Panel1(wx.Panel,):
             print("no hay valor")
 
     def Agregar(self,event):
-        'Agrega nuevos campos a las tablas'
         if self.cbxColumns.GetValue() != "":
             self.grid.AppendRows()
-            self.tChoiceEditor = wx.grid.GridCellChoiceEditor(["Sum","Media","Max"], allowOthers=True)
+            self.tChoiceEditor = wx.grid.GridCellChoiceEditor(["Sum","Media","Max","Min"], allowOthers=True)
             self.grid.SetCellEditor(self.fila, 3, self.tChoiceEditor)
             self.fila += 1
             self.rows += 1
@@ -105,10 +152,15 @@ class Panel1(wx.Panel,):
             self.grid.ForceRefresh()
 
     def Eliminar(self,event):
-        'Elimina campos de las tablas'
         if self.rows > 0: 
             self.grid.DeleteRows(self.rows-1)
             self.rows -= 1
             self.fila -= 1
             self.grid.ForceRefresh()
-        
+
+    def GetRowsValue(self):
+        datos = [[0 for x in range(4)] for x in range(self.rows)] 
+	for i in range(0,self.rows):
+    	    for j in range(0,self.fila):
+		datos[i][j] = self.grid.GetCellValue(i,j)
+        return datos
