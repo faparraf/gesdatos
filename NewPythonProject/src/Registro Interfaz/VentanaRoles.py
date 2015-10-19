@@ -25,7 +25,7 @@ class VentanaRoles(wx.Panel):
 		                
                 #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
 		PanelComponentsCbxRol = wx.Panel(self) #Creacion padre hijo
-		self.labelCbxRol = Component.CreateLabel(PanelComponentsCbxRol,15,pos=(0,0),label="                 Rol:              ")
+		self.labelCbxRol = Component.CreateLabel(PanelComponentsCbxRol,15,pos=(0,0),label="Rol: ")
                 listica=[]
                 for tip in self.rTipoPersona.verTipos():
                     listica.append(str(tip.get_Tipo()))
@@ -39,7 +39,7 @@ class VentanaRoles(wx.Panel):
                 
                  #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
 		PanelComponentsCbxTabla = wx.Panel(self) #Creacion padre hijo
-		self.labelCbxTabla = Component.CreateLabel(PanelComponentsCbxTabla,15,pos=(0,0),label="              Tabla:              ")
+		self.labelCbxTabla = Component.CreateLabel(PanelComponentsCbxTabla,15,pos=(0,0),label="Tabla:")
                 self.CbTabla = Component.CreateComboBox(PanelComponentsCbxTabla,pos=(0,0),size=250,List=[])#self.solicitud.verPais())
 		#self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbTabla) #Creación de Evento
 		sizerPanelCbxTabla = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
@@ -50,11 +50,11 @@ class VentanaRoles(wx.Panel):
                          
 #----CreaciÃ³n de un panel de CheckBox, e inclusiÃ³n  del objeto CheckBox y su Label
                 PanelComponentsCheckBox = wx.Panel(self) #Creacion padre hijo
-                self.labelCheckBox = Component.CreateLabel(PanelComponentsCheckBox,15,pos=(0,0),label="                                                                       Prioridad:")
+                
                 labels=["Insertar","Seleccionar","Eliminar","Actualizar"]                
                 self.CheckBox = Component.CreateCheckBox(4,PanelComponentsCheckBox,labels,size=(70,30))
                 sizerPanelCheckBox = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaÃ±os
-                sizerPanelCheckBox.Add(self.labelCheckBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+                 # Adicion del Objeto al panel
                 sizerPanelCheckBox.Add(self.CheckBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
                 PanelComponentsCheckBox.SetSizer(sizerPanelCheckBox)
                 PanelComponentsCheckBox.SetBackgroundColour("3399FF") #AsignaciÃ³n de Color de Fondo 
@@ -74,13 +74,13 @@ class VentanaRoles(wx.Panel):
                 
                 
                 gs = wx.BoxSizer(wx.VERTICAL) #Creacion grilla de tamaño
-                gs1 = wx.BoxSizer(wx.VERTICAL) #Creacion grilla de tamaño
+                gs1 = wx.BoxSizer(wx.HORIZONTAL) #Creacion grilla de tamaño
                 
       #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
-		gs1.AddMany([ (PanelComponentsCbxRol,1,wx.ALIGN_CENTER),(PanelComponentsCbxTabla,1,0),(PanelComponentsCheckBox,1,0)])
+		gs1.AddMany([(PanelComponentsCbxTabla,wx.EXPAND,0),(PanelComponentsCheckBox,wx.EXPAND,0)])
                 
-                gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER),(gs1,0,0),
-                            (PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
+                gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER), (PanelComponentsCbxRol,wx.EXPAND,wx.ALIGN_CENTER),
+                (gs1,0,wx.ALIGN_CENTER),(PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
                                 
                 #gs2 = wx.GridSizer(3, 1, 7, 7)
                 #gs2.AddMany([(PanelComponentsTitulo,0,wx.ALIGN_CENTER,0,0),(gs)])

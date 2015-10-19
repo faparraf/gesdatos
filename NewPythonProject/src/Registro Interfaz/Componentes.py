@@ -100,7 +100,7 @@ class Component(wx.Panel):
 				gridCheckBox = wx.GridSizer(1, 1, 5, 5)
 				gridCheckBox.AddMany([(CheckBoxList[0], 0, wx.ALIGN_CENTER)])
 			if number%2==0:
-				gridCheckBox = wx.GridSizer(number/2, 2, 5, 5)
+				gridCheckBox = wx.GridSizer(1, number, 5, 5)
 				for j in range(len(CheckBoxList)):
 					gridCheckBox.AddMany([(CheckBoxList[j], 0, wx.ALIGN_CENTER)])
 			if number%2!=0:
