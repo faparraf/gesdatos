@@ -11,41 +11,41 @@ class Component(wx.Panel):
 	def __init__(self,parent):
                 'Inicia la interfaz.'
 	        wx.Panel.__init__(self,parent)  
-#-----------------Creaci贸n de Label------------
+#-----------------Creaci?n de Label------------
 	def CreateLabel(self,parent,fonsize,pos,label): 
-                'Permite la creaci髇 de un Label (etiqueta).'
+                'Permite la creaci? de un Label (etiqueta).'
 		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
 		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
 		self.label.SetFont(self.font)
 		return self.label
 
-#-----------------Creaci贸n de ComboBox------------      
+#-----------------Creaci?n de ComboBox------------      
 	def CreateComboBox(self,parent,pos,size,List):
-                'Permite la creaci髇 de un ComboBox.'
+                'Permite la creaci? de un ComboBox.'
 		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
 		return self.cbx
     
-#-----------------Creaci贸n de TextArea------------ 
+#-----------------Creaci?n de TextArea------------ 
 	def CreateTextArea(self,parent,pos,size):
-                'Permite la creaci髇 de un TextArea.'
+                'Permite la creaci? de un TextArea.'
 		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
 		return self.txtarea
-#-----------------Creaci贸n de Hyperlink-----------
+#-----------------Creaci?n de Hyperlink-----------
 
 	def CreateHyperLink(self,parent,name,link):
-                'Permite la creaci髇 de un Hipervinculo.'
+                'Permite la creaci? de un Hipervinculo.'
 		self.hyper = hl.HyperLinkCtrl(parent, -1, name, pos=(100, 100),URL=link)
 		return self.hyper
 
-#-----------------Creaci贸n de RadioBox------------ 
+#-----------------Creaci?n de RadioBox------------ 
 	def CreateRadioBox(self,parent,label,radioList):
-                'Permite la creaci髇 de un RadioBox.'
+                'Permite la creaci? de un RadioBox.'
 		self.RadioBox = wx.RadioBox(parent, -1, label, (10, 10), wx.DefaultSize,radioList, 2, wx.RA_SPECIFY_COLS)
 		return self.RadioBox
 
-#-----------------Creaci贸n de Grilla------------ 	
+#-----------------Creaci?n de Grilla------------ 	
 	def CreateGrid(self,parent,rows,colums,titles,width):
-                'Permite la creaci髇 de un Grid.'
+                'Permite la creaci? de un Grid.'
 		self.Grid=wx.grid.Grid(parent)
 		self.Grid.CreateGrid(rows,colums)
 		for i in range(0,colums):
@@ -55,21 +55,21 @@ class Component(wx.Panel):
 
 #-----------------------------------------------
 	def CreateListctrl(self,parent,titles,lenghs,size):
-                'Permite la creaci髇 de una Lista din醡ica.'
+                'Permite la creaci? de una Lista din?ica.'
 		self.listctrl = wx.ListCtrl(parent, size=(size[0],size[1]), style=wx.LC_REPORT | wx.BORDER_SUNKEN)
 		for i in range(len(titles)):
 			self.listctrl.InsertColumn(i, titles[i], width=lenghs[i])
 		return self.listctrl
 
-#-----------------Creaci贸n de Boton------------ 	
+#-----------------Creaci?n de Boton------------ 	
 	def CreateButton(self,parent,label):
-                'Permite la creaci髇 de un Bot髇.'
+                'Permite la creaci? de un Bot?.'
 		self.Button =wx.Button(parent,label=label)
 		return self.Button
 
-#-----------------Creaci贸n de CheckBox------------ 	
+#-----------------Creaci?n de CheckBox------------ 	
 	def CreateCheckBox(self,number,parent,labels,size):
-                'Permite la creaci髇 de un CheckBox.'
+                'Permite la creaci? de un CheckBox.'
 		CheckBoxList=[]
 		if number>=1 :
 			for i in range(1,number+1):
@@ -90,7 +90,7 @@ class Component(wx.Panel):
 #-----------------------------------------------------redireccion-c------------
 
 	def setpanel(self,panel):
-                'Permite la visualizaci髇 del panel.'
+                'Permite la visualizaci? del panel.'
 		panel.Show(True)
 		
 	def EventComboBox(self, event):
