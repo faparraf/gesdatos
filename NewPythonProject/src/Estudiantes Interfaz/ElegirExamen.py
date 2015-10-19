@@ -4,6 +4,7 @@ __author__ = "Gesdatos"
 __date__ = "$20-jul-2015 18:52:55$"
 import wx
 import Componentes
+import cargarExamen
 
 class ElegirExamen(wx.Panel):
 	def __init__(self,parent):
@@ -65,9 +66,10 @@ class ElegirExamen(wx.Panel):
 		sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(sizer)
 
-	def OnClick(self,event):
+	def OnClick(self,e):
                 'Permite establecer el evento del Botón'
 		#from ElegirExamen import elegirExamen 
 		#ElegirExamen = elegirExamen()
-		#ElegirExamen.Show()
-		self.Close(True)
+		#ElegirExamen.Show
+                print ("cargando examen")
+                verexamen = cargarExamen.iniciarverexamen(2)
