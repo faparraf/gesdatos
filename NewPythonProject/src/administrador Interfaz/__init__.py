@@ -28,11 +28,13 @@ class MenuPrincipaladmin(wx.Frame):
         topPanel= scrolled.ScrolledPanel(self)
         topPanel.SetupScrolling(scroll_y=True)
         topPanel.SetBackgroundColour('3399FF')
-        self.sizer = sizertopPanel=wx.BoxSizer(wx.VERTICAL)
+        sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(Body(topPanel,idaadministrador),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         topPanel.SetSizer(sizertopPanel)
+        self.sizer = sizertopPanel
+        self.topPanel = topPanel
         self.topanel=topPanel
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         #Genracion de menu Principal que controlara el interfaz
@@ -61,8 +63,8 @@ class MenuPrincipaladmin(wx.Frame):
     
     def OnClose(self, event):
         dlg = wx.MessageDialog(self, 
-        "Do you really want to close this application?",
-        "Confirm Exit", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+        "¿Realmente quiere salir?",
+        "Confirmar Salida", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
         result = dlg.ShowModal()
         dlg.Destroy()
         if result == wx.ID_OK:
@@ -76,13 +78,13 @@ class MenuPrincipaladmin(wx.Frame):
     def agregar(self,event):
         parametro = event.GetId()
         if parametro == ID_AGREGAR_TEMA:
-            panelagregar = admparametros.paneltema(self,'agregar')
+            panelagregar = admparametros.paneltema(self.topPanel,self,'agregar')
         elif parametro == ID_AGREGAR_TIPO_PREGUNTA:
-            panelagregar = admparametros.paneltipopregunta(self,'agregar')
+            panelagregar = admparametros.paneltipopregunta(self.topPanel,self,'agregar')
         elif parametro == ID_AGREGAR_TIPO_OPCION:
-            panelagregar = admparametros.paneltipoopcion(self,'agregar')
+            panelagregar = admparametros.paneltipoopcion(self.topPanel,self,'agregar')
         elif parametro == ID_AGREGAR_TIPO_EXAMEN:
-            panelagregar = admparametros.paneltipoexamen(self,'agregar')
+            panelagregar = admparametros.paneltipoexamen(self.topPanel,self,'agregar')
         self.cambiarpanel(panelagregar)
     
     def getconexion(self):
@@ -90,7 +92,7 @@ class MenuPrincipaladmin(wx.Frame):
             return self.conexion.connection
     
     def regresarpanelprincipal(self):
-        panel_original = Body(topPanel,self.idaadministrador)
+        panel_original = Body(self.topPanel,self.idaadministrador)
         self.cambiarpanel(panel_original)
     
     def cambiarpanel(self,nuevopanel):
@@ -139,21 +141,6 @@ class Body(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL) #AdiciÃ³n de la grilla de tamaÃ±os al panel padre
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
-    
-    def registro(self, e):
-        'metodo que atendera el boton siguiente y registrara la informacion ingresada por el docente'
-        # Definimos los métodos de los eventos
-        self.father.registrarExamen(e,self)
-    
-    def idtemaescogido(self,e):
-        'metodo escucha de evento de escoger un tema con fin de saber  el valor de la llave del tema escogido'
-        temaexamen = e.GetString()
-        fila = 0
-        for it in self.sampleListTipo:
-            if it == temaexamen:
-                self.temaescogido = self.opcionesexamenTema[fila][0]
-                break
-            fila=fila+1
             
 idaadministrador = "4"
 MenuPrincipaladmin(idaadministrador)
