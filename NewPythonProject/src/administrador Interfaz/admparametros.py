@@ -44,6 +44,9 @@ class paneltema(wx.Panel):
     def registro(self, e):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el administrador'
         # Definimos los métodos de los eventos
+        queryidpregunta = "select count(*) from pregunta;"
+        idpregunta = self.conexion.connection.ExecuteQuery(queryidpregunta)
+        idpregunta = (idpregunta[0][0])
         self.father.regresarpanelprincipal()
     
     def idbaseescogida(self,e):
