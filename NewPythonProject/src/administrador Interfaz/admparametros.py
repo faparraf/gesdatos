@@ -24,6 +24,7 @@ class paneltema(wx.Panel):
         self.baseescogida = ''#se almacenara el identificador del tema escogido
         self.opcionesbase = (self.father.getconexion()).ExecuteQuery(query) #consulta de todos los tipos de examen
         print("consutla sql de tipos de examen "+str(self.opcionesbase))
+        self.sampleListBase.append('')
         for a in self.opcionesbase:
             self.sampleListBase.append(a[1])
         self.edittipo = wx.ComboBox(self, choices=self.sampleListBase, style=wx.CB_DROPDOWN)
@@ -44,20 +45,37 @@ class paneltema(wx.Panel):
     def registro(self, e):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el administrador'
         # Definimos los métodos de los eventos
-        queryidpregunta = "select count(*) from pregunta;"
-        idpregunta = self.conexion.connection.ExecuteQuery(queryidpregunta)
-        idpregunta = (idpregunta[0][0])
+        queryidpregunta = "select count(*) from tema;"
+        idtema = (self.father.getconexion()).ExecuteQuery(queryidpregunta)
+        idtema = (idtema[0][0])+1
+        if self.baseescogida!='':
+            inserttema = 'INSERT INTO tema ("idtema","id_bd","desc_tema")'
+            inserttema += "VALUES ("+str(idtema)+","+str(self.baseescogida)+",'"+str(self.editdesc.GetValue())+"');"
+            print (inserttema)
+        else:
+            inserttema = 'INSERT INTO tema ("idtema","desc_tema")'
+            inserttema += "VALUES ("+str(idtema)+",'"+str(self.editdesc.GetValue())+"');"
+            print (inserttema)
+        (self.father.getconexion()).ExecuteQueryWithoutreturn(inserttema)
+        dlg = wx.MessageDialog(self, 
+            "Registro exitoso",
+            "Confirmacion", wx.OK|wx.CANCEL)
+        result = dlg.ShowModal()
+        dlg.Destroy()
         self.father.regresarpanelprincipal()
     
     def idbaseescogida(self,e):
         'metodo escucha de evento de escoger un tema con fin de saber  el valor de la llave del tema escogido'
         baseescogida = e.GetString()
         fila = 0
-        for it in self.sampleListBase:
-            if it == baseescogida:
-                self.baseescogida = self.opcionesbase[fila][0]
-                break
-            fila=fila+1
+        if baseescogida != '':
+            for it in self.sampleListBase:
+                if it == baseescogida:
+                    self.baseescogida = self.opcionesbase[fila][0]
+                    break
+                fila=fila+1
+        else:
+            self.baseescogida = ''
 ## Body nuevo tipo pregunta
 ##-----------------------------------------------------------el):
 class paneltipopregunta(wx.Panel):
@@ -82,7 +100,19 @@ class paneltipopregunta(wx.Panel):
     
     def registro(self, e):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el administrador'
-        # Definimos los métodos de los eventos
+        # Definimos los métodos de los eventos# Definimos los métodos de los eventos
+        queryidpregunta = "select count(*) from tipopegrunta;"
+        idtema = (self.father.getconexion()).ExecuteQuery(queryidpregunta)
+        idtema = (idtema[0][0])+1
+        inserttema = 'INSERT INTO tipopegrunta ("id_tipopre","desc_tipopreg")'
+        inserttema += "VALUES ("+str(idtema)+",'"+str(self.editdesc.GetValue())+"');"
+        print (inserttema)
+        (self.father.getconexion()).ExecuteQueryWithoutreturn(inserttema)
+        dlg = wx.MessageDialog(self, 
+            "Registro exitoso",
+            "Confirmacion", wx.OK|wx.CANCEL)
+        result = dlg.ShowModal()
+        dlg.Destroy()
         self.father.regresarpanelprincipal()
 
 ## Body nuevo tipo opcion
@@ -109,7 +139,19 @@ class paneltipoopcion(wx.Panel):
     
     def registro(self, e):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el administrador'
-        # Definimos los métodos de los eventos
+        # Definimos los métodos de los eventos# Definimos los métodos de los eventos
+        queryidpregunta = "select count(*) from tipoopcion;"
+        idtema = (self.father.getconexion()).ExecuteQuery(queryidpregunta)
+        idtema = (idtema[0][0])+1
+        inserttema = 'INSERT INTO tipoopcion ("id_tipoop","desc_tipoopc")'
+        inserttema += "VALUES ("+str(idtema)+",'"+str(self.editdesc.GetValue())+"');"
+        print (inserttema)
+        (self.father.getconexion()).ExecuteQueryWithoutreturn(inserttema)
+        dlg = wx.MessageDialog(self, 
+            "Registro exitoso",
+            "Confirmacion", wx.OK|wx.CANCEL)
+        result = dlg.ShowModal()
+        dlg.Destroy()
         self.father.regresarpanelprincipal()
         
 ## Body nuevo tipo examen
@@ -136,5 +178,17 @@ class paneltipoexamen(wx.Panel):
     
     def registro(self, e):
         'metodo que atendera el boton siguiente y registrara la informacion ingresada por el administrador'
-        # Definimos los métodos de los eventos
+        # Definimos los métodos de los eventos# Definimos los métodos de los eventos
+        queryidpregunta = "select count(*) from tipoexamen;"
+        idtema = (self.father.getconexion()).ExecuteQuery(queryidpregunta)
+        idtema = (idtema[0][0])+1
+        inserttema = 'INSERT INTO tipoexamen ("id_tipoexa","desc_tipoexa")'
+        inserttema += "VALUES ("+str(idtema)+",'"+str(self.editdesc.GetValue())+"');"
+        print (inserttema)
+        (self.father.getconexion()).ExecuteQueryWithoutreturn(inserttema)
+        dlg = wx.MessageDialog(self, 
+            "Registro exitoso",
+            "Confirmacion", wx.OK|wx.CANCEL)
+        result = dlg.ShowModal()
+        dlg.Destroy()
         self.father.regresarpanelprincipal()

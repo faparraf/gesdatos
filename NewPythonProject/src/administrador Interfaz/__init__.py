@@ -60,6 +60,8 @@ class MenuPrincipaladmin(wx.Frame):
         self.SetMenuBar(menuBar)
         self.Show()
         app.MainLoop()
+        self.GetSizer().Layout()
+        self.Fit()
     
     def OnClose(self, event):
         dlg = wx.MessageDialog(self, 
