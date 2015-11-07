@@ -6,6 +6,7 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 import Componentes
 from RegistroUsuarios.Requests import Request
+import Correo
 
 class VentanaRegistroUsuarios(wx.Panel):   
     
@@ -15,7 +16,7 @@ class VentanaRegistroUsuarios(wx.Panel):
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
                 self.solicitud = Request()                             
-                
+                #correo=Correo.Correo()
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
 		self.labelTitulo = Component.CreateLabel(PanelComponentsTitulo,25,pos=(0,0),label="Registro de usuarios\n") 
@@ -210,6 +211,10 @@ class VentanaRegistroUsuarios(wx.Panel):
                                                                 self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
                                                                 self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
                                                                 self.RbCategoria.GetSelection())
+                                
+                                #msg="<p><h1>Registro usuario Suhe</h1></p>"+self.TxtAreaDocumento.GetValue()
+                                #correo.enviar(self.TxtAreaCorreo.GetValue(),msg,"Registro Suhe")
+                                                        
                             except :
                                 wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
                                 self.solicitud = Request()   

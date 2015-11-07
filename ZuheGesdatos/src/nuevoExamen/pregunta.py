@@ -20,11 +20,11 @@ class pregunta():
         #ingreso de variable
         self.imagen = ""
      
-    # Definimos los m√©todos de los eventos
+    # Definimos los mÈtodos de los eventos
      
     def registrardatosgenerales(self,Enunciado, Tema, Tipo, Url):
         'ingreso de datos de una pregunta como Enunciado, Tema y Tipo de pregunta'
-        # Creamos una ventana de di√°logo con un bot√≥n de ok. wx.OK es una ID est√†ndard de wxWidgets.
+        # Creamos una ventana de di·logo con un botÛn de ok. wx.OK es una ID est‡ndard de wxWidgets.
         self.Enunciado = Enunciado
         self.tema = Tema
         self.tipoPregunta = Tipo

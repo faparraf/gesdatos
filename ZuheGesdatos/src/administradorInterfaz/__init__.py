@@ -144,5 +144,5 @@ class Body(wx.Panel):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
             
-idaadministrador = "4"
-MenuPrincipaladmin(idaadministrador)
+#idaadministrador = "4"
+#MenuPrincipaladmin(idaadministrador)

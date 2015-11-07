@@ -130,5 +130,5 @@ class Body(wx.Panel):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
             
-iddocente = "4"
-MenuPrincipalDocente(iddocente)
+#iddocente = "4"
+#MenuPrincipalDocente(iddocente)

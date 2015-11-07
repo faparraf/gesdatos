@@ -25,11 +25,11 @@ class Head(wx.Panel,):
 	PanelImage1.SetBackgroundColour('3399FF')
 
 	PanelText = wx.Panel(self)
-	self.text1 = wx.StaticText(PanelText, label="ZUHÃ‰ - UD")
+	self.text1 = wx.StaticText(PanelText, label="ZUHÉ - UD")
         self.font1 = wx.Font(20 ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
         self.text1.SetFont(self.font1)
 
-	self.text2 = wx.StaticText(PanelText, label="SOFTWARE ACADÃ‰MICO 1.0")
+	self.text2 = wx.StaticText(PanelText, label="SOFTWARE ACADÉMICO 1.0")
         self.font2 = wx.Font(13 ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
         self.text2.SetFont(self.font2)
 	sizertext = wx.BoxSizer(wx.VERTICAL)
@@ -69,11 +69,11 @@ class Low(wx.Panel,):
 	Paneltext = wx.Panel(self)
 
 	sizertext = wx.BoxSizer(wx.VERTICAL)
-	self.text1 = wx.StaticText(Paneltext, label="Universidad Distrital Fransisco JosÃ© de Caldas")
+	self.text1 = wx.StaticText(Paneltext, label="Universidad Distrital Fransisco José de Caldas")
         self.font1 = wx.Font(12, wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
         self.text1.SetFont(self.font1)
 
-	self.text2 = wx.StaticText(Paneltext, label="Grupo de InvestigaciÃ³n Gesdatos")
+	self.text2 = wx.StaticText(Paneltext, label="Grupo de Investigación Gesdatos")
 	self.font2 = wx.Font(12, wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
         self.text2.SetFont(self.font2)
 	

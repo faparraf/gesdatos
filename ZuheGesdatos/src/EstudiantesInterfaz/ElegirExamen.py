@@ -72,4 +72,4 @@ class ElegirExamen(wx.Panel):
 		#ElegirExamen = elegirExamen()
 		#ElegirExamen.Show
                 print ("cargando examen")
-                verexamen = cargarExamen.iniciarverexamen(2)
+                verexamen = cargarExamen.iniciarverexamen(6)

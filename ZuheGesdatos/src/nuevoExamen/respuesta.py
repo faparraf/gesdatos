@@ -12,7 +12,7 @@ class respuesta():
         self.idprespuesta = 0;
         self.respuesta = "";
         
-    # Definimos los mÃ©todos de los eventos
+    # Definimos los métodos de los eventos
      
     def setopcionpregunta(self,opcionpregunta):
         'cambia la opcion de la respuesta con valor de opcionpregunta'

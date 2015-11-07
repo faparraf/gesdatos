@@ -10,8 +10,9 @@ import psycopg2, psycopg2.extras
 class Conexion:                  
     'Clase que permitira la comunicacion con la base de datos'     
     host = "localhost"           
-    user = "postgres"
-    passwd = "2648618"
+    user = "adminexamen"
+    passwd = "pasexamen"
+    port="5434"
     db = "examen"
     
     def __init__(self):
@@ -19,8 +20,8 @@ class Conexion:
         self.connection = psycopg2.connect( database=self.db,
                                            user= self.user,
                                            password= self.passwd,
-                                           host= self.host)
-                                            ##port = self.port)
+                                           host= self.host,
+                                           port = self.port)
         self.cur = self.connection.cursor()  #cursor
 
     def insertQuery(self,txtsql):                 #funcion querry para interactuar con la BD  

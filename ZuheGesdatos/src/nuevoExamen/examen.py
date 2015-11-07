@@ -23,7 +23,7 @@ class examen():
         self.tipoExamen = 0
         self.titulo = ""
         
-    # Definimos los mÃ©todos de los eventos
+    # Definimos los métodos de los eventos
      
     def settitulo(self,nuevotitulo):
         'cambia titulo de examen con valor de nuevotitulo'
