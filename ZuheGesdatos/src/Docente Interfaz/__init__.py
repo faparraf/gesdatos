@@ -4,10 +4,10 @@ __author__ = "Daniel Romero, Jhoan Villa"
 __date__ = "$20-jul-2015 18:52:55$"
 import wx, os, ConnSchema,ConnectionDataBase
 import wx
-import InterfazExamen.__init__
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
+import nuevoExamen.__init__
 # Identificdores en el menu
 ID_AGREGAR_EXAMEN = wx.NewId ()
 
@@ -41,8 +41,9 @@ class MenuPrincipalDocente(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnClose, m_exit)
         menuBar.Append(menu, "&Archivo")
         menu = wx.Menu()
-        m_agregartema = menu.Append(ID_AGREGAR_EXAMEN,"&Agregar tema", "Agregar nuevo Examen")
+        m_agregartema = menu.Append(ID_AGREGAR_EXAMEN,"&Examen", "Agregar nuevo Examen")
         self.Bind(wx.EVT_MENU, self.agregar, m_agregartema, id=ID_AGREGAR_EXAMEN)
+        menuBar.Append(menu, "&Examen")
         menu = wx.Menu()
         m_about = menu.Append(wx.ID_ABOUT, "&Sobre nosotros", "Information about this program")
         self.Bind(wx.EVT_MENU, self.OnAbout, m_about)
@@ -70,8 +71,8 @@ class MenuPrincipalDocente(wx.Frame):
     def agregar(self,event):
         parametro = event.GetId()
         if parametro == ID_AGREGAR_EXAMEN:
-            panelagregar = admparametros.paneltema(self.topPanel,self,'agregar')
-            
+            interfaz = nuevoExamen.__init__.interfazpanelpaso(self,self.iddocente,self.topPanel,self.sizer)
+            panelagregar = nuevoExamen.__init__.BodyNuevoExamen(self.topPanel,interfaz,self.iddocente)
         self.cambiarpanel(panelagregar)
     
     def getconexion(self):
@@ -119,7 +120,7 @@ class Body(wx.Panel):
         queryidexamen = "select (nom_pers||' '||apellido_pers) from persona where id_persona = "+iddocente+";"
         self.nombre = self.conexion.connection.ExecuteQuery(queryidexamen)
         self.nombre = (self.nombre[0][0])
-        self.quote = wx.StaticText(self, label="Bienvenido Admistrador: "+self.nombre, pos=(140, 10))
+        self.quote = wx.StaticText(self, label="Bienvenido Docente: "+self.nombre, pos=(140, 10))
         self.aparte = wx.StaticText(self, label="", pos=(140, 10))
         gs = wx.GridSizer(1, 2, 1, 1) #Creacion grilla de tamaño
         #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
@@ -130,4 +131,4 @@ class Body(wx.Panel):
         self.SetSizer(sizer)
             
 iddocente = "4"
-MenuPrincipaladmin(iddocente)
+MenuPrincipalDocente(iddocente)

@@ -12,7 +12,7 @@ import Componentes
 
 ## Body
 ##-----------------------------------------------------------el):
-class Body(wx.Panel):
+class BodyNuevoExamen(wx.Panel):
     """ Una clase personalizada de frame donde el usuario que desee registrar un nuevo examen
         podra ingresar datos como el nombre del examen, la fecha del examen,
         el puntaje extra del examen, el tipo del examen y la cantidad de preguntas que este tendra."""
@@ -306,19 +306,19 @@ class interfazpanelpaso():
             self.father.GetSizer().Layout()
             self.father.Fit()
             
-app=wx.App(False)
-displaySize= wx.DisplaySize()
-frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-menubar = wx.MenuBar()
-topPanel= scrolled.ScrolledPanel(frame)
-topPanel.SetupScrolling(scroll_y=True)
-topPanel.SetBackgroundColour('3399FF')
-sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-iddocente = "4"
-interfaz = interfazpanelpaso(frame,iddocente,topPanel,sizertopPanel)
-sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-sizertopPanel.Add(Body(topPanel,interfaz,iddocente),0,wx.EXPAND|wx.ALL,border=10)
-sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-topPanel.SetSizer(sizertopPanel)
-frame.Show()
-app.MainLoop()
+#app=wx.App(False)
+#displaySize= wx.DisplaySize()
+#frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
+#menubar = wx.MenuBar()
+#topPanel= scrolled.ScrolledPanel(frame)
+#topPanel.SetupScrolling(scroll_y=True)
+#topPanel.SetBackgroundColour('3399FF')
+#sizertopPanel=wx.BoxSizer(wx.VERTICAL)
+#iddocente = "4"
+#interfaz = interfazpanelpaso(frame,iddocente,topPanel,sizertopPanel)
+#sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+#sizertopPanel.Add(BodyNuevoExamen(topPanel,interfaz,iddocente),0,wx.EXPAND|wx.ALL,border=10)
+#sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+#topPanel.SetSizer(sizertopPanel)
+#frame.Show()
+#app.MainLoop()
