@@ -87,7 +87,11 @@ class Component(wx.Panel):
                 'Permite la creación de un Botón.'
 		self.Button =wx.Button(parent,label=label)
 		return self.Button
-
+#-----------------CreaciÃ³n de Check------------ 	
+	def CreateCheck(self,parent,label,size):
+                'Permite la creación de un CheckBox.'
+		self.check=wx.CheckBox(parent,label=label,size=(size[0],size[1]), style=0)			
+		return self.check
 #-----------------CreaciÃ³n de CheckBox------------ 	
 	def CreateCheckBox(self,number,parent,labels,size):
                 'Permite la creación de un CheckBox.'

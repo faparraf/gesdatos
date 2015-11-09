@@ -16,14 +16,14 @@ class Request():
         self.conn.insertQuery("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo,correo_universidad,uni,usuario) values (%s, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s' )" %datos)
         
         if categoria == 0:
-            estudianteid= int("%s" %(self.conn.selectQuery("select count(*) from estudiante")[0]))+1
-            datosEstudiante=(estudianteid,personaid,'now',documento)            
-            self.conn.insertQuery("insert into estudiante (id_est,id_persn,fecha_reg,pass_estu) values (%s, %s, '%s', '%s' )"%datosEstudiante)
+            #estudianteid= int("%s" %(self.conn.selectQuery("select count(*) from estudiante")[0]))+1
+            datosEstudiante=(personaid,'now',documento)            
+            self.conn.insertQuery("insert into estudiante (id_persn,fecha_reg,pass_estu) values (%s, %s, '%s', '%s' )"%datosEstudiante)
             
         else:
-            docenteid= int("%s" %(self.conn.selectQuery("select count(*) from docente")[0]))+1
-            datosDocente=(docenteid,personaid,'now',documento)            
-            self.conn.insertQuery("insert into docente (id_docente,id_persona,reg_fecha,pass_docente) values (%s, %s, '%s', '%s' )"%datosDocente)
+            #docenteid= int("%s" %(self.conn.selectQuery("select count(*) from docente")[0]))+1
+            datosDocente=(personaid,'now',documento)            
+            self.conn.insertQuery("insert into docente (id_persona,reg_fecha,pass_docente) values (%s, %s, '%s', '%s' )"%datosDocente)
                    
         #datos=(nombre,apellido,documento,fechaNac,telefono,correo,correoUni,universidad,usuario)
         #sql="insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario) values"

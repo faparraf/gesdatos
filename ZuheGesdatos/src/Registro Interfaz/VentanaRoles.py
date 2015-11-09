@@ -9,6 +9,7 @@ import Componentes
 #from RegistroUsuarios.Requests import Request
 import RequestTipoPersona
 import TipoPersona
+import RolTabla
 
 class VentanaRoles(wx.Panel):   
     
@@ -17,7 +18,8 @@ class VentanaRoles(wx.Panel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.rTipoPersona = RequestTipoPersona.RequestTipoPersona()                             
+                self.rTipoPersona = RequestTipoPersona.RequestTipoPersona()  
+                self.roltab = RolTabla.RolTabla()
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
@@ -28,7 +30,7 @@ class VentanaRoles(wx.Panel):
 		self.labelCbxRol = Component.CreateLabel(PanelComponentsCbxRol,15,pos=(0,0),label="Rol: ")
                 listica=[]
                 for tip in self.rTipoPersona.verTipos():
-                    listica.append(str(tip.get_Tipo()))
+                    listica.append(tip.get_Tipo())
 		self.CbRol = Component.CreateComboBox(PanelComponentsCbxRol,pos=(0,0),size=250,List=listica)#self.solicitud.verPais())
 		self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbRol) #Creación de Evento
 		sizerPanelCbxRol = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
@@ -41,7 +43,7 @@ class VentanaRoles(wx.Panel):
 		PanelComponentsCbxTabla = wx.Panel(self) #Creacion padre hijo
 		self.labelCbxTabla = Component.CreateLabel(PanelComponentsCbxTabla,15,pos=(0,0),label="Tabla:")
                 self.CbTabla = Component.CreateComboBox(PanelComponentsCbxTabla,pos=(0,0),size=250,List=[])#self.solicitud.verPais())
-		#self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbTabla) #Creación de Evento
+		self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox2, self.CbTabla) #Creación de Evento
 		sizerPanelCbxTabla = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
 		sizerPanelCbxTabla.Add(self.labelCbxTabla , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
 		sizerPanelCbxTabla.Add(self.CbTabla , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -51,11 +53,19 @@ class VentanaRoles(wx.Panel):
 #----CreaciÃ³n de un panel de CheckBox, e inclusiÃ³n  del objeto CheckBox y su Label
                 PanelComponentsCheckBox = wx.Panel(self) #Creacion padre hijo
                 
-                labels=["Insertar","Seleccionar","Eliminar","Actualizar"]                
-                self.CheckBox = Component.CreateCheckBox(4,PanelComponentsCheckBox,labels,size=(70,30))
+                #labels=["Insertar","Seleccionar","Eliminar","Actualizar"]                
+                #self.CheckBox = Component.CreateCheckBox(4,PanelComponentsCheckBox,labels,size=(75,30))
+                self.CheckInsertar = Component.CreateCheck(PanelComponentsCheckBox,"Insertar",size=(75,30))
+                self.CheckSeleccionar = Component.CreateCheck(PanelComponentsCheckBox,"Seleccionar",size=(75,30))
+                self.CheckEliminar = Component.CreateCheck(PanelComponentsCheckBox,"Eliminar",size=(75,30))
+                self.CheckActualizar = Component.CreateCheck(PanelComponentsCheckBox,"Actualizar",size=(75,30))
                 sizerPanelCheckBox = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaÃ±os
                  # Adicion del Objeto al panel
-                sizerPanelCheckBox.Add(self.CheckBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+                sizerPanelCheckBox.Add(self.CheckInsertar , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
+                sizerPanelCheckBox.Add(self.CheckSeleccionar , 0, wx.ALIGN_CENTER)
+                sizerPanelCheckBox.Add(self.CheckEliminar , 0, wx.ALIGN_CENTER)
+                sizerPanelCheckBox.Add(self.CheckActualizar , 0, wx.ALIGN_CENTER)
+                
                 PanelComponentsCheckBox.SetSizer(sizerPanelCheckBox)
                 PanelComponentsCheckBox.SetBackgroundColour("3399FF") #AsignaciÃ³n de Color de Fondo 
 
@@ -102,6 +112,22 @@ class VentanaRoles(wx.Panel):
                 lista.append(tab.get_Tipo())
             self.CbTabla.AppendItems(lista)
             
+        def EvtComboBox2(self, event):
+            
+            #self.CbTabla.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
+            'Maneja el evento que realiza el panel'
+            #roltab = RolTabla.RolTabla()
+            self.roltab =self.rTipoPersona.verTablaRoles(self.CbTabla.GetCurrentSelection()+1 ,self.CbRol.GetCurrentSelection()+1)
+            #print str(roltab.get_BoolSeleccionar())
+            #print str(roltab.get_IdTabla())
+            self.CheckSeleccionar.SetValue(self.roltab.get_BoolSeleccionar())
+            self.CheckInsertar.SetValue(self.roltab.get_BoolInsertar())
+            self.CheckActualizar.SetValue(self.roltab.get_BoolActualizar())
+            self.CheckEliminar.SetValue(self.roltab.get_BoolEliminar())
+            
+            print str(self.CbRol.GetCurrentSelection()+1) +" "+ str(self.CbTabla.GetCurrentSelection()+1)
+            
+            
             
                 
             #print "pot"   
@@ -111,9 +137,20 @@ class VentanaRoles(wx.Panel):
             #           
             if self.CbRol.GetValue()=="":
                 wx.MessageBox("El area de Rol esta sin seleccionar ","Gesdatos")
-            elif self.CbTablaUniversidad.GetValue()=="":
+            elif self.CbTabla.GetValue()=="":
                 wx.MessageBox("El area de Tabla esta sin seleccionar ","Gesdatos")
             else:
-                a
+                if(self.roltab.get_BoolSeleccionar()!=self.CheckSeleccionar.GetValue()):
+                    self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaSeleccionar(),self.CheckSeleccionar.GetValue())
+                    #print "entro"+str(self.roltab.get_IdRolTabla())
+                elif(self.roltab.get_BoolInsertar()!=self.CheckInsertar.GetValue()):
+                    self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaInsertar(),self.CheckInsertar.GetValue())
+                elif(self.roltab.get_BoolActualizar()!=self.CheckActualizar.GetValue()):
+                    self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaActualizar(),self.CheckActualizar.GetValue())
+                elif(self.roltab.get_BoolEliminar()!=self.CheckEliminar.GetValue()):
+                    self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaEliminar(),self.CheckEliminar.GetValue())                
+                
+                print self.roltab.get_BoolSeleccionar()
+                print self.CheckActualizar.GetValue()
             
                 
