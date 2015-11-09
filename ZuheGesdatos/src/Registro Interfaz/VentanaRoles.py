@@ -143,11 +143,11 @@ class VentanaRoles(wx.Panel):
                 if(self.roltab.get_BoolSeleccionar()!=self.CheckSeleccionar.GetValue()):
                     self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaSeleccionar(),self.CheckSeleccionar.GetValue())
                     #print "entro"+str(self.roltab.get_IdRolTabla())
-                elif(self.roltab.get_BoolInsertar()!=self.CheckInsertar.GetValue()):
+                if(self.roltab.get_BoolInsertar()!=self.CheckInsertar.GetValue()):
                     self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaInsertar(),self.CheckInsertar.GetValue())
-                elif(self.roltab.get_BoolActualizar()!=self.CheckActualizar.GetValue()):
+                if(self.roltab.get_BoolActualizar()!=self.CheckActualizar.GetValue()):
                     self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaActualizar(),self.CheckActualizar.GetValue())
-                elif(self.roltab.get_BoolEliminar()!=self.CheckEliminar.GetValue()):
+                if(self.roltab.get_BoolEliminar()!=self.CheckEliminar.GetValue()):
                     self.rTipoPersona.actualizarRolTabla(self.roltab.get_IdRolTablaEliminar(),self.CheckEliminar.GetValue())                
                 
                 print self.roltab.get_BoolSeleccionar()
