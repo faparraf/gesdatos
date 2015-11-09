@@ -2,7 +2,8 @@
 # -*- coding: cp1252 -*-
 __author__ = "EDUARDO"
 __date__ = "$15/10/2015 06:42:15 PM$"
-import wx, ConnSchema,ConnectionDataBase,Correo
+import wx, ConnSchema,ConnectionDataBase
+import Correo
 import wx
 import administradorInterfaz.__init__
 import DocenteInterfaz.__init__

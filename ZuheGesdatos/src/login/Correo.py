@@ -21,7 +21,7 @@ class Correo:
         msg.attach(MIMEText(text))       
         self.__server.ehlo()
         self.__server.starttls()
-        self.__server.ehlo()
+        #self.__server.ehlo()
         self.__server.login(self.__username,self.__password)
         self.__server.sendmail(self.__username,destino,msg.as_string())
         self.__server.quit()
