@@ -139,26 +139,7 @@ class Body(wx.Panel):
 		
     def OnClick(self,event):
         'Identifica el evento del Botón.'
-	self.cambiarpanel(self,ElegirExamen)
+	Cursos.cambiarpanel(self,ElegirExamen.ElegirExamen)
 
-    def cambiarpanel(self,nuevopanel):
-        """Metodo usado para cambiar un panel en el que ya se
-        registró la informacion para el usuario y se requiere
-        que se muestre la interfaz respectiva"""
-        #siempre se cambia en la posicion 2 ya que es la del body
-        sizer = self.sizer
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-        sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
-        sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-        self.topanel.SetSizer(self.sizer)
-        self.father.SetSizer(sizer)
-        self.father.GetSizer().Layout()
-        self.father.Fit()
 
 Cursos()
