@@ -1,18 +1,78 @@
 #!/usr/bin/env python
 # -*- coding: cp1252 -*-
 __author__ = "EDUARDO"
-__date__ = "$15/10/2015 06:42:15 PM$"
+__date__ = "$14/11/2015 04:30:01 PM$"
+
 import wx, ConnSchema,ConnectionDataBase
 import Correo
 import wx
 import administradorInterfaz.__init__
 import DocenteInterfaz.__init__
-#import EstudiantesInterfaz.IniciarSesion
 import wx.lib.scrolledpanel as scrolled
 import smtplib 
 import HeadLow
 import Componentes
 
+class LogeoInt(wx.Frame):
+    def __init__(self):
+        'Constructor que requiere de un parent como interfaz contendor y manipulador para que acceda a la información'
+        app=wx.App(False)
+        displaySize= wx.DisplaySize()
+        wx.Frame.__init__(self, None, pos=(0, 0), size=(displaySize[0], displaySize[1]))
+        displaySize= wx.DisplaySize()
+        topPanel= scrolled.ScrolledPanel(self)
+        topPanel.SetupScrolling(scroll_y=True)
+        topPanel.SetBackgroundColour('3399FF')
+        sizertopPanel=wx.BoxSizer(wx.VERTICAL)
+        sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(Body(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        topPanel.SetSizer(sizertopPanel)
+        self.sizer = sizertopPanel
+        self.topPanel = topPanel
+        self.topanel=topPanel
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
+        #Genracion de menu Principal que controlara el interfaz
+        menuBar = wx.MenuBar()
+        menu = wx.Menu()
+        m_exit = menu.Append(wx.ID_EXIT, "&salir\tAlt-X", "Close window and exit program.")
+        self.Bind(wx.EVT_MENU, self.OnClose, m_exit)
+        menuBar.Append(menu, "&Archivo")
+        self.SetMenuBar(menuBar)
+        self.Show()
+        app.MainLoop()
+        self.GetSizer().Layout()
+        self.Fit()   
+
+    def OnClose(self, event):
+        dlg = wx.MessageDialog(self, 
+        "¿Realmente quiere salir?",
+        "Confirmar Salida", wx.OK|wx.CANCEL|wx.ICON_QUESTION)
+        result = dlg.ShowModal()
+        dlg.Destroy()
+        if result == wx.ID_OK:
+            self.Destroy()
+##-----------------------------------------------------------
+
+    def cambiarpanel(self,nuevopanel):
+        """Metodo usado para cambiar un panel en el que ya se
+        registró la informacion para el usuario y se requiere
+        que se muestre la interfaz respectiva"""
+        #siempre se cambia en la posicion 2 ya que es la del body
+        sizer = self.sizer
+        sizer.Hide(0)
+        sizer.Remove(0)
+        sizer.Hide(0)
+        sizer.Remove(0)
+        sizer.Hide(0)
+        sizer.Remove(0)
+        sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
+        sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
+        self.topanel.SetSizer(self.sizer)
+        self.father.SetSizer(sizer)
+        self.father.GetSizer().Layout()
+        self.father.Fit()        
 
 
 ## Body
@@ -20,14 +80,13 @@ import Componentes
 class Body(wx.Panel):
     """ Una clase personalizada de frame donde el usuario que desee ingresar y 
     este registrado pueda digitar su usario y su clave."""
-    def __init__(self, parent):#, manipulador):
+    def __init__(self, parent):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         self.parent=parent
-        wx.Panel.__init__(self,parent) # Inicializacion Panel Padre
+        wx.Panel.__init__(self,parent) # Inicialización Panel Padre
         self.SetBackgroundColour('3399FF')
-        #self.father = manipulador
-
-        # parametros basicos generales del registro de un examen
+        
+        # parametros basicos generales del registro 
         self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se requerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             
@@ -59,8 +118,19 @@ class Body(wx.Panel):
                     (self.buttoningresar, 0, wx.ALIGN_CENTER),(self.buttonolvidar, 0, wx.ALIGN_CENTER)])
         sizer = wx.BoxSizer(wx.VERTICAL) #AdiciÃ³n de la grilla de tamaÃ±os al panel padre
         sizer.Add(gs, proportion=1, flag=wx.ALIGN_CENTER)
-        self.SetSizer(sizer)
-    
+        self.SetSizer(sizer)       
+        
+    def idtipoescogido(self,e):
+        'metodo escucha de evento de escoger un tipo con fin de saber el valor del rol escogido'
+        tiporol = e.GetString()
+        fila = 0
+        for it in self.sampleListTipo:
+            if it == tiporol:
+                self.tipoescogido = self.opcionesRoles[fila][0]
+                print(self.tipoescogido)
+                break
+            fila=fila+1    
+
     def ingresar(self, e):
         'metodo que capturara los datos y los comprobara con la bd para ingresar a su respectiva interfaz'
         tipo= str(self.tipoescogido)
@@ -130,55 +200,7 @@ class Body(wx.Panel):
             else:
                wx.MessageBox("El usuario con esas características no existe","Gesdatos")
         else:
-            wx.MessageBox("Ingrese el usuario y el tipo de usuario","Gesdatos")        
-        
- 
-    def idtipoescogido(self,e):
-        'metodo escucha de evento de escoger un tipo con fin de saber el valor del rol escogido'
-        tiporol = e.GetString()
-        fila = 0
-        for it in self.sampleListTipo:
-            if it == tiporol:
-                self.tipoescogido = self.opcionesRoles[fila][0]
-                print(self.tipoescogido)
-                break
-            fila=fila+1
+            wx.MessageBox("Ingrese el usuario y el tipo de usuario","Gesdatos")
 
-##-----------------------------------------------------------
+LogeoInt()
 
-        def cambiarpanel(self,nuevopanel):
-            """Metodo usado para cambiar un panel en el que ya se
-             registró la informacion para el nuevo examen y se requiere
-             que el siguiente paso en el registro de un nuevo examen se muestre
-             requiere como parametro el nuevo panel "nuevopanel" en el que se va a
-             reemplazar el ya utlizado"""
-            #siempre se cambia en la poscion 2 ya que es la del body
-            sizer = self.sizer
-            sizer.Hide(0)
-            sizer.Remove(0)
-            sizer.Hide(0)
-            sizer.Remove(0)
-            sizer.Hide(0)
-            sizer.Remove(0)
-            sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-            sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
-            sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-            self.topanel.SetSizer(self.sizer)
-            self.father.SetSizer(sizer)
-            self.father.GetSizer().Layout()
-            self.father.Fit()
-      
-app=wx.App(False)
-displaySize= wx.DisplaySize()
-frame = wx.Frame(None, wx.ID_ANY, 'ZUHÉ - UD', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-menubar = wx.MenuBar()
-topPanel= scrolled.ScrolledPanel(frame)
-topPanel.SetupScrolling(scroll_y=True)
-topPanel.SetBackgroundColour('3399FF')
-sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-sizertopPanel.Add(Body(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-topPanel.SetSizer(sizertopPanel)
-frame.Show()
-app.MainLoop()
