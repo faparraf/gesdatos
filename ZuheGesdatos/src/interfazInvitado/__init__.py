@@ -130,7 +130,7 @@ class interfazpanelpaso():
             self.father = parent
             self.topanel = topPanel
             self.sizer = sizertopPanel
-            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5432")#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
         

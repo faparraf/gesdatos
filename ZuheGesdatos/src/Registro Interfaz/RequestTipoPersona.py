@@ -13,7 +13,7 @@ class RequestTipoPersona:
     def verTipos(self):
         
         'Consulta el listado de roles'
-        lista= self.conn.selectQuery("select * from tipopersona")
+        lista= self.conn.selectQuery('select * from tipopersona')
         roles=[]
         for row in lista:
             tipo=TipoPersona.TipoPersona()
@@ -23,17 +23,17 @@ class RequestTipoPersona:
         return roles
     
     def verTablas(self):
-        lista= self.conn.selectQuery("select * from tabla")
+        lista= self.conn.selectQuery('select * from "Tabla"')
         tablas=[]
         for row in lista:
             tipo=TipoPersona.TipoPersona()
             tipo.set_IdTipoPersona(row[0])
-            tipo.set_Tipo(row[2])
+            tipo.set_Tipo(row[1])
             tablas.append(tipo)            
         return tablas
     
     def verTablaRoles(self,idtabla,idtipopersona):
-        lista= self.conn.selectQuery('select * from PermisoTabla where idTipoPersona ='+str(idtipopersona)+' and idTabla ='+str(idtabla))
+        lista= self.conn.selectQuery('select * from "PermisoTabla" where "idTipoPersona" ='+str(idtipopersona)+' and "idTabla" ='+str(idtabla))
         rolTabla = RolTabla.RolTabla()
         
         #p=[]
@@ -58,7 +58,7 @@ class RequestTipoPersona:
         return rolTabla   
     
     def actualizarRolTabla(self,idroltabla,bool):
-        self.conn.insertQuery('update PermisoTabla set permiso='+str(bool)+' where IdRolTabla ='+str(idroltabla))
+        self.conn.insertQuery('update "PermisoTabla" set permiso='+str(bool)+' where "IdRolTabla" ='+str(idroltabla))
 #c=RequestTipoPersona()
 #for tip in c.verTipos():
 #    print tip

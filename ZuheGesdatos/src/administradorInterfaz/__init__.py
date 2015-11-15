@@ -18,7 +18,7 @@ class MenuPrincipaladmin(wx.Frame):
     def __init__(self,idaadministrador):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5432")#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         self.idaadministrador = idaadministrador
         app=wx.App(False)

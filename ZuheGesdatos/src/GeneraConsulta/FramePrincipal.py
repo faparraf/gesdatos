@@ -24,7 +24,7 @@ class Head(wx.Panel):
 class Body(wx.Panel):
 	def __init__(self,parent):
 		self.parent=parent
-		self.conn = ConnectionDataBase.Connection("localhost","db_avitours","postgres","postgres")
+		self.conn = ConnectionDataBase.Connection("localhost","mundiales","adminexamen","pasexamen")
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.BodyQuery=BodyQuery.BodyQuery(self, self.conn) ## En esta linea se Agrega el Panel de inicio
 		self.SetBackgroundColour("#696969") # Color de Fondo del panel
