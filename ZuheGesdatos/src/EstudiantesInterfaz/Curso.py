@@ -293,4 +293,3 @@ class Body(wx.Panel):
         ElegirExamen.ElegirExamen()
 
 Cursos()
->>>>>>> 49d386d 
