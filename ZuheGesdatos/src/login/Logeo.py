@@ -8,6 +8,7 @@ import Correo
 import wx
 import administradorInterfaz.__init__
 import DocenteInterfaz.__init__
+#import EstudiantesInterfaz.Curso
 import wx.lib.scrolledpanel as scrolled
 import smtplib 
 import HeadLow
@@ -52,28 +53,6 @@ class LogeoInt(wx.Frame):
         dlg.Destroy()
         if result == wx.ID_OK:
             self.Destroy()
-##-----------------------------------------------------------
-
-    def cambiarpanel(self,nuevopanel):
-        """Metodo usado para cambiar un panel en el que ya se
-        registró la informacion para el usuario y se requiere
-        que se muestre la interfaz respectiva"""
-        #siempre se cambia en la posicion 2 ya que es la del body
-        sizer = self.sizer
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Hide(0)
-        sizer.Remove(0)
-        sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-        sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
-        sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
-        self.topanel.SetSizer(self.sizer)
-        self.father.SetSizer(sizer)
-        self.father.GetSizer().Layout()
-        self.father.Fit()        
-
 
 ## Body
 ##-----------------------------------------------------------el):
@@ -140,9 +119,7 @@ class Body(wx.Panel):
             query ="SELECT p.id_persona FROM persona p, estudiante e WHERE p.usuario='"+usuario+"' AND e.pass_estu='"+contrasena+"' AND p.idtipopersona=1 AND p.id_persona=e.id_persn;"
             idusuario=self.conexion.connection.ExecuteQuery(query)
             if idusuario:
-                print('ahi')
-                print(idusuario + "no lo pide")
-                
+                #EstudiantesInterfaz.Curso.Cursos()                
             else:
                 wx.MessageBox("El usuario con esas características no existe","Gesdatos")
         elif tipo=='2':

@@ -7,6 +7,7 @@ import wx, ConnSchema,ConnectionDataBase
 import ElegirExamen
 import wx.lib.scrolledpanel as scrolled
 import Componentes
+import HeadLow
 
 
 class Cursos(wx.Frame):
@@ -20,9 +21,9 @@ class Cursos(wx.Frame):
         topPanel.SetupScrolling(scroll_y=True)
         topPanel.SetBackgroundColour('3399FF')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-        #sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(Body(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-        #sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         topPanel.SetSizer(sizertopPanel)
         self.sizer = sizertopPanel
         self.topPanel = topPanel
