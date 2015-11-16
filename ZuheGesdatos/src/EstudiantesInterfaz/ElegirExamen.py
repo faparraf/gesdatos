@@ -50,7 +50,7 @@ class ElegirExamen(wx.Frame):
 ## Body
 ##-----------------------------------------------------------el):
 class Body(wx.Panel):
-	def __init__(self,parent):
+	def __init__(self,parent,idestudiante,idcurso):
                 'Constructor de la interfaz que recibe su contenedor'
  #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent)
@@ -58,6 +58,20 @@ class Body(wx.Panel):
 #--------------Instancia Clase Componente--------------
 		Component = Componentes.Component(self) 
         	self.parent=parent
+                self.idestudiante=idestudiante
+                self.idcurso = idcurso
+                
+                queryexamencurso = "select examen.id_exa, examen.titulo_exa, examen.tiempo_exa_inicio, "
+                queryexamencurso += "examen.tiempo_exa_fin, examen.tipoexa, examen.fecha from examen, curso_examen "
+                queryexamencurso += "where curso_examen.id_curso = "+idcurso+" and curso_examen.id_examen = examen.id_exa"
+                
+                self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+                self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
+                self.examenescurso = self.conexion.connection.ExecuteQuery(queryexamencurso)
+                
+                print (self.examenescurso)
+                
+                
 #--------------Instancia Clase ComponenteTitulo--------------
 
 #--------------Creacion padre hijo--------------
@@ -111,8 +125,5 @@ class Body(wx.Panel):
 
 	def OnClick(self,e):
                 'Permite establecer el evento del Botón'
-		#from ElegirExamen import elegirExamen 
-		#ElegirExamen = elegirExamen()
-		#ElegirExamen.Show
                 print ("cargando examen")
                 verexamen = cargarExamen.iniciarverexamen(6)

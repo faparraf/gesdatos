@@ -9,6 +9,7 @@ import HeadLow
 import Componentes
 import Curso
 ID_CURSO = wx.NewId ()
+ID_BUSCAR_CURSO  = wx.NewId ()
 
 class MenuPrincipalEstudiante(wx.Frame):
     def __init__(self,idestudiante):
@@ -38,14 +39,20 @@ class MenuPrincipalEstudiante(wx.Frame):
         menu = wx.Menu()
         m_exit = menu.Append(wx.ID_EXIT, "&salir\tAlt-X", "Close window and exit program.")
         self.Bind(wx.EVT_MENU, self.OnClose, m_exit)
+        
         menuBar.Append(menu, "&Archivo")
         menu = wx.Menu()
         m_miscursos= menu.Append(ID_CURSO ,"&Mis Cursos", "Ingresar al modulo Cursos")
         self.Bind(wx.EVT_MENU, self.abrirmiscursos, m_miscursos, id=ID_CURSO)
+        
+        m_buscarcursos = menu.Append(ID_BUSCAR_CURSO ,"&Buscar Cursos", "Ingresar al modulo de buscar Cursos")
+        self.Bind(wx.EVT_MENU, self.buscarCursos, m_buscarcursos, id=ID_BUSCAR_CURSO)
+        
         menuBar.Append(menu, "&Cursos")
         menu = wx.Menu()
         m_about = menu.Append(wx.ID_ABOUT, "&Sobre nosotros", "Information about this program")
         self.Bind(wx.EVT_MENU, self.OnAbout, m_about)
+        
         menuBar.Append(menu, "&Ayuda")
         self.SetMenuBar(menuBar)
         self.Show()
@@ -70,8 +77,14 @@ class MenuPrincipalEstudiante(wx.Frame):
     def abrirmiscursos(self,event):
         parametro = event.GetId()
         if parametro == ID_CURSO:
-            interfaz = Curso.Body(self.topPanel,self.idestudiante)            
+            interfaz = Curso.miscursos(self.topPanel,self.idestudiante,self)            
         self.cambiarpanel(interfaz)
+    
+    def buscarCursos(self,event):
+        parametro = event.GetId()
+        if parametro == ID_BUSCAR_CURSO:
+            interfaz = Curso.buscarcursos(self.topPanel,self.idestudiante,self)            
+        self.cambiarpanel(interfaz)        
     
     def getconexion(self):
             """consutlor que retorna la clase administradora de la base de datos"""
@@ -128,5 +141,5 @@ class Body(wx.Panel):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
             
-idestudiante = "1"
+idestudiante = "3"
 MenuPrincipalEstudiante(idestudiante)
