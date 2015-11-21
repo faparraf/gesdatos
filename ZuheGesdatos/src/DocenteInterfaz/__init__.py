@@ -8,7 +8,7 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 import nuevoExamen.__init__
-from sshtunnel import SSHTunnelForwarder
+#from sshtunnel import SSHTunnelForwarder
 # Identificdores en el menu
 ID_AGREGAR_EXAMEN = wx.NewId ()
 
