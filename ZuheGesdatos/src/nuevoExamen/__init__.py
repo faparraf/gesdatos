@@ -98,7 +98,7 @@ class interfazpanelpaso():
         cambiar el panel del interfaz para mantenerse en la estructura Body
         ubicado entre Head y Low."""
         
-        def __init__(self, parent,iddocente,topPanel,sizertopPanel):
+        def __init__(self, parent,iddocente,topPanel,sizertopPanel,localport):
             """ Metodo usado para iniciar el registro de un nuevo examen
             en sus parametros generales se encuentra el interfaz parent causante
             del llamado de esta clase para reguistrar un nuevo examen, se requere
@@ -111,7 +111,7 @@ class interfazpanelpaso():
             self.topanel = topPanel
             self.sizer = sizertopPanel
             self.nuevoexamen = examen.examen(str(iddocente))
-            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",localport)#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             queryidexamen = "select count(*) from examen;"
             self.idexamen = self.conexion.connection.ExecuteQuery(queryidexamen)
