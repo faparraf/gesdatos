@@ -74,9 +74,6 @@ class miscursos(wx.Panel):
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         self.miscursos = self.conexion.connection.ExecuteQuery(querymiscursos)
         
-        print (self.miscursos)
-        print (self.miscursos[0][0])
-#--------------Titulo-------------- 
 #--------------Creacion padre hijo--------------
 	PanelComponentsLabel = wx.Panel(self) 
 #--------------Label "Miscursos"--------------
@@ -87,27 +84,40 @@ class miscursos(wx.Panel):
 	
         PanelComponentsLabel.SetSizer(sizerPanelLabel)
         PanelComponentsLabel.SetBackgroundColour("3399FF")
-		
-#--------------Creaci贸n de un panel de Grid, e inclusi贸n  del objeto Grid y su Label--------------
-#--------------reacion padre hijo--------------
-	PanelComponentsGrid = wx.Panel(self) 
-	titles = ['Curso', 'Docente']
-	self.Grid = Component.CreateGrid(PanelComponentsGrid,4,2,titles,75)
-#-------------Creacion caja de tama帽os--------------
-	sizerPanelGrid = wx.BoxSizer(wx.VERTICAL)
-#--------------Adicion del Objeto al panel--------------
-	sizerPanelGrid.Add(self.Grid , 0, wx.ALIGN_CENTER)  
-	PanelComponentsGrid.SetSizer(sizerPanelGrid)
-#--------------Asignaci贸n de Color de Fondo-------------- 
-	PanelComponentsGrid.SetBackgroundColour("3399FF") 
-		
+
+        grilla = wx.GridSizer(len(self.miscursos)+1, 4, 0, 0) 
+        labelTitulo1 = Component.CreateLabel(self,12,pos=(0,0),label= 'C骴igo')
+        labelTitulo2 = Component.CreateLabel(self,12,pos=(0,0),label= 'Nombre')
+        labelTitulo3 = Component.CreateLabel(self,12,pos=(0,0),label= 'Docente')
+        labelTitulo4 = Component.CreateLabel(self,12,pos=(0,0),label= ' ')
+        
+        grilla.Add(labelTitulo1,0, wx.ALIGN_CENTER)
+        grilla.Add(labelTitulo2,0, wx.ALIGN_CENTER)
+        grilla.Add(labelTitulo3,0, wx.ALIGN_CENTER)        
+        grilla.Add(labelTitulo4,0, wx.ALIGN_CENTER)        
+        
+        for a in range (len(self.miscursos)):
+            
+            labelCurso = Component.CreateLabel(self,12,pos=(0,0),label= str(self.miscursos[a][0]))
+            labelCurso2 = Component.CreateLabel(self,12,pos=(0,0),label= str(self.miscursos[a][1]))
+            labelCurso3 = Component.CreateLabel(self,12,pos=(0,0),label= str(self.miscursos[a][3]))
+            
+            xw1 = wx.CheckBox(self, -1 ,'', (15, 30))
+            xw1.SetValue(False)
+            xw1.Bind(wx.EVT_RADIOBUTTON, self.OnClick, xw1 ,id = int(self.miscursos[a][0]))
+            
+            grilla.Add(labelCurso,0, wx.ALIGN_CENTER)
+            grilla.Add(labelCurso2,0, wx.ALIGN_CENTER)
+            grilla.Add(labelCurso3,0, wx.ALIGN_CENTER)
+            grilla.Add(xw1,0, wx.ALIGN_CENTER)
+                            
 #--------------Creacion de un panel de Buttons, e inclusion  del objeto Buttons y su Label--------------
 #--------------Creacion padre hijo--------------
 	PanelComponentsButtons = wx.Panel(self) 
 		
 	self.Button1 = Component.CreateButton(PanelComponentsButtons,"Seleccionar")
 #--------------Creaci贸n de Evento--------------
-	self.Bind(wx.EVT_BUTTON, self.OnClick,self.Button1)
+	self.Bind(wx.EVT_BUTTON, self.OnClick)
 
 #--------------Creacion caja de tama帽os--------------
 	sizerPanelButton = wx.BoxSizer(wx.HORIZONTAL) 
@@ -116,22 +126,22 @@ class miscursos(wx.Panel):
 	PanelComponentsButtons.SetSizer(sizerPanelButton)
 #--------------Asignaci贸n de Color de Fondo-------------- 
 	PanelComponentsButtons.SetBackgroundColour("3399FF") 
-		
+        
 #--------------Creacion grilla de tamano 3 filas 1 columna--------------
-	gs = wx.GridSizer(3, 1, 0, 0) 
+	gs = wx.GridSizer(4, 1, 0, 0) 
 #--------------Adicion de Paneles a la Grilla--------------
-	gs.AddMany([(PanelComponentsLabel, 0, wx.ALIGN_CENTER),(PanelComponentsGrid, 0, wx.ALIGN_CENTER),
-		(PanelComponentsButtons, 0, wx.ALIGN_CENTER)])
+	gs.AddMany([(PanelComponentsLabel, 0, wx.ALIGN_CENTER),(grilla, 0, wx.ALIGN_CENTER)
+        ,(PanelComponentsButtons, 0, wx.ALIGN_CENTER)])
 		
 #--------------Adicion de la grilla de tamanos al panel padre--------------	
 	
 	sizer = wx.BoxSizer(wx.VERTICAL) 
 	sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 	self.SetSizer(sizer)
-		
+        		
     def OnClick(self,event):
         'Identifica el evento del Bot髇.'
-        self.idcurso = str(2)
+        self.idcurso = str('2')
         interfaz = ElegirExamen.Body(self.parent,self.idestudiante,self.idcurso)
         self.frame.cambiarpanel(interfaz)
  
@@ -139,49 +149,69 @@ class miscursos(wx.Panel):
 ## BuscarCursos
 ##-----------------------------------------------------------el):
 class buscarcursos(wx.Panel):    
-    def __init__(self, parent, idestudiante, frame):
+    def __init__(self,parent,idestudiante,frame):
         self.parent=parent
         'Constructor que recibe a parent como contenedor'
 #--------------Inicializacion Panel Padre--------------
 	wx.Panel.__init__(self,parent) 
 	self.SetBackgroundColour("3399FF")
+               
 #--------------Instancia Clase Componente--------------
 	Component = Componentes.Component(self) 
 	self.parent=parent
         self.frame=frame
         self.idestudiante=idestudiante
-#--------------Titulo-------------- 
+        
+        querybuscarcursos = "select curso.id_curso, curso.nom_curso, persona.id_persona, (persona.nom_pers||' '||persona.apellido_pers) "
+        querybuscarcursos += "from curso, persona, docente where curso.id_prof = docente.id_persona and "
+        querybuscarcursos += "docente.id_persona = persona.id_persona order by curso.id_curso"
+        
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
+        self.buscarcursos = self.conexion.connection.ExecuteQuery(querybuscarcursos)
+        
 #--------------Creacion padre hijo--------------
 	PanelComponentsLabel = wx.Panel(self) 
-#--------------Label "Miscursos"--------------
-	self.label = Component.CreateLabel(PanelComponentsLabel,15,pos=(0,0),label="Cursos")
+#--------------Label "Buscar cursos"--------------
+	self.label = Component.CreateLabel(PanelComponentsLabel,15,pos=(0,0),label="Buscar Cursos")
 		
 	sizerPanelLabel = wx.BoxSizer(wx.VERTICAL)
 	sizerPanelLabel.Add(self.label, 0, wx.ALIGN_CENTER)
 	
         PanelComponentsLabel.SetSizer(sizerPanelLabel)
         PanelComponentsLabel.SetBackgroundColour("3399FF")
-		
-#--------------Creaci贸n de un panel de Grid, e inclusi贸n  del objeto Grid y su Label--------------
-#--------------reacion padre hijo--------------
-	PanelComponentsGrid = wx.Panel(self) 
-	titles = ['Curso', 'Docente']
-	self.Grid = Component.CreateGrid(PanelComponentsGrid,4,2,titles,75)
-#-------------Creacion caja de tama帽os--------------
-	sizerPanelGrid = wx.BoxSizer(wx.VERTICAL)
-#--------------Adicion del Objeto al panel--------------
-	sizerPanelGrid.Add(self.Grid , 0, wx.ALIGN_CENTER)  
-	PanelComponentsGrid.SetSizer(sizerPanelGrid)
-#--------------Asignaci贸n de Color de Fondo-------------- 
-	PanelComponentsGrid.SetBackgroundColour("3399FF") 
-		
+
+        grilla = wx.GridSizer(len(self.buscarcursos)+1, 4, 0, 0) 
+        labelTitulo1 = Component.CreateLabel(self,12,pos=(0,0),label= 'C骴igo')
+        labelTitulo2 = Component.CreateLabel(self,12,pos=(0,0),label= 'Nombre')
+        labelTitulo3 = Component.CreateLabel(self,12,pos=(0,0),label= 'Docente')
+        labelTitulo4 = Component.CreateLabel(self,12,pos=(0,0),label= ' ')
+        
+        grilla.Add(labelTitulo1,0, wx.ALIGN_CENTER)
+        grilla.Add(labelTitulo2,0, wx.ALIGN_CENTER)
+        grilla.Add(labelTitulo3,0, wx.ALIGN_CENTER)        
+        grilla.Add(labelTitulo4,0, wx.ALIGN_CENTER)        
+        
+        for a in range (len(self.buscarcursos)):
+            
+            labelCurso = Component.CreateLabel(self,12,pos=(0,0),label= str(self.buscarcursos[a][0]))
+            labelCurso2 = Component.CreateLabel(self,12,pos=(0,0),label= str(self.buscarcursos[a][1]))
+            labelCurso3 = Component.CreateLabel(self,12,pos=(0,0),label= str(self.buscarcursos[a][3]))
+            buttonCurso = Component.CreateButton(self,"Inscribir")
+            buttonCurso.Bind(wx.EVT_BUTTON, self.OnClick)
+            
+            grilla.Add(labelCurso,0, wx.ALIGN_CENTER)
+            grilla.Add(labelCurso2,0, wx.ALIGN_CENTER)
+            grilla.Add(labelCurso3,0, wx.ALIGN_CENTER)
+            grilla.Add(buttonCurso,0, wx.ALIGN_CENTER)
+                            
 #--------------Creacion de un panel de Buttons, e inclusion  del objeto Buttons y su Label--------------
 #--------------Creacion padre hijo--------------
 	PanelComponentsButtons = wx.Panel(self) 
 		
-	self.Button1 = Component.CreateButton(PanelComponentsButtons,"Inscribirme")
+	self.Button1 = Component.CreateButton(PanelComponentsButtons,"Inscribir")
 #--------------Creaci贸n de Evento--------------
-	self.Bind(wx.EVT_BUTTON, self.OnClick,self.Button1)
+	self.Bind(wx.EVT_BUTTON, self.OnClick)
 
 #--------------Creacion caja de tama帽os--------------
 	sizerPanelButton = wx.BoxSizer(wx.HORIZONTAL) 
@@ -190,12 +220,12 @@ class buscarcursos(wx.Panel):
 	PanelComponentsButtons.SetSizer(sizerPanelButton)
 #--------------Asignaci贸n de Color de Fondo-------------- 
 	PanelComponentsButtons.SetBackgroundColour("3399FF") 
-		
+        
 #--------------Creacion grilla de tamano 3 filas 1 columna--------------
-	gs = wx.GridSizer(3, 1, 0, 0) 
+	gs = wx.GridSizer(4, 1, 0, 0) 
 #--------------Adicion de Paneles a la Grilla--------------
-	gs.AddMany([(PanelComponentsLabel, 0, wx.ALIGN_CENTER),(PanelComponentsGrid, 0, wx.ALIGN_CENTER),
-		(PanelComponentsButtons, 0, wx.ALIGN_CENTER)])
+	gs.AddMany([(PanelComponentsLabel, 0, wx.ALIGN_CENTER),(grilla, 0, wx.ALIGN_CENTER)
+        ,(PanelComponentsButtons, 0, wx.ALIGN_CENTER)])
 		
 #--------------Adicion de la grilla de tamanos al panel padre--------------	
 	
