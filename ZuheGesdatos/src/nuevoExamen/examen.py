@@ -15,6 +15,7 @@ class examen():
         self.horainicio = ""
         self.horafin = ""
         self.idestudiantes = []
+        self.cursoselegidos = []
         self.fechaPresEstu = []
         self.puntajeEstu = []
         self.idexamen = 0
@@ -52,6 +53,10 @@ class examen():
     def setidestudiantes(self,idestudiantes):
         'cambia los estudiates registrados con valor de idestudiantes'
         self.idestudiantes = idestudiantes
+
+    def setcursoselegidos(self,cursoselegidos):
+        'cambia los cursos elegidos para los estudiantes del examen'
+        self.cursoselegidos = cursoselegidos
 
     def setfechaPresEstu(self,fechas):
         'cambia las fechasa presentar examen por parte de estudiante con valor de fechas'

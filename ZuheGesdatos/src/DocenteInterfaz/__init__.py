@@ -137,5 +137,6 @@ class Body(wx.Panel):
 #	ssh_password="gesdatosestudent",
 #	ssh_username="estgesdatos",
 #	remote_bind_address=('127.0.0.1', 5432)) as server:
-#            iddocente = "4"
-#            MenuPrincipalDocente(iddocente,server.local_bind_port)
+iddocente = "4"
+            #MenuPrincipalDocente(iddocente,server.local_bind_port)
+MenuPrincipalDocente(iddocente,5434)

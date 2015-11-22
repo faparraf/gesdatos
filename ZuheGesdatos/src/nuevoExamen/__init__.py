@@ -111,6 +111,7 @@ class interfazpanelpaso():
             self.topanel = topPanel
             self.sizer = sizertopPanel
             self.nuevoexamen = examen.examen(str(iddocente))
+            self.iddocente=iddocente
             self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",localport)#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             queryidexamen = "select count(*) from examen;"
@@ -186,6 +187,11 @@ class interfazpanelpaso():
                 insertexapreg += "VALUES ("+str(idpregunta)+","+str(pregunta.puntaje)+","+str(self.idexamen)+");"
                 print (insertexapreg)
                 self.conexion.connection.ExecuteQueryWithoutreturn(insertexapreg)
+            for curso in self.nuevoexamen.cursoselegidos:
+                insertcurso = 'INSERT INTO curso_examen ("id_curso","id_examen")'
+                insertcurso += "VALUES ("+str(curso)+","+str(self.idexamen)+");"
+                print (insertcurso)
+                self.conexion.connection.ExecuteQueryWithoutreturn(insertcurso)
         
         def generarpanelespreguntas(self,opcionespreguntas,it):
             """ usado para cada una de las preguntas que el examen
@@ -272,7 +278,9 @@ class interfazpanelpaso():
             el panel donde se ingreso la informacion y la cantidad de preguntas del examen"""
             #self.quote = wx.StaticText(self, label=dlg.comboBox1.GetValue(), pos=(20, 30))
             EstudiantesAsignados = panel.estudiantesescogidos
+            cursosAsignados = panel.cursosescogidos
             self.nuevoexamen.setidestudiantes(EstudiantesAsignados)
+            self.nuevoexamen.setcursoselegidos(cursosAsignados)
             print("valor "+str(EstudiantesAsignados) ) 
             query ="SELECT * FROM tipopegrunta;"            
             self.opcionespreguntas = self.conexion.connection.ExecuteQuery(query) #comentado mienstras no este creada la base ded datos
