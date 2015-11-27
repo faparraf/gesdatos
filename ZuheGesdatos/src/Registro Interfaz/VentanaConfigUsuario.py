@@ -10,7 +10,7 @@ from RegistroUsuarios.Requests import Request
 
 class VentanaConfigUsuario(wx.Panel):   
     
-	def __init__(self,parent):
+	def __init__(self,parent,idusuario):
                 'contructor requiere de parent como interfaz contenedor'
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
@@ -24,7 +24,8 @@ class VentanaConfigUsuario(wx.Panel):
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsNombre = wx.Panel(self) #Creacion padre hijo
 		self.labelNombre = Component.CreateLabel(PanelComponentsNombre,15,pos=(0,0),label="Nombre:        ")
-		self.TxtAreaNombre = Component.CreateImputText(PanelComponentsNombre,pos=(0,0),size=(250,22))                
+		self.TxtAreaNombre = Component.CreateImputText(PanelComponentsNombre,pos=(0,0),size=(250,22))
+                self.TxtAreaNombre.SetValue("hola")
 		sizerPanelNombre = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelNombre.Add(self.labelNombre , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelNombre.Add(self.TxtAreaNombre , 0, wx.EXPAND) # Adicion del Objeto al panel
@@ -114,17 +115,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsCbxUniversidad.SetSizer(sizerPanelCbxUniversidad)
 		PanelComponentsCbxUniversidad.SetBackgroundColour("white") #Asignación de Color de Fondo 
                 
-                PanelComponentsRCategoria = wx.Panel(self) #Creacion padre hijo
-		self.labelRadioBox = Component.CreateLabel(PanelComponentsRCategoria,15,pos=(0,0),label="Categoria:    ")
-		ListaCategoria = ['Estudiante    ', 'Docente']
-		self.RbCategoria = Component.CreateRadioBox(PanelComponentsRCategoria,"Tipo",ListaCategoria)
-		self.Bind(wx.EVT_RADIOBOX, self.EvtRadioBox, self.RbCategoria)#Creación de Evento
-		sizerPanelRadioBox = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
-		sizerPanelRadioBox.Add(self.labelRadioBox , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
-		sizerPanelRadioBox.Add(self.RbCategoria , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
-		PanelComponentsRCategoria.SetSizer(sizerPanelRadioBox)
-		PanelComponentsRCategoria.SetBackgroundColour("white")
-                
+                               
 #----Creación de un panel de Buttons, e inclusión  del objeto Buttons y su Label
 		PanelComponentsBConfirmar = wx.Panel(self) #Creacion padre hijo		
 		self.BConfirmar = Component.CreateButton(PanelComponentsBConfirmar,"Confirmar")
@@ -146,7 +137,7 @@ class VentanaConfigUsuario(wx.Panel):
                             (PanelComponentsCbxUniversidad,0,0)])
                 gs3.AddMany([gs1,gs2])
                 gs.AddMany([(PanelComponentsTitulo,wx.EXPAND,wx.ALIGN_CENTER),(gs3,0,wx.ALIGN_CENTER),
-                            (PanelComponentsRCategoria,0,wx.ALIGN_CENTER),(PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
+                            (PanelComponentsBConfirmar, wx.EXPAND, wx.ALIGN_CENTER)])
                                 
                 #gs2 = wx.GridSizer(3, 1, 7, 7)
                 #gs2.AddMany([(PanelComponentsTitulo,0,wx.ALIGN_CENTER,0,0),(gs)])

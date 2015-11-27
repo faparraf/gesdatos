@@ -3,7 +3,7 @@
 
 class TipoPersona:
     __idTipoPersona=0
-    __tipo="asedeeeeeee"
+    __tipo=""
     
     def __init__(self):
         self.__idTipoPersona
