@@ -12,7 +12,7 @@ class Persona:
     __correouni=""
     __usuario=""
     __universidad=""
-    __pais=""
+    __pais=0
     
     
     def __init__(self):
@@ -36,7 +36,7 @@ class Persona:
         """Documentation"""
         self.__idpersona=idpersona
         
-    def get__nombre(self,parameters):
+    def get__nombre(self):
         """Documentation"""
         return self.__nombre
     

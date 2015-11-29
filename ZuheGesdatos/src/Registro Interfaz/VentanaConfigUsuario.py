@@ -6,6 +6,7 @@ import re
 import wx
 import wx.lib.scrolledpanel as scrolled
 import Componentes
+import RequestConfig
 from RegistroUsuarios.Requests import Request
 
 class VentanaConfigUsuario(wx.Panel):   
@@ -15,7 +16,9 @@ class VentanaConfigUsuario(wx.Panel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.solicitud = Request()                             
+                self.solicitud = Request()         
+                self.rconf= RequestConfig.RequestConfig(idusuario)
+                self.persona=self.rconf.ver_persona()
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
@@ -24,8 +27,8 @@ class VentanaConfigUsuario(wx.Panel):
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsNombre = wx.Panel(self) #Creacion padre hijo
 		self.labelNombre = Component.CreateLabel(PanelComponentsNombre,15,pos=(0,0),label="Nombre:        ")
-		self.TxtAreaNombre = Component.CreateImputText(PanelComponentsNombre,pos=(0,0),size=(250,22))
-                self.TxtAreaNombre.SetValue("hola")
+		self.TxtAreaNombre = Component.CreateImputText(PanelComponentsNombre,pos=(0,0),size=(250,22))                
+                self.TxtAreaNombre.SetValue(self.persona.get__nombre())
 		sizerPanelNombre = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelNombre.Add(self.labelNombre , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelNombre.Add(self.TxtAreaNombre , 0, wx.EXPAND) # Adicion del Objeto al panel
@@ -36,6 +39,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsApellido = wx.Panel(self) #Creacion padre hijo
 		self.labelApellido = Component.CreateLabel(PanelComponentsApellido,15,pos=(0,0),label="Apellido:        ")
 		self.TxtAreaApellido = Component.CreateImputText(PanelComponentsApellido,pos=(0,0),size=(250,22))
+                self.TxtAreaApellido.SetValue(self.persona.get__apellido())
 		sizerPanelApellido = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelApellido.Add(self.labelApellido ,wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelApellido.Add(self.TxtAreaApellido , 0, wx.EXPAND) # Adicion del Objeto al panel
@@ -46,6 +50,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsDocumento = wx.Panel(self) #Creacion padre hijo
 		self.labelDocumento = Component.CreateLabel(PanelComponentsDocumento,15,pos=(0,0),label="Documento:   ")
 		self.TxtAreaDocumento = Component.CreateIntCtrl(PanelComponentsDocumento,pos=(0,0),size=(250,22))
+                self.TxtAreaDocumento.SetValue(int(self.persona.get__documento()))
                 self.Bind(wx.EVT_TEXT, self.EvtPanelDocumento, self.TxtAreaDocumento)
 		sizerPanelDocumento = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelDocumento.Add(self.labelDocumento , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
@@ -53,20 +58,12 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsDocumento.SetSizer(sizerPanelDocumento)
 		PanelComponentsDocumento.SetBackgroundColour("white") #Asignación de Color de Fondo 
                 
-#----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
-		PanelComponentsFechaNac = wx.Panel(self) #Creacion padre hijo
-		self.labelFechaNac = Component.CreateLabel(PanelComponentsFechaNac,15,pos=(0,0),label="Fecha Nacimiento:  ")                                
-		self.ClcFechaNac = Component.CreateCalendarCtrl(PanelComponentsFechaNac,pos=(0,0),size=(200,22))
-		sizerPanelFechaNac = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
-		sizerPanelFechaNac.Add(self.labelFechaNac , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
-		sizerPanelFechaNac.Add(self.ClcFechaNac , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
-		PanelComponentsFechaNac.SetSizer(sizerPanelFechaNac)
-		PanelComponentsFechaNac.SetBackgroundColour("white") #Asignación de Color de Fondo 
-               
+              
 #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsCorreo = wx.Panel(self) #Creacion padre hijo
 		self.labelCorreo = Component.CreateLabel(PanelComponentsCorreo,15,pos=(0,0),label="Correo:                    ")
-		self.TxtAreaCorreo = Component.CreateImputText(PanelComponentsCorreo,pos=(0,0),size=(250,22))		
+		self.TxtAreaCorreo = Component.CreateImputText(PanelComponentsCorreo,pos=(0,0),size=(250,22))	
+                self.TxtAreaCorreo.SetValue(self.persona.get__correo())
                 sizerPanelCorreo = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelCorreo.Add(self.labelCorreo , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelCorreo.Add(self.TxtAreaCorreo , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -77,6 +74,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsCorreoUni = wx.Panel(self) #Creacion padre hijo
 		self.labelCorreoUni = Component.CreateLabel(PanelComponentsCorreoUni,15,pos=(0,0),label="Correo Universidad:  ")
 		self.TxtAreaCorreoUni = Component.CreateImputText(PanelComponentsCorreoUni,pos=(0,0),size=(250,22))
+                self.TxtAreaCorreoUni.SetValue(self.persona.get__correouni())
 		sizerPanelCorreoUni = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelCorreoUni.Add(self.labelCorreoUni , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelCorreoUni.Add(self.TxtAreaCorreoUni , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -87,6 +85,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsUsuario = wx.Panel(self) #Creacion padre hijo
 		self.labelUsuario = Component.CreateLabel(PanelComponentsUsuario,15,pos=(0,0),label="Usuario:                   ")
 		self.TxtAreaUsuario = Component.CreateImputText(PanelComponentsUsuario,pos=(0,0),size=(250,22))
+                self.TxtAreaUsuario.SetValue(self.persona.get__usuario())
 		sizerPanelUsuario = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelUsuario.Add(self.labelUsuario , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		sizerPanelUsuario.Add(self.TxtAreaUsuario , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -97,12 +96,14 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsCbxPais = wx.Panel(self) #Creacion padre hijo
 		self.labelCbxPais = Component.CreateLabel(PanelComponentsCbxPais,15,pos=(0,0),label="Pais:              ")                
 		self.CbPais = Component.CreateComboBox(PanelComponentsCbxPais,pos=(0,0),size=250,List=self.solicitud.verPais())#self.solicitud.verPais())
-		self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbPais) #Creación de Evento
+		
+                self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.CbPais) #Creación de Evento
 		sizerPanelCbxPais = wx.BoxSizer(wx.HORIZONTAL)#Creacion caja de tamaños
 		sizerPanelCbxPais.Add(self.labelCbxPais , 0, wx.ALIGN_CENTER,border= 10) # Adicion del Objeto al panel
 		sizerPanelCbxPais.Add(self.CbPais , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		PanelComponentsCbxPais.SetSizer(sizerPanelCbxPais)
 		PanelComponentsCbxPais.SetBackgroundColour("white") #Asignación de Color de Fondo 
+                self.CbPais.Select(int(self.persona.get__pais())-1)
                 
 #----Creación de un panel de ComboBox, e inclusión  del objeto ComboBox y su Label
 		PanelComponentsCbxUniversidad = wx.Panel(self) #Creacion padre hijo
@@ -114,6 +115,9 @@ class VentanaConfigUsuario(wx.Panel):
 		sizerPanelCbxUniversidad.Add(self.CbUniversidad , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		PanelComponentsCbxUniversidad.SetSizer(sizerPanelCbxUniversidad)
 		PanelComponentsCbxUniversidad.SetBackgroundColour("white") #Asignación de Color de Fondo 
+                self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
+                self.CbUniversidad.Select(int(self.persona.get__universidad())-1)
+                
                 
                                
 #----Creación de un panel de Buttons, e inclusión  del objeto Buttons y su Label
@@ -131,7 +135,7 @@ class VentanaConfigUsuario(wx.Panel):
                 gs3 = wx.GridSizer(1, 2, 7, 7) #Creacion grilla de tamaño
       #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
 		gs1.AddMany([ (PanelComponentsNombre,1,0),
-                            (PanelComponentsApellido, 1, 0), (PanelComponentsDocumento, 1, 0),(PanelComponentsFechaNac, 0, 0),
+                            (PanelComponentsApellido, 1, 0), (PanelComponentsDocumento, 1, 0),
                             (PanelComponentsCbxPais,0,0)])
                 gs2.AddMany([(PanelComponentsCorreo, 0, 0),(PanelComponentsCorreoUni, 0, 0),(PanelComponentsUsuario, 0, 0),
                             (PanelComponentsCbxUniversidad,0,0)])
@@ -153,18 +157,13 @@ class VentanaConfigUsuario(wx.Panel):
             'Maneja el evento que realiza el ComboBox'
             self.CbUniversidad.Clear()
             self.CbUniversidad.AppendItems(self.solicitud.verUniversidad(self.CbPais.GetValue()))
-            self.CbUniversidad.Append("Otra...")
+            
                 #print cate	
                         
         def EvtCbUniversidad(self, event):
-            'Maneja el evento que realiza el ComboBox con las universidades'
-            if self.CbUniversidad.GetValue() == "Otra...":               
-                print "ad"
-            
-        def EvtRadioBox(self, event):
-            'Maneja el evento que realiza el RadioBox'
-            print self.ClcFechaNac.GetValue().FormatISODate()
-                           
+            print 'Maneja el evento que realiza el ComboBox con las universidades'
+           
+        
         def EvtPanelDocumento(self, event):
                 'Maneja el evento que realiza el panel'
                 print "pot"   
@@ -197,7 +196,13 @@ class VentanaConfigUsuario(wx.Panel):
                             print "picho ok"                        
                         else:
                             try:
-                                self.solicitud.registrarPersona(self.TxtAreaNombre.GetValue(),self.TxtAreaApellido.GetValue(),
+                                if(self.TxtAreaNombre.GetValue()!=self.persona.get__nombre()):
+                                    self.rconf.actualizar__nombre(self.TxtAreaNombre.GetValue())
+                                
+                                if(self.TxtAreaApellido.GetValue()!=self.persona.get__apellido()):
+                                    self.rconf.actualizar__apellido(self.TxtAreaApellido.GetValue())
+                                    
+                                self.solicitud.registrarPersona(self,self.TxtAreaApellido.GetValue(),
                                                                 self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
                                                                 self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
                                                                 self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),

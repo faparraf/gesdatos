@@ -31,7 +31,7 @@ class Body(wx.Panel):
 		self.parent=parent
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		#self.panel=VentanaRegistroUsuarios.VentanaRegistroUsuarios(self) ## En esta linea se Agrega el Panel de inicio
-		self.panel=VentanaConfigUsuario.VentanaConfigUsuario(self,15)
+		self.panel=VentanaConfigUsuario.VentanaConfigUsuario(self,2)
                 #self.panel=VentanaRoles.VentanaRoles(self)
                 self.SetBackgroundColour("white") # Color de Fondo del panel
 		self.sizerbody=wx.BoxSizer(wx.VERTICAL)
