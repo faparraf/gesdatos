@@ -31,26 +31,27 @@ class RequestConfig:
         return persona
                                     
     def actualizar__nombre(self,nombre):
-        self.conn.insertQuery('update persona set nom_pers="'+nombre+'" where id_persona ='+str(self.__idpersona))
+        self.conn.insertQuery("update persona set nom_pers='"+nombre+"' where id_persona ="+str(self.__idpersona))
     
     def actualizar__apellido(self,apellido):
-        self.conn.insertQuery('update persona set apellido_pers="'+apellido+'" where id_persona ='+str(self.__idpersona))
+        self.conn.insertQuery("update persona set apellido_pers='"+apellido+"' where id_persona ="+str(self.__idpersona))
         
     def actualizar__documento(self,documento):
-        self.conn.insertQuery('update persona set di_pers='+documento+' where id_persona ='+str(self.__idpersona))    
+        self.conn.insertQuery("update persona set di_pers="+str(documento)+" where id_persona ="+str(self.__idpersona))    
        
     def actualizar__fechanacimiento(self,fechanacimiento):
-        self.conn.insertQuery('update persona set fecha_nac="'+fechanacimiento+'" where id_persona ='+str(self.__idpersona))
+        self.conn.insertQuery("update persona set fecha_nac='"+fechanacimiento+"' where id_persona ="+str(self.__idpersona))
         
     def actualizar__correo(self,correo):
-        self.conn.insertQuery('update persona set correo="'+correo+'" where id_persona ='+str(self.__idpersona))
+        self.conn.insertQuery("update persona set correo='"+correo+"' where id_persona ="+str(self.__idpersona))
         
     def actualizar__correouni(self,correouni):
-        self.conn.insertQuery('update persona set correo_universidad="'+correouni+'" where id_persona ='+str(self.__idpersona))
+        self.conn.insertQuery("update persona set correo_universidad='"+correouni+"' where id_persona ="+str(self.__idpersona))
         
     def actualizar__usuario(self,usuario):
-        self.conn.insertQuery('update persona set usuario="'+usuario+'" where id_persona ='+str(self.__idpersona))
-        
+        self.conn.insertQuery("update persona set usuario='"+usuario+"' where id_persona ="+str(self.__idpersona))
+            
     def actualizar__universidad(self,universidad):
-        self.conn.insertQuery('update persona set uni='+universidad+' where id_persona ='+str(self.__idpersona))   
+        universidadid=int("%s" %(self.conn.selectQuery("select id_uni from universidad where nom_uni ='"+universidad+"'")[0]))
+        self.conn.insertQuery("update persona set uni="+str(universidadid)+" where id_persona ="+str(self.__idpersona))   
    

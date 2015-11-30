@@ -15,7 +15,8 @@ class VentanaRegistroUsuarios(wx.Panel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.solicitud = Request()                             
+                self.solicitud = Request()     
+                
                 #correo=Correo.Correo()
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
 		PanelComponentsTitulo = wx.Panel(self) #Creacion padre hijo
@@ -211,6 +212,10 @@ class VentanaRegistroUsuarios(wx.Panel):
                                                                 self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
                                                                 self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
                                                                 self.RbCategoria.GetSelection())
+                                
+                                #correo = Correo.Correo()
+                                #corre.enviar(self.TxtAreaCorreoUni.GetValue(), "Bienvenido a zuhe su contraseña es "+str(self.TxtAreaDocumento.GetValue()),"Registro zuhe")
+                        
                                 
                                 #msg="<p><h1>Registro usuario Suhe</h1></p>"+self.TxtAreaDocumento.GetValue()
                                 #correo.enviar(self.TxtAreaCorreo.GetValue(),msg,"Registro Suhe")

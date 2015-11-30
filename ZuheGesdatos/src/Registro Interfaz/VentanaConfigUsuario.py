@@ -195,21 +195,35 @@ class VentanaConfigUsuario(wx.Panel):
                         if wx.MessageBox("Desea realizar el registro ","Gesdatos",wx.OK|wx.CANCEL) ==16:
                             print "picho ok"                        
                         else:
+                            
                             try:
+                           
                                 if(self.TxtAreaNombre.GetValue()!=self.persona.get__nombre()):
                                     self.rconf.actualizar__nombre(self.TxtAreaNombre.GetValue())
                                 
                                 if(self.TxtAreaApellido.GetValue()!=self.persona.get__apellido()):
                                     self.rconf.actualizar__apellido(self.TxtAreaApellido.GetValue())
                                     
-                                self.solicitud.registrarPersona(self,self.TxtAreaApellido.GetValue(),
-                                                                self.TxtAreaDocumento.GetValue(),self.ClcFechaNac.GetValue().FormatISODate(),
-                                                                self.TxtAreaCorreo.GetValue(),self.TxtAreaCorreoUni.GetValue(),
-                                                                self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
-                                                                self.RbCategoria.GetSelection())
-                            except :
-                                wx.MessageBox("El documento o usuario ya existen ","Gesdatos")
-                                self.solicitud = Request()   
+                                if(self.TxtAreaDocumento.GetValue()!=self.persona.get__documento()):
+                                    self.rconf.actualizar__documento(self.TxtAreaDocumento.GetValue())
+                                
+                                if(self.TxtAreaCorreo.GetValue()!=self.persona.get__correo()):
+                                    self.rconf.actualizar__correo(self.TxtAreaCorreo.GetValue())
+                                    
+                                if(self.TxtAreaCorreoUni.GetValue()!=self.persona.get__correouni()):
+                                    self.rconf.actualizar__correouni(self.TxtAreaCorreoUni.GetValue())
+                                                                   
+                                if(self.CbUniversidad.GetValue()!=self.persona.get__universidad()):
+                                    self.rconf.actualizar__universidad(self.CbUniversidad.GetValue())
+                                    
+                                if(self.TxtAreaUsuario.GetValue()!=self.persona.get__usuario()):
+                                    self.rconf.actualizar__usuario(self.TxtAreaUsuario.GetValue())   
+                                    
+                                wx.MessageBox("La informacion a sido actualizada ","Gesdatos")
+                            except:
+                                wx.MessageBox("El usuario o documento ya existen ","Gesdatos")
+                                
+                            
                     else:
                         wx.MessageBox("El area Correo Universidad ingresado no es valido ","Gesdatos")   
                 else:                
