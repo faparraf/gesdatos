@@ -78,14 +78,18 @@ class panelFalsoVerdadero(wx.Panel):
         'Se crea el bloc de notas o menu de pesta�as'
         wx.Panel.__init__(self, parent=parent)
         componentes = Componentes.Component(self)
+        self.parent=parent
         self.opciones = ["Falso","Verdadero"]
         self.radioBox = componentes.CreateRadioBox(self, "", self.opciones)
+        self.radioBox.Bind(wx.EVT_RADIOBOX, self.EvtRadioBox, self.radioBox)
         gs = wx.GridSizer(1, 1, 1, 1) #Creacion grilla de tamaño
         #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
         gs.AddMany([(self.radioBox, 0, wx.ALIGN_CENTER)])
         sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
+    def EvtRadioBox(self, event):
+        print('La opcion marcada es: ' + str(event.GetString())+' de  la pregunta: '+str(self.parent.idpregunta))
 
 #---------------------------------------------------------------------------------------
 
@@ -93,6 +97,7 @@ class PanelOpcionMultiple(wx.Panel):
     def __init__(self,parent,idpregunta):
         'Se crea el bloc de notas o menu de pesta�as'
         wx.Panel.__init__(self, parent=parent)
+        self.parent=parent
         componentes = Componentes.Component(self)
         gs = wx.GridSizer(1, 1, 1, 1) #Creacion grilla de tamaño
         query = "select opcionpreg.respuesta from opcionpreg, pregunta where "
@@ -105,9 +110,13 @@ class PanelOpcionMultiple(wx.Panel):
             #labela = componentes.CreateLabel(self,12,[0,35],self.opcionpregunta[a-1][0])
             #cheackbox = componentes.CreateComboBox(self,[0,35],100,self.opciones)
             #cheackbox.Value = "Falso"
-        radiobox = componentes.CreateRadioBox(self,"Opciones respuesta",self.radiolist)
+        self.radiobox = componentes.CreateRadioBox(self,"Opciones respuesta",self.radiolist)
+        self.radiobox.Bind(wx.EVT_RADIOBOX, self.EvtRadioBox, self.radiobox)
         #gs.Add(labela, 0, wx.ALIGN_CENTER)
-        gs.Add(radiobox, 0, wx.ALIGN_CENTER)
+        gs.Add(self.radiobox, 0, wx.ALIGN_CENTER)
         sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
+        
+    def EvtRadioBox(self, event):
+        print('La opcion marcada es: ' + str(event.GetString())+' de  la pregunta: '+str(self.parent.idpregunta))

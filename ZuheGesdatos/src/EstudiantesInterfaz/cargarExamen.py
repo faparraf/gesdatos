@@ -35,7 +35,7 @@ class DialogoExamen(wx.Dialog):
         self.lblname = wx.StaticText(panel, label="Nombre Examen : "+str(self.generalidadexamen[0][0]), pos=(0, 35))
         self.docente = wx.StaticText(panel, label="Docente :"+str(self.generalidadexamen[0][1]), pos=(100, 35))
         self.lblhoraini = wx.StaticText(panel, label="Hora Inicio :"+str(self.generalidadexamen[0][2]), pos=(0, 65))
-        self.lblhorafin = wx.StaticText(panel, label="Hora Fin :"+str(self.generalidadexamen[0][3]), pos=(100, 65))
+        self.lblhorafin = wx.StaticText(panel, label="Hora Fin: "+str(self.generalidadexamen[0][3]), pos=(100, 65))
         self.enviar = wx.Button(panel, wx.ID_OK,label="Enviar")
         #--------------Adición de Paneles a la Grilla, esta grilla permite que los paneles se ajuste al tamaño de la pantalla
         gs.AddMany([(self.lblname, 0, wx.ALIGN_CENTER),(self.docente, 0, wx.ALIGN_CENTER),
@@ -67,23 +67,28 @@ class InterfazExamen(wx.Panel):
         self.idpreguntas = (self.conectordatabase).ExecuteQuery(query)
         print str(self.idpreguntas)
         self.cantidadpreguntas = 0
+        
         for it in self.idpreguntas:
             # A�adimos los paneles con Addpage
             idpregunta = (self.idpreguntas[self.cantidadpreguntas])
             print("creando pregunta "+str(idpregunta))
             nuevopanel = panelPregunta.panelpregunta(nb,self,idpregunta[0])#se pone de la posicion 0 porque se retorna una lista de un solo elemento
             self.cantidadpreguntas=self.cantidadpreguntas+1
-            nb.AddPage(nuevopanel, "pregunta "+str(self.cantidadpreguntas))
+            nb.AddPage(nuevopanel, "Pregunta "+str(self.cantidadpreguntas))
+        
         sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
         #sizer.Add(self.enviar, proportion=1,flag=wx.FIXED_MINSIZE)
         sizer.Add(nb, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
+        
     def getconexion(self):
         """consutlor que retorna la clase administradora de la base de datos"""
         return self.conexion.connection
+    
     def getcantimgtemp(self):
         'Obtiene la imagen'
         return self.cantimgtemp
+    
     def setcantimgtemp(self,nuevacant):
         'Se asigna la imagen'
         self.cantimgtemp = nuevacant
