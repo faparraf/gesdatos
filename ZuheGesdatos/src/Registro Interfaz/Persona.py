@@ -1,7 +1,9 @@
-import TipoPersona   
+import TipoPersona 
 
 
-class Persona:   
+
+class Persona:
+    """Clase Objeto de Persona"""
     
     __idpersona=0
     __nombre=""
@@ -16,7 +18,7 @@ class Persona:
     
     
     def __init__(self):
-        """Documentation"""
+        """Inicializa atributos de la clase"""
         self.__idpersona;
         self.__nombre;
         self.__apellido;
@@ -27,7 +29,9 @@ class Persona:
         self.__usuario;
         self.__universidad;
         self.__pais;
+    
         
+    """Agrega setters y getters a cada atributo"""    
     def get__idpersona(self):
         """Documentation"""
         return self.__idpersona
@@ -108,19 +112,3 @@ class Persona:
         """Documentation"""
         self.__pais=pais    
         
-                      
-    def prueba(self):
-        tipo= TipoPersona.TipoPersona()
-        tipo.set_IdTipoPersona(5)
-        tipo.set_Tipo("alumno")
-        ##tipo.idTipoPersona=6
-        tipo.set_IdTipoPersona(8)
-        return tipo
-        #print tipo.get_IdTipoPersona()
-        
-    
-#pers=Persona()
-#t=pers.prueba()
-#print t.get_IdTipoPersona()
-#print t.get_Tipo()
-                

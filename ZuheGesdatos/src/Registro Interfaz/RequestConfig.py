@@ -4,16 +4,19 @@
 from RegistroUsuarios.Conexion import Conexion
 import Persona
 class RequestConfig:
+    """Clase DAO que implementa los Request con la BD"""
     
     __idpersona=""
     
     def __init__(self,idpersona):
+        """Inicializa atributos de la clase"""
         self.__idpersona=idpersona
         
         'Inicia la ejecución de la clase'
         self.conn= Conexion()        
     
     def ver_persona(self):
+        """metodo que retorna una persona asociada a la clase"""
         
         lista= self.conn.selectQuery('select p.nom_pers, p.apellido_pers, p.di_pers, p.fecha_nac, p.correo, p.correo_universidad, p.usuario, p.uni, u.id_paisuni from persona p, universidad u where p.id_persona='+str(self.__idpersona)+' and u.id_uni = p.uni')
         persona = Persona.Persona()    
@@ -29,7 +32,9 @@ class RequestConfig:
             persona.set__pais(row[8])  
             
         return persona
+     
                                     
+    """Metodos que actualizan segun el dato recibido"""                                
     def actualizar__nombre(self,nombre):
         self.conn.insertQuery("update persona set nom_pers='"+nombre+"' where id_persona ="+str(self.__idpersona))
     
