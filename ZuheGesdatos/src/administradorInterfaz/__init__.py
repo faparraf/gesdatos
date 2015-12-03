@@ -15,10 +15,10 @@ ID_AGREGAR_TIPO_OPCION = wx.NewId ()
 ID_AGREGAR_TIPO_EXAMEN = wx.NewId ()
 
 class MenuPrincipaladmin(wx.Frame):
-    def __init__(self,idaadministrador):
+    def __init__(self,idaadministrador,puerto):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
-        
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5432")#se rquerie de datos para conexion a motor
+        self.puerto = str(puerto)
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",puerto)#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         self.idaadministrador = idaadministrador
         app=wx.App(False)
@@ -30,7 +30,7 @@ class MenuPrincipaladmin(wx.Frame):
         topPanel.SetBackgroundColour('3399FF')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-        sizertopPanel.Add(Body(topPanel,idaadministrador),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(Body(topPanel,idaadministrador,self.puerto),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         topPanel.SetSizer(sizertopPanel)
         self.sizer = sizertopPanel
@@ -125,11 +125,11 @@ class Body(wx.Panel):
     """ Una clase personalizada de frame donde el usuario que desee registrar un nuevo examen
         podra ingresar datos como el nombre del examen, la fecha del examen,
         el puntaje extra del examen, el tipo del examen y la cantidad de preguntas que este tendra."""
-    def __init__(self, parent, idadministrador):
+    def __init__(self, parent, idadministrador,puerto):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
         self.SetBackgroundColour('3399FF')
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",puerto)#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         queryidexamen = "select (nom_pers||' '||apellido_pers) from persona where id_persona = "+idadministrador+";"
         self.nombre = self.conexion.connection.ExecuteQuery(queryidexamen)
@@ -145,4 +145,4 @@ class Body(wx.Panel):
         self.SetSizer(sizer)
             
 #idaadministrador = "4"
-#MenuPrincipaladmin(idaadministrador)
+#MenuPrincipaladmin(idaadministrador,"5434")
