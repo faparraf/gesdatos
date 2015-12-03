@@ -118,7 +118,7 @@ class interfazpanelpaso():
         cambiar el panel del interfaz para mantenerse en la estructura Body
         ubicado entre Head y Low."""
         
-        def __init__(self, parent,topPanel,sizertopPanel):
+        def __init__(self, parent,topPanel,sizertopPanel,puerto):
             """ Metodo usado para iniciar el registro de un nuevo examen
             en sus parametros generales se encuentra el interfaz parent causante
             del llamado de esta clase para reguistrar un nuevo examen, se requere
@@ -130,7 +130,7 @@ class interfazpanelpaso():
             self.father = parent
             self.topanel = topPanel
             self.sizer = sizertopPanel
-            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5432")#se rquerie de datos para conexion a motor
+            self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(puerto))#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             #self.Bind(wx.EVT_BUTTON, self.registrarExamen,self.button)
         
@@ -153,7 +153,7 @@ topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)
 topPanel.SetBackgroundColour('3399FF')
 sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-interfaz = interfazpanelpaso(frame,topPanel,sizertopPanel)
+interfaz = interfazpanelpaso(frame,topPanel,sizertopPanel,"5434")
 sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
 sizertopPanel.Add(Body(topPanel,interfaz),0,wx.EXPAND|wx.ALL,border=10)
 sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
