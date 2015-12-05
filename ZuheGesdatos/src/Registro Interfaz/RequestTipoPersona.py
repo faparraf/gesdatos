@@ -6,9 +6,9 @@ from RegistroUsuarios.Conexion import Conexion
 
 class RequestTipoPersona:
     
-    def __init__(self):
+    def __init__(self,puerto):
         'Inicia la ejecución de la clase'
-        self.conn= Conexion()
+        self.conn= Conexion(puerto)
         
     def verTipos(self):
         

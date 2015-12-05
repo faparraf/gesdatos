@@ -13,12 +13,12 @@ import RolTabla
 
 class VentanaRoles(wx.Panel):   
     
-	def __init__(self,parent):
+	def __init__(self,parent,puerto):
                 'contructor requiere de parent como interfaz contenedor'
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.rTipoPersona = RequestTipoPersona.RequestTipoPersona()  
+                self.rTipoPersona = RequestTipoPersona.RequestTipoPersona(puerto)  
                 self.roltab = RolTabla.RolTabla()
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label

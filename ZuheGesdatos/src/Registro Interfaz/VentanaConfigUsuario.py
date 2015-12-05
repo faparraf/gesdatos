@@ -11,13 +11,13 @@ from RegistroUsuarios.Requests import Request
 
 class VentanaConfigUsuario(wx.Panel):   
     
-	def __init__(self,parent,idusuario):
+	def __init__(self,parent,idusuario,puerto):
                 'contructor requiere de parent como interfaz contenedor'
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
                 self.solicitud = Request()         
-                self.rconf= RequestConfig.RequestConfig(idusuario)
+                self.rconf= RequestConfig.RequestConfig(idusuario,puerto)
                 self.persona=self.rconf.ver_persona()
                 
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
@@ -74,7 +74,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsCorreoUni = wx.Panel(self) #Creacion padre hijo
 		self.labelCorreoUni = Component.CreateLabel(PanelComponentsCorreoUni,15,pos=(0,0),label="Correo Universidad:  ")
 		self.TxtAreaCorreoUni = Component.CreateImputText(PanelComponentsCorreoUni,pos=(0,0),size=(250,22))
-                self.TxtAreaCorreoUni.SetValue(self.persona.get__correouni())
+                self.TxtAreaCorreoUni.SetValue(self.persona.get__correouni().strip())
 		sizerPanelCorreoUni = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelCorreoUni.Add(self.labelCorreoUni , wx.RIGHT, wx.EXPAND) # Adicion del Objeto al panel
 		sizerPanelCorreoUni.Add(self.TxtAreaCorreoUni , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
@@ -85,7 +85,7 @@ class VentanaConfigUsuario(wx.Panel):
 		PanelComponentsUsuario = wx.Panel(self) #Creacion padre hijo
 		self.labelUsuario = Component.CreateLabel(PanelComponentsUsuario,15,pos=(0,0),label="Usuario:                   ")
 		self.TxtAreaUsuario = Component.CreateImputText(PanelComponentsUsuario,pos=(0,0),size=(250,22))
-                self.TxtAreaUsuario.SetValue(self.persona.get__usuario())
+                self.TxtAreaUsuario.SetValue(self.persona.get__usuario().strip())
 		sizerPanelUsuario = wx.BoxSizer(wx.HORIZONTAL) #Creacion caja de tamaños
 		sizerPanelUsuario.Add(self.labelUsuario , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel
 		sizerPanelUsuario.Add(self.TxtAreaUsuario , 0, wx.ALIGN_CENTER) # Adicion del Objeto al panel

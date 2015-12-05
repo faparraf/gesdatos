@@ -5,23 +5,25 @@ __date__ = "$20-jul-2015 18:52:55$"
 import psycopg2, psycopg2.extras  
 #from Registro import Registro
 # importar libreria psycopg2 para permitir la conexion con postgres
-
+#from sshtunnel import SSHTunnelForwarder
 
 class Conexion:                  
-    'Clase que permitira la comunicacion con la base de datos'     
-    #host = "127.0.0.1"           
-    user = "postgres"
-    passwd = "2648618"
+    'Clase que permitira la comunicacion con la base de datos'   
+    
+    
+    host = "200.69.103.79" #127.0.0.1     <---- No se cual era          
+    user = "gesdatosestudent"
+    passwd = "estgesdatos"
     #port="5432"
     db = "examen"
     
-    def __init__(self):
+    def __init__(self,puerto):
         'Constructor que inicia las funciones de la clase'  
         self.connection = psycopg2.connect( database=self.db,
                                            user= self.user,
-                                           password= self.passwd#,
-                                           #host= self.host,
-                                           #port = self.port
+                                           password= self.passwd,
+                                           host= self.host,
+                                           port = puerto
                                            )
         self.cur = self.connection.cursor()  #cursor
 
@@ -51,3 +53,5 @@ class Conexion:
     #print(dbe.query(q))                 #como se llama la funcion querry
     #dbe=Registro();
     #print(dbe.registrar(juan,1,1,1,1,1))
+
+

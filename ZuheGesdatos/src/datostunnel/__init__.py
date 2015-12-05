@@ -46,10 +46,10 @@ class paramtunnel():
         def getdatabaseserverport(self):
             """consutlor que retorna el puerto del servidor de base de datos"""
             return self.databaseserverport
-#tunnel = paramtunnel()
-#print tunnel.getidirserver()
-#print tunnel.getporttunnel()
-#print tunnel.getuser()
-#print tunnel.getpasuser()
-#print tunnel.getlocalip()
-#print tunnel.getdatabaseserverport()
+tunnel = paramtunnel()
+print tunnel.getidirserver()
+print tunnel.getporttunnel()
+print tunnel.getuser()
+print tunnel.getpasuser()
+print tunnel.getlocalip()
+print tunnel.getdatabaseserverport()

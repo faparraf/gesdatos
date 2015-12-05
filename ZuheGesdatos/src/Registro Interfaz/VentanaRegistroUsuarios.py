@@ -10,12 +10,12 @@ import Correo
 
 class VentanaRegistroUsuarios(wx.Panel):   
     
-	def __init__(self,parent):
+	def __init__(self,parent,puerto):
                 'contructor requiere de parent como interfaz contenedor'
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.solicitud = Request()     
+                self.solicitud = Request(puerto)     
                 
                 #correo=Correo.Correo()
   #----Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label
@@ -213,9 +213,12 @@ class VentanaRegistroUsuarios(wx.Panel):
                                                                 self.CbUniversidad.GetValue(),self.TxtAreaUsuario.GetValue(),
                                                                 self.RbCategoria.GetSelection())
                                 
-                                #correo = Correo.Correo()
-                                #corre.enviar(self.TxtAreaCorreoUni.GetValue(), "Bienvenido a zuhe su contraseña es "+str(self.TxtAreaDocumento.GetValue()),"Registro zuhe")
-                        
+                                #POR FAVOR VERIFICAR EL CORREO, HOTMAIL BLOQUEA CORREOS Y NO PERMITE ESTA FUNCIONALIDAD SI DETECTA SPAM.
+                                try:
+                                    correo = Correo.Correo()
+                                    corre.enviar(self.TxtAreaCorreoUni.GetValue(), "Bienvenido a zuhe su contraseña es "+str(self.TxtAreaDocumento.GetValue()),"Registro zuhe")
+                                except:
+                                    print "ocurrio un error mientras se enviaba el correo, hable con el administrador"
                                 
                                 #msg="<p><h1>Registro usuario Suhe</h1></p>"+self.TxtAreaDocumento.GetValue()
                                 #correo.enviar(self.TxtAreaCorreo.GetValue(),msg,"Registro Suhe")

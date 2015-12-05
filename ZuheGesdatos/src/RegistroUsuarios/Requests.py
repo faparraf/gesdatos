@@ -4,16 +4,16 @@ from Conexion import Conexion
 
 class Request():    
     #conn= Conexion()
-    def __init__(self): 
+    def __init__(self,puerto): 
         'Inicia la ejecución de la clase'
-        self.conn= Conexion()
+        self.conn= Conexion(puerto)
            
     def registrarPersona (self,nombre,apellido,documento,fechaNac,correo,correoUni,universidad,usuario,categoria):
         'Registra las personas en la base de datos'   
         #personaid=1;
         personaid= int("%s" %(self.conn.selectQuery("select count(*) from persona")[0]))+1
         universidadid=int("%s" %(self.conn.selectQuery("select id_uni from universidad where nom_uni ='"+universidad+"'")[0]))
-        datos=(personaid,nombre,apellido,documento,fechaNac,correo,correoUni,universidadid,usuario,categoria)        
+        datos=(personaid,nombre,apellido,documento,fechaNac,correo,correoUni,universidadid,usuario,categoria+1)        
         self.conn.insertQuery("insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo,correo_universidad,uni,usuario,idtipopersona) values (%s, '%s', '%s', %s, '%s', '%s', '%s', %s, '%s',%s )" %datos)
         
         if categoria == 0:
@@ -21,11 +21,12 @@ class Request():
             datosEstudiante=(personaid,'now',documento)            
             self.conn.insertQuery("insert into estudiante (id_persn,fecha_reg,pass_estu) values (%s,'%s', '%s' )"%datosEstudiante)
             
-        else:
+        if categoria == 1:
             #docenteid= int("%s" %(self.conn.selectQuery("select count(*) from docente")[0]))+1
             datosDocente=(personaid,'now',documento)            
             self.conn.insertQuery("insert into docente (id_persona,reg_fecha,pass_docente) values (%s,'%s', '%s' )"%datosDocente)
-                   
+        
+        
         #datos=(nombre,apellido,documento,fechaNac,telefono,correo,correoUni,universidad,usuario)
         #sql="insert into persona (id_persona,nom_pers, apellido_pers,di_pers,fecha_nac,correo_universidad,uni,correo,usuario) values"
         #nuevo = Conexion()

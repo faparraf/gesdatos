@@ -8,12 +8,12 @@ class RequestConfig:
     
     __idpersona=""
     
-    def __init__(self,idpersona):
+    def __init__(self,idpersona,puerto):
         """Inicializa atributos de la clase"""
         self.__idpersona=idpersona
         
         'Inicia la ejecución de la clase'
-        self.conn= Conexion()        
+        self.conn= Conexion(puerto)        
     
     def ver_persona(self):
         """metodo que retorna una persona asociada a la clase"""

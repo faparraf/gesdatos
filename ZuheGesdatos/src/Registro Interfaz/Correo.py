@@ -27,7 +27,7 @@ class Correo:
         self.__server.quit()
 
 #ejemplo para envio
-#destino = _____@____.com'
+#destino = 'geiner.salcedo.ppc0111@gmail.com'
 #text = 'email from python'
 #m= Correo()
 #m.enviar(destino,text,'prueba')
