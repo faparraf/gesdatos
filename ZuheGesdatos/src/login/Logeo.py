@@ -8,14 +8,14 @@ import Correo
 import wx
 import administradorInterfaz.__init__
 import DocenteInterfaz.__init__
-#import EstudiantesInterfaz.Curso
+import EstudianteInterfaz._init_
 import wx.lib.scrolledpanel as scrolled
 import smtplib 
 import HeadLow
 import Componentes
 
 class LogeoInt(wx.Frame):
-    def __init__(self):
+    def __init__(self,puerto):
         'Constructor que requiere de un parent como interfaz contendor y manipulador para que acceda a la información'
         app=wx.App(False)
         displaySize= wx.DisplaySize()
@@ -26,9 +26,10 @@ class LogeoInt(wx.Frame):
         topPanel.SetBackgroundColour('3399FF')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-        sizertopPanel.Add(Body(topPanel),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(Body(topPanel,puerto),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         topPanel.SetSizer(sizertopPanel)
+        self.puerto = puerto
         self.sizer = sizertopPanel
         self.topPanel = topPanel
         self.topanel=topPanel
@@ -59,14 +60,15 @@ class LogeoInt(wx.Frame):
 class Body(wx.Panel):
     """ Una clase personalizada de frame donde el usuario que desee ingresar y 
     este registrado pueda digitar su usario y su clave."""
-    def __init__(self, parent):
+    def __init__(self, parent, puerto):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
+        self.puerto=puerto
         self.parent=parent
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
         self.SetBackgroundColour('3399FF')
         
         # parametros basicos generales del registro 
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se requerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.puerto)#se requerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             
         self.lblusuario = wx.StaticText(self, label="Usuario: ", pos=(100,35))
@@ -119,21 +121,21 @@ class Body(wx.Panel):
             query ="SELECT p.id_persona FROM persona p, estudiante e WHERE p.usuario='"+usuario+"' AND e.pass_estu='"+contrasena+"' AND p.idtipopersona=1 AND p.id_persona=e.id_persn;"
             idusuario=self.conexion.connection.ExecuteQuery(query)
             if idusuario:
-                #EstudiantesInterfaz.Curso.Cursos()                
+                EstudianteInterfaz._init_.MenuPrincipalEstudiante(str(idusuario[0][0]),self.puerto) 
             else:
                 wx.MessageBox("El usuario con esas características no existe","Gesdatos")
         elif tipo=='2':
             query ="SELECT p.id_persona FROM persona p, docente d WHERE p.usuario='"+usuario+"' AND d.pass_docente='"+contrasena+"' AND p.idtipopersona=2 AND p.id_persona=d.id_persona;"
             idusuario=self.conexion.connection.ExecuteQuery(query)
             if idusuario:
-                DocenteInterfaz.__init__.MenuPrincipalDocente(str(idusuario[0][0]))
+                DocenteInterfaz.__init__.MenuPrincipalDocente(str(idusuario[0][0]),self.puerto)
             else:
                 wx.MessageBox("El usuario con esas características no existe","Gesdatos")
         elif tipo=='3':
             query ="SELECT p.id_persona FROM persona p, administrador a WHERE p.usuario='"+usuario+"' AND a.pass_adm='"+contrasena+"' AND p.idtipopersona=3 AND p.id_persona=a.id_persn;"
             idusuario=self.conexion.connection.ExecuteQuery(query)
             if idusuario:
-                administradorInterfaz.__init__.MenuPrincipaladmin(str(idusuario[0][0]))
+                administradorInterfaz.__init__.MenuPrincipaladmin(str(idusuario[0][0]),self.puerto)
             else:
                wx.MessageBox("El usuario con esas características no existe","Gesdatos")
         else:
@@ -179,5 +181,5 @@ class Body(wx.Panel):
         else:
             wx.MessageBox("Ingrese el usuario y el tipo de usuario","Gesdatos")
 
-LogeoInt()
+LogeoInt("5434")
 
