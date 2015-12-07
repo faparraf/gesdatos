@@ -19,7 +19,7 @@ class BodyNuevoExamen(wx.Panel):
     def __init__(self, parent, manipulador, iddocente):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.quote = wx.StaticText(self, label="Docente: "+iddocente, pos=(140, 10))
         self.aparte = wx.StaticText(self, label="", pos=(140, 10))

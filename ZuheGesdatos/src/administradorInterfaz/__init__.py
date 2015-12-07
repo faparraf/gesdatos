@@ -128,7 +128,7 @@ class Body(wx.Panel):
     def __init__(self, parent, idadministrador,puerto):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",puerto)#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         queryidexamen = "select (nom_pers||' '||apellido_pers) from persona where id_persona = "+idadministrador+";"

@@ -18,7 +18,7 @@ class dialogoregistroEstudiantes(wx.Panel):
         gestionar la informacion a ingresar por este panel y la cantidad de
         preguntas que el examen ha de tener."""
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("white")
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.estudiantesescogidos = []
         self.cursosescogidos = []
         self.father = manipulador

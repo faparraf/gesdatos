@@ -16,7 +16,7 @@ class dialogoregistropregunta(wx.Panel):
         i como el numero de rpegunta que se esta registrando y opaciones de
         preguntas como las opciones disponibles de acuerdo a la base de datos."""
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("white")
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.it = i
         self.lblEnunciado = wx.StaticText(self, label="Enunciado :")
@@ -100,7 +100,7 @@ class dialogoregistrorespuestaopcionmultiplemultiple(wx.Panel):
         """Constructor, requiere del objeto parent que contiene el panel, l manipulador
         como la calse que gestiona la informacion a registrar y el numero de pregunta i a registrar"""
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("white")
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.it = i
         self.editOpcion = []
@@ -142,7 +142,7 @@ class dialogoregistrorespuestafalseoverdadero(wx.Panel):
         """Constructor, requiere del objeto parent que contiene el panel, el manipulador
         como la clase que gestiona la informacion a registrar y el numero de pregunta i a registrar"""
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("white")
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.it = i
         self.lblOpcion = wx.StaticText(self, label="Opcion Respuesta:")
@@ -183,7 +183,7 @@ class dialogoregistrorespuestaopcionmultipleunico(wx.Panel):
         """Constructor, requiere del objeto parent que contiene el panel, el manipulador
         como la clase que gestiona la informacion a registrar y el numero de pregunta i a registrar"""
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("white")
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.it = i
         self.editOpcion = []

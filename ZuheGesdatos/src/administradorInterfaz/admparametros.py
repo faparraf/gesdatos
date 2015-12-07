@@ -16,7 +16,7 @@ class paneltema(wx.Panel):
     def __init__(self, parent,manipulador,accion):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.lblid_bd = wx.StaticText(self, label="Base de datos escogida :", pos=(100,35))
         self.sampleListBase = []
@@ -85,7 +85,7 @@ class paneltipopregunta(wx.Panel):
     def __init__(self, parent,manipulador,accion):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.lbldesc = wx.StaticText(self, label="Descripcion Tipo de Pregunta :", pos=(100,35))
         self.editdesc = wx.TextCtrl(self, value="", pos=(0, 35), size=(140,-1))
@@ -124,7 +124,7 @@ class paneltipoopcion(wx.Panel):
     def __init__(self, parent,manipulador,accion):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.lbldesc = wx.StaticText(self, label="Descripcion Tipo de Opcion Pregunta :", pos=(100,35))
         self.editdesc = wx.TextCtrl(self, value="", pos=(0, 35), size=(140,-1))
@@ -163,7 +163,7 @@ class paneltipoexamen(wx.Panel):
     def __init__(self, parent,manipulador,accion):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-        self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#32506D") # Color de Fondo del panel
         self.father = manipulador
         self.lbldesc = wx.StaticText(self, label="Descripcion Tipo de Examen :", pos=(100,35))
         self.editdesc = wx.TextCtrl(self, value="", pos=(0, 35), size=(140,-1))

@@ -13,7 +13,7 @@ class Head(wx.Panel,):
         'Inicia la parte del encabezado.'
         #Encabezado
        	wx.Panel.__init__(self, parent)
-	self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#00BF8F")
 	
 	PanelImage1 = wx.Panel(self)
 	script_dir = sys.path[0]
@@ -65,7 +65,7 @@ class Low(wx.Panel,):
         'Inicia la parte del pie de página.'
         #Pie de Pagina
       	wx.Panel.__init__(self, parent)
-	self.SetBackgroundColour("3399FF")
+	self.SetBackgroundColour("#F7F7F7")
 	Paneltext = wx.Panel(self)
 
 	sizertext = wx.BoxSizer(wx.VERTICAL)
