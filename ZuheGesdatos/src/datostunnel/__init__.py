@@ -15,12 +15,12 @@ class paramtunnel():
             txtfile = "strkenc"           #ponemos el archivo a encriptar
             txt_text = base64.decodestring(open(txtfile,"rb").read())  #indicamos que habra el txtfile (archivo.txt) y codifique la cadena a base64 y el resultado lo ponga entre comillas """
             #print txt_text.split("\r\n")    #imprime en la pantalla txt_text que contiene el resultado codificado a base64
-            self.dirserver = txt_text.split("\r\n")[0]
-            self.porttunnel = txt_text.split("\r\n")[1]
-            self.user = txt_text.split("\r\n")[2]
-            self.pasuser = txt_text.split("\r\n")[3]
-            self.localip = txt_text.split("\r\n")[4]
-            self.databaseserverport= ""
+            self.dirserver = str(txt_text.split("\r\n")[0])
+            self.porttunnel = str(txt_text.split("\r\n")[1])
+            self.pasuser = str(txt_text.split("\r\n")[2])
+            self.user= str(txt_text.split("\r\n")[3])
+            self.localip = str(txt_text.split("\r\n")[4])
+            self.databaseserverport= "5432"
             
         
         def getidirserver(self):
@@ -44,12 +44,6 @@ class paramtunnel():
             return self.localip
         
         def getdatabaseserverport(self):
-            """consutlor que retorna el puerto del servidor de base de datos"""
+            """consultor que retorna el puerto del servidor de base de datos"""
             return self.databaseserverport
 tunnel = paramtunnel()
-print tunnel.getidirserver()
-print tunnel.getporttunnel()
-print tunnel.getuser()
-print tunnel.getpasuser()
-print tunnel.getlocalip()
-print tunnel.getdatabaseserverport()

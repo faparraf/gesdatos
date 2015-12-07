@@ -60,18 +60,19 @@ class Low(wx.Panel):
 TunelParametros = Ptunel.paramtunnel() 
 port1=int(TunelParametros.getporttunnel())
 port2=5432
+app=wx.App(False)
+frame = wx.Frame(None, wx.ID_ANY, 'ZUHÉ - UD', pos=(0, 0), size=(900,900)) #Creacion de objeto wx.Frame
+menubar = wx.MenuBar()
+topPanel= scrolled.ScrolledPanel(frame) #creacion de panel padre
+topPanel.SetupScrolling(scroll_y=True)
+topPanel.SetBackgroundColour("#00BF8F")
+sizertopPanel=wx.BoxSizer(wx.VERTICAL) #creacion de caja de tamaños
+            
 with SSHTunnelForwarder(
 	(TunelParametros.getidirserver(),port1),
 	ssh_password=TunelParametros.getpasuser(),
 	ssh_username=TunelParametros.getuser(),
 	remote_bind_address=(TunelParametros.getlocalip(),port2)) as server: 
-            app=wx.App(False)
-            frame = wx.Frame(None, wx.ID_ANY, 'ZUHÉ - UD', pos=(0, 0), size=(900,900)) #Creacion de objeto wx.Frame
-            menubar = wx.MenuBar()
-            topPanel= scrolled.ScrolledPanel(frame) #creacion de panel padre
-            topPanel.SetupScrolling(scroll_y=True)
-            topPanel.SetBackgroundColour("#00BF8F")
-            sizertopPanel=wx.BoxSizer(wx.VERTICAL) #creacion de caja de tamaños
             randomport = server.local_bind_port
             print(randomport)
             Body= Body(topPanel,randomport) 
