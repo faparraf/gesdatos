@@ -15,39 +15,50 @@ class Component(wx.Panel):
                 'Inicia la interfaz.'
 	        wx.Panel.__init__(self,parent) 
                 
-#-----------------Creaci贸n de Label------------
+#-----------------Creaci髇 de Label------------
 	def CreateLabel(self,parent,fonsize,pos,label):  
                 'Permite la creaci髇 de un Label (etiqueta).'
 		self.label = wx.StaticText(parent, label=label, pos=(pos[0], pos[1]))
-		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
+		self.label.SetForegroundColour(('#FFFFFF'))
+		self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)	  
+                self.font = wx.Font(fonsize ,wx.DECORATIVE, wx.NORMAL, wx.NORMAL)
 		self.label.SetFont(self.font)
 		return self.label
 
-#-----------------Creaci贸n de ComboBox------------      
+#-----------------Creaci髇 de ComboBox------------      
 	def CreateComboBox(self,parent,pos,size,List): 
                 'Permite la creaci髇 de un ComboBox.'
 		self.cbx = wx.ComboBox(parent, pos=(pos[0], pos[1]), size=(size, -1), choices=List, style=wx.CB_DROPDOWN)
 		return self.cbx
-            
+
 #-----------------Creaci髇 de CalendarCtrl------------      
 	def CreateCalendarCtrl(self,parent,pos,size):
                 'Permite la creaci髇 de un Calendario.'
                 self.calc =wx.DatePickerCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.DP_DROPDOWN)
 		return self.calc
         
-#-----------------Creaci贸n de TextArea------------ 
+#-----------------Creaci髇 de TextArea------------ 
 	def CreateTextArea(self,parent,pos,size):  
                 'Permite la creaci髇 de un TextArea.'
 		self.txtarea = wx.TextCtrl(parent,pos=(pos[0], pos[1]), size=(size[0],size[1]), style=wx.TE_MULTILINE)
 		return self.txtarea
 
-#-----------------Creaci贸n de RadioBox------------ 
+#-----------------Creaci髇 de Hyperlink-----------
+	def CreateHyperLink(self,parent,name,link):
+                'Permite la creaci髇 de un HyperLink.'
+		self.hyper = hl.HyperLinkCtrl(parent, -1, name, pos=(100, 100),URL=link)
+		self.hyper.SetForegroundColour(('#FFFFFF'))
+		self.hyper.SetBackgroundColour('#32506D') 
+		return self.hyper
+
+#-----------------Creaci髇n de RadioBox------------ 
 	def CreateRadioBox(self,parent,label,radioList):
                 'Permite la creaci髇 de un RadioBox.'
 		self.RadioBox = wx.RadioBox(parent, -1, label, (10, 10), wx.DefaultSize,radioList, 2, wx.RA_SPECIFY_COLS)
+		self.RadioBox.SetForegroundColour('#FFFFFF')
 		return self.RadioBox
 
-#-----------------Creaci贸n de Grilla------------ 	
+#-----------------Creaci髇 de Grilla------------ 	
 	def CreateGrid(self,parent,rows,colums,titles,width):
                 'Permite la creaci髇 de un Grid.'
 		self.Grid=wx.grid.Grid(parent)
@@ -55,22 +66,34 @@ class Component(wx.Panel):
 		for i in range(0,colums):
 			self.Grid.SetColLabelValue(i,titles[0])
 			self.Grid.SetColSize(i,width)	
-		return self.Grid
-
-#-----------------Creaci贸n de Boton------------ 	
+		return self.Grid            
+    
+#---------------Creci髇 de Lista de Control-----------------------------
+	def CreateListctrl(self,parent,titles,lenghs,size):
+                'Permite crear una lista de control'
+		self.listctrl = wx.ListCtrl(parent, size=(size[0],size[1]), style=wx.LC_REPORT | wx.BORDER_SUNKEN)
+		for i in range(len(titles)):
+			self.listctrl.InsertColumn(i, titles[i], width=lenghs[i])
+		return self.listctrl
+            
+#-----------------Creaci髇 de Boton------------ 	
 	def CreateButton(self,parent,label):
                 'Permite la creaci髇 de un Bot髇.'
 		self.Button =wx.Button(parent,label=label)
-		return self.Button
+		self.Button.SetForegroundColour('#FFFFFF')
+		self.Button.SetBackgroundColour('#32506D') 
+		return self.Button            
 
-#-----------------Creaci贸n de CheckBox------------ 	
+#-----------------Creaci髇 de CheckBox----------------------------------------------------- 	
 	def CreateCheckBox(self,number,parent,labels,size):
                 'Permite la creaci髇 de un CheckBox.'
 		CheckBoxList=[]
 		if number>=1 :
 			for i in range(1,number+1):
-				print(i)
-				CheckBoxList.append(wx.CheckBox(parent,label=labels[i-1],size=(size[0],size[1]), style=0))
+				self.ck1=wx.CheckBox(parent,label=labels[i-1],size=(size[0],size[1]), style=0)
+				self.ck1.SetForegroundColour('#FFFFFF')
+				CheckBoxList.append(self.ck1)
+
 			if number==1:
 				gridCheckBox = wx.GridSizer(1, 1, 5, 5)
 				gridCheckBox.AddMany([(CheckBoxList[0], 0, wx.ALIGN_CENTER)])
@@ -83,8 +106,23 @@ class Component(wx.Panel):
 				for k in range(len(CheckBoxList)):
 					gridCheckBox.AddMany([(CheckBoxList[k], 0, wx.ALIGN_CENTER)])
 		return gridCheckBox
+            
+#-----------------Creaci髇 de Notebook----------------------------------------------------- 
+	def CreateNotebook(self,parent,numberpages,labels,size):
+                'Permite crear un Notebook'
+		self.Notebook = wx.Notebook(parent, size=(size[0],size[1]))
+		self.panel = wx.Panel(self.Notebook )
+		self.Notebook.AddPage(self.panel, labels[0])	
+		for i in range(numberpages-1):	
+			self.panel = wx.Panel(self.Notebook )
+			self.Notebook.AddPage(self.panel, labels[i+1])
+		return self.Notebook
+			
+#-----------------------------------------------------redireccion-c------------
+	def setpanel(self,panel):
+		panel.Show(True)
 
-#-----------------Creaci贸n de un evento del CheckBox------------ 	
+#-----------------Creaci髇 de un evento del CheckBox------------ 	
 	def EventComboBox(self, event):
                 'Identifica el evento del ComboBox.'
 		print("Mi evento")
@@ -100,16 +138,3 @@ class Component(wx.Panel):
 	def EvtComboBoxTable(self, event):
                 'Identifica el evento del ComboBox.'
 		print('Evento de combo box: %s' % event.GetString())
-                
-#-----------------Creaci贸n de Hyperlink-----------
-
-	def CreateHyperLink(self,parent,name,link):
-		self.hyper = hl.HyperLinkCtrl(parent, -1, name, pos=(100, 100),URL=link)
-		return self.hyper
-
-#-----------------------------------------------
-	def CreateListctrl(self,parent,titles,lenghs,size):
-		self.listctrl = wx.ListCtrl(parent, size=(size[0],size[1]), style=wx.LC_REPORT | wx.BORDER_SUNKEN)
-		for i in range(len(titles)):
-			self.listctrl.InsertColumn(i, titles[i], width=lenghs[i])
-		return self.listctrl
