@@ -23,10 +23,10 @@ class Head(wx.Panel):
 ## Body
 ##-----------------------------------------------------------
 class Body(wx.Panel):
-	def __init__(self,parent,port):
+	def __init__(self,parent,port,frame,topPanel,sizertopPanel):
 		self.parent=parent
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-		self.panel=panel1.Panel1(self,port) ## En esta linea se Agrega el Panel de inicio
+		self.panel=panel1.Panel1(self,port,frame,topPanel,sizertopPanel) ## En esta linea se Agrega el Panel de inicio
 		self.SetBackgroundColour("#32506D") # Color de Fondo del panel
 		self.sizerbody=wx.BoxSizer(wx.VERTICAL)
 		self.sizerbody.Add(self.panel,0,wx.EXPAND|wx.ALL,border=5)
@@ -75,7 +75,7 @@ with SSHTunnelForwarder(
 	remote_bind_address=(TunelParametros.getlocalip(),port2)) as server: 
             randomport = server.local_bind_port
             print(randomport)
-            Body= Body(topPanel,randomport) 
+            Body= Body(topPanel,randomport,frame,topPanel,sizertopPanel) 
             #Inclusion de los tres paneles
             sizertopPanel.Add(Head(topPanel),0,wx.EXPAND|wx.ALL,border=0)
             sizertopPanel.Add(Body,0,wx.EXPAND|wx.ALL,border=0)

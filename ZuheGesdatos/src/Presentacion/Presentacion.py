@@ -14,7 +14,7 @@ class Presentacion(wx.Panel):
 		 :param parent:, padre del objeto 
             :param style:, Estilo del objeto 
             :param size:, dimensiones del objeto"""
-		wx.Panel.__init__(self, parent, size=(500,260),style=wx.RAISED_BORDER)
+		wx.Panel.__init__(self, parent, size=(550,260),style=wx.RAISED_BORDER)
 		"""Inicializa el objeto Panel.
 		    :param parent:, padre del objeto 
             :param style:, Estilo del objeto 

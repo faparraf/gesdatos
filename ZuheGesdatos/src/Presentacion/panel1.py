@@ -4,18 +4,21 @@ import wx
 import Componentes
 import panel2
 import panel3
+#import login.Logeo
+import interfazInvitado.__init__ as invitado
+#import Registro_Interfaz.__init__
 import Presentacion
-import login.Logeo
 
 class Panel1(wx.Panel):
-	def __init__(self,parent,port):
+	def __init__(self,parent,port,frame,topPanel,sizertopPanel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("#32506D")
 		Component = Componentes.Component(self) # Instancia Clase Componente
 		self.parent=parent
-		self.port=port  
-     
-		
+		self.topPanel = topPanel
+                self.sizertopPanel = sizertopPanel
+                self.port = port
+                self.frame =  frame
 		PanelPresentation = wx.Panel(self) #Creacion panel hijo
 		self.Labelpresentation = Component.CreateLabel(PanelPresentation,15,pos=(0,0),label="Participantes del Proyecto")
 		self.Presentacion = Presentacion.Presentacion(PanelPresentation,port)
@@ -38,9 +41,9 @@ class Panel1(wx.Panel):
 
 		 #----Creación de un panel de Buttons, e inclusión  del objeto Buttons y su Label, adicionalmente se incluye en el boton el evento de cambio de panel
 		PanelComponentsButtons = wx.Panel(self) #Creacion padre hijo
-		self.Button1 = Component.CreateButton(PanelComponentsButtons,"Ingresar como Invitado")
+		self.Button1 = Component.CreateButton(PanelComponentsButtons,"Ingresar")
 		self.Bind(wx.EVT_BUTTON, self.ingresar,self.Button1)#Creación de Evento
-		self.Button2 = Component.CreateButton(PanelComponentsButtons,"Ingresar")
+		self.Button2 = Component.CreateButton(PanelComponentsButtons,"Ingresar como Invitado")
 		self.Bind(wx.EVT_BUTTON, self.ingresarcomoinvitado,self.Button2)#Creación de Evento
 		self.Button3 = Component.CreateButton(PanelComponentsButtons,"Registrarse")
 		self.Bind(wx.EVT_BUTTON, self.registrarse,self.Button3)#Creación de Evento
@@ -67,9 +70,10 @@ class Panel1(wx.Panel):
 	#def Modificar(self,event):
 	#	self.parent.setpanel(panel3.Panel3(self.parent))	
 	def ingresar(self,event):
-                print("ingresar")
-                login.Logeo.LogeoInt(self.port)
-	def ingresarcomoinvitado(self,event):
-		print("ingresar como invitado")
-	def registrarse(self,event):
-		print("Registrarse")
+            login.Logeo.LogeoInt(self,port)
+        def ingresarcomoinvitado(self,event):
+            manipulador = invitado.interfazpanelpaso(self.parent,self.topPanel,self.sizertopPanel,self.port)
+            panelinvitado = invitado.Body(self.parent, manipulador)
+            self.parent.setpanel(self,panelinvitado)
+        def registrarse(self,event):
+            Registro_Interfaz.__init__.Body(self)

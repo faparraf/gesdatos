@@ -7,7 +7,7 @@ class ConnSchema():
         self.connection = ConnectionDataBase.Connection(localhost,gesdatos,user,password,port)
 
     def ObtenerInvolucrados(self):
-        sql = ("SELECT concat('Participante:  ',nombres) ,concat(' Proyecto:  ',proyecto_curricular.nombre)  FROM estudiante_involucrado,proyecto_curricular,periodo Where estudiante_involucrado.id_proyecto = proyecto_curricular.id_proyecto and  periodo.id_periodo = estudiante_involucrado.id_periodo")
+        sql = ("SELECT concat('Participante:  ',nombres) ,concat(' Proyecto:  ',proyecto_curricular.nombre) FROM estudiante_involucrado,proyecto_curricular,periodo Where estudiante_involucrado.id_proyecto = proyecto_curricular.id_proyecto and  periodo.id_periodo = estudiante_involucrado.id_periodo")
         ret = self.connection.ExecuteQuery(sql)
         return ret
     def ObtenerFacultades(self):
