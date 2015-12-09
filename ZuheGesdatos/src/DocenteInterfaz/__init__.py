@@ -8,12 +8,12 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 import nuevoExamen.__init__
-from sshtunnel import SSHTunnelForwarder
+#from sshtunnel import SSHTunnelForwarder
 # Identificdores en el menu
 ID_AGREGAR_EXAMEN = wx.NewId ()
 
 class MenuPrincipalDocente(wx.Frame):
-    def __init__(self,iddocente,localport,server):
+    def __init__(self,iddocente,localport):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         self.localport = str(localport)
         self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.localport)#se rquerie de datos para conexion a motor
@@ -21,7 +21,6 @@ class MenuPrincipalDocente(wx.Frame):
         self.iddocente = iddocente
         app=wx.App(False)
         displaySize= wx.DisplaySize()
-        self.server = server
         wx.Frame.__init__(self, None, pos=(0, 0), size=(displaySize[0], displaySize[1]))
         displaySize= wx.DisplaySize()
         topPanel= scrolled.ScrolledPanel(self)
@@ -135,10 +134,10 @@ class Body(wx.Panel):
             
 
 iddocente = "4"
-with SSHTunnelForwarder(
-	('200.69.103.79', 22),
-	ssh_password="gesdatosestudent",
-	ssh_username="estgesdatos",
-	remote_bind_address=('127.0.0.1', 5432)) as server:
-            MenuPrincipalDocente(iddocente,server.local_bind_port,server)
-#MenuPrincipalDocente(iddocente,5434)
+#with SSHTunnelForwarder(
+#	('200.69.103.79', 22),
+#	ssh_password="gesdatosestudent",
+#	ssh_username="estgesdatos",
+#	remote_bind_address=('127.0.0.1', 5432)) as server:
+#            MenuPrincipalDocente(iddocente,server.local_bind_port,server)
+MenuPrincipalDocente(iddocente,5434)
