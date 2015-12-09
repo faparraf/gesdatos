@@ -12,9 +12,15 @@ def iniciarverexamen(idexamen,puerto):
     app=wx.App(False)
     displaySize= wx.DisplaySize()
     frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-    DialogoExamen(frame,idexamen,puerto)
+    dlg = DialogoExamen(frame,idexamen,puerto)
     frame.Show()
     app.MainLoop()
+    res = dlg.ShowModal()
+    #dlg.Destroy()
+    if res == wx.ID_OK or res == wx.EVT_CLOSE:
+        print("saliendo de interfaz examen")
+    dlg.Destroy()
+    frame.Destroy()
 
 #----------------------------------------------------------------------------
 
