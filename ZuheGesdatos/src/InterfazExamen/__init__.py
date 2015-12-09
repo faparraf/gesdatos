@@ -7,12 +7,12 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 
-def iniciarverexamen(idexamen):
+def iniciarverexamen(idexamen,puerto):
     'Permite ver el examen creado'
     app=wx.App(False)
     displaySize= wx.DisplaySize()
     frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-    DialogoExamen(frame,idexamen)
+    DialogoExamen(frame,idexamen,puerto)
     frame.Show()
     app.MainLoop()
 
@@ -20,11 +20,11 @@ def iniciarverexamen(idexamen):
 
 class DialogoExamen(wx.Dialog):
     #----------------------------------------------------------------------
-    def __init__(self,parent,idexamen):
+    def __init__(self,parent,idexamen,puerto):
         """Constructor"""
         displaySize= wx.DisplaySize()
         wx.Dialog.__init__(self, parent, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(puerto))#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         query ="select examen.titulo_exa, persona.nom_pers || ' ' ||persona.apellido_pers, examen.tiempo_exa_inicio, examen.tiempo_exa_fin "
         query += "from persona, examen, docente where docente.id_persona = persona.id_persona and examen.id_dcnte = docente.id_persona and examen.id_exa = "+str(idexamen)+";"    

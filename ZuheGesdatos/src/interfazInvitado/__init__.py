@@ -129,6 +129,7 @@ class interfazpanelpaso():
             los paneles."""
             self.father = parent
             self.topanel = topPanel
+            self.puerto = puerto
             self.sizer = sizertopPanel
             self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(puerto))#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
@@ -139,7 +140,7 @@ class interfazpanelpaso():
             return self.conexion.connection
         
         def iniciarinterfazExamen(self,idexamen):
-            verexamen = InterfazExamen.__init__.iniciarverexamen(idexamen)
+            verexamen = InterfazExamen.__init__.iniciarverexamen(idexamen,self.puerto)
             res = verexamen.ShowModal()
             if res == wx.ID_OK:
                 print("examen contestado")
