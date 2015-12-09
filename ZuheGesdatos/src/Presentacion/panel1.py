@@ -2,11 +2,8 @@
 # -*- coding: cp1252 -*-
 import wx
 import Componentes
-import panel2
-import panel3
-#import login.Logeo
 import interfazInvitado.__init__ as invitado
-#import Registro_Interfaz.__init__
+#import login.Logeo
 import Presentacion
 
 class Panel1(wx.Panel):
@@ -70,10 +67,11 @@ class Panel1(wx.Panel):
 	#def Modificar(self,event):
 	#	self.parent.setpanel(panel3.Panel3(self.parent))	
 	def ingresar(self,event):
-            login.Logeo.LogeoInt(self,port)
+            Login = login.Logeo.Body(self.parent,self.port)
+            self.parent.setpanel(Login)
         def ingresarcomoinvitado(self,event):
             manipulador = invitado.interfazpanelpaso(self.parent,self.topPanel,self.sizertopPanel,self.port)
             panelinvitado = invitado.Body(self.parent, manipulador)
-            self.parent.setpanel(self,panelinvitado)
+            self.parent.setpanel(panelinvitado)
         def registrarse(self,event):
             Registro_Interfaz.__init__.Body(self)

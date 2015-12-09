@@ -45,3 +45,7 @@ class ConnSchema():
         for i in range(len(ret)):
             ret[i] = str(ret[i][0])
         return ret
+    def ObtenerInvolucrados(self):
+        sql = ("SELECT concat('Participante:  ',nombres) ,concat(' Proyecto:  ',proyecto_curricular.nombre)  FROM estudiante_involucrado,proyecto_curricular,periodo Where estudiante_involucrado.id_proyecto = proyecto_curricular.id_proyecto and  periodo.id_periodo = estudiante_involucrado.id_periodo")
+        ret = self.connection.ExecuteQuery(sql)
+        return ret

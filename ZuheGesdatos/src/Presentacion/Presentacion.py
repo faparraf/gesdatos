@@ -2,6 +2,7 @@
 # -*- coding: cp1252 -*-
 import wx
 import ConnSchema
+import ConnectionDataBase
 import pprint
 ## Head
 ##-----------------------------------------------------------
@@ -21,8 +22,9 @@ class Presentacion(wx.Panel):
             :param size:, dimensiones del objeto"""
 		self.SetBackgroundColour('#00BF8F')
 		#Arreglo de Nombres
-		db = ConnSchema.ConnSchema("localhost","examen","adminexamen","pasexamen",str(port))
-		involucrados = db.ObtenerInvolucrados()
+		self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(port))#se rquerie de datos para conexion a motor
+                self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
+                involucrados = self.conexion.ObtenerInvolucrados()
 		Participantes = ""
 		for j in range(len(involucrados)):
 			for x in range(len(involucrados[j])):
