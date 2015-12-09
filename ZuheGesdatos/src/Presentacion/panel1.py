@@ -5,6 +5,7 @@ import Componentes
 import panel2
 import panel3
 import Presentacion
+import login.Logeo
 
 class Panel1(wx.Panel):
 	def __init__(self,parent,port):
@@ -12,7 +13,7 @@ class Panel1(wx.Panel):
 		self.SetBackgroundColour("#32506D")
 		Component = Componentes.Component(self) # Instancia Clase Componente
 		self.parent=parent
-		  
+		self.port=port  
      
 		
 		PanelPresentation = wx.Panel(self) #Creacion panel hijo
@@ -66,7 +67,8 @@ class Panel1(wx.Panel):
 	#def Modificar(self,event):
 	#	self.parent.setpanel(panel3.Panel3(self.parent))	
 	def ingresar(self,event):
-		print("ingresar")
+                print("ingresar")
+                login.Logeo.LogeoInt(self.port)
 	def ingresarcomoinvitado(self,event):
 		print("ingresar como invitado")
 	def registrarse(self,event):

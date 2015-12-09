@@ -181,5 +181,5 @@ class Body(wx.Panel):
         else:
             wx.MessageBox("Ingrese el usuario y el tipo de usuario","Gesdatos")
 
-LogeoInt("5434")
+#LogeoInt("5434")
 
