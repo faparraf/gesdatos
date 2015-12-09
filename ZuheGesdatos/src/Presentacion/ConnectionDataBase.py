@@ -26,6 +26,7 @@ class Connection():
         'Ejecuta las sentencias y retorna los resultados'
         self.querys.execute(queryString)
         self.conn.commit()               
+            #print 'Error %s' % e        
             #print 'Error %s' % e
             
     def InsertwithaImage(self, queryString,file):
