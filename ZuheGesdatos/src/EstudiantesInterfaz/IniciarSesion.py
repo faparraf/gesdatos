@@ -12,7 +12,7 @@ class IniciarSesionEstudiante(wx.Panel):
                 'Inicia el panel junto con su contenedor'
 #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent) 
-		self.SetBackgroundColour("3399FF")
+		self.SetBackgroundColour("#00BF8F")
 #--------------Instancia Clase Componente--------------
 		Component = Componentes.Component(self) 
 		self.parent=parent
@@ -26,7 +26,7 @@ class IniciarSesionEstudiante(wx.Panel):
 		sizerPanelLabel.Add(self.label, 0, wx.ALIGN_CENTER)
 		
 		PanelComponentsLabel.SetSizer(sizerPanelLabel)
-		PanelComponentsLabel.SetBackgroundColour("3399FF")
+		PanelComponentsLabel.SetBackgroundColour("#00BF8F")
 		
 #--------------Creación de un panel de TxtArea, e inclusión  del objeto TxtArea y su Label--------------
 #--------------Creacion padre hijo--------------
@@ -58,10 +58,10 @@ class IniciarSesionEstudiante(wx.Panel):
 		sizerPanelTxtArea2.Add(self.TxtArea2 , 0, wx.ALIGN_CENTER) 
 #--------------Asignación de Color de Fondo-txtArea1--------------				
 		PanelComponentsTxtArea1.SetSizer(sizerPanelTxtArea1)
-		PanelComponentsTxtArea1.SetBackgroundColour("3399FF") 
+		PanelComponentsTxtArea1.SetBackgroundColour("00BF8F") 
 #--------------Asignación de Color de Fondo-txtArea2--------------		
 		PanelComponentsTxtArea2.SetSizer(sizerPanelTxtArea2)
-		PanelComponentsTxtArea2.SetBackgroundColour("3399FF") 
+		PanelComponentsTxtArea2.SetBackgroundColour("00BF8F") 
 		
 #--------------Creacion de un panel de Buttons, e inclusion  del objeto Buttons y su Label-------------
 #--------------Creacion padre hijo--------------

@@ -24,7 +24,7 @@ class MenuPrincipalEstudiante(wx.Frame):
         displaySize= wx.DisplaySize()
         topPanel= scrolled.ScrolledPanel(self)
         topPanel.SetupScrolling(scroll_y=True)
-        topPanel.SetBackgroundColour('3399FF')
+        topPanel.SetBackgroundColour('#00BF8F')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(Body(topPanel,idestudiante),0,wx.EXPAND|wx.ALL,border=10)

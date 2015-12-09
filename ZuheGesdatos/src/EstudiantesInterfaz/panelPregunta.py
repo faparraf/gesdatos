@@ -12,7 +12,7 @@ class panelpregunta(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         self.manipulador = manipulador
         self.idpregunta = idpregunta
-        self.SetBackgroundColour('3399FF')
+        self.SetBackgroundColour('#00BF8F')
         self.aparte = wx.StaticText(self, label="", pos=(140, 10))
         query = "select pregunta.enunciado,tema.desc_tema, pregunta.imagen,pregunta.tipopre from pregunta,"
         query += "tema where pregunta.tema = tema.idtema and pregunta.id_pregunta ="+str(self.idpregunta)+";"
@@ -43,7 +43,7 @@ class panelpregunta(wx.Panel):
             self.image.Rescale(80, 100) 
             self.imageUd = wx.BitmapFromImage(self.image) 
             self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
-            PanelImage1.SetBackgroundColour('3399FF')
+            PanelImage1.SetBackgroundColour('#00BF8F')
         
         gy = wx.GridSizer(1,2, 5, 5) #Creacion grilla de tamaño
         gy.AddMany([(gs, 0, wx.ALIGN_CENTER),

@@ -2,25 +2,28 @@
 # -*- coding: utf-8 -*-
 __author__ = "Gesdatos"
 __date__ = "$20-jul-2015 18:52:55$"
+import datostunnel.__init__ as Ptunel
 import wx
 import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 import IngresarComo
 import IniciarSesion
-
+from sshtunnel import SSHTunnelForwarder
 ## Body
 ##-----------------------------------------------------------
 class Body(wx.Panel):
 	def __init__(self,parent):
                 'Inicio del cuerpo de la interfaz'
 		self.parent=parent
+                self.topPanel = topPanel
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.panel=IngresarComo.IngresarComo(self) ## En esta linea se Agrega el Panel de inicio
-		self.SetBackgroundColour('3399FF') # Color de Fondo del panel
+		self.SetBackgroundColour('#00BF8F') # Color de Fondo del panel
 		self.sizerbody=wx.BoxSizer(wx.VERTICAL)
 		self.sizerbody.Add(self.panel,0,wx.EXPAND|wx.ALL,border=5)
 		self.SetSizer(self.sizerbody)
+                
 		
 	#metodo setpanel, se encarga de reemplazar el panel actual por otro
 	def setpanel(self,paneltemp):

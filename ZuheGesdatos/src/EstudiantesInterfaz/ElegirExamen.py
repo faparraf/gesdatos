@@ -15,7 +15,7 @@ class ElegirExamen(wx.Frame):
         displaySize= wx.DisplaySize()
         topPanel= scrolled.ScrolledPanel(self)
         topPanel.SetupScrolling(scroll_y=True)
-        topPanel.SetBackgroundColour('3399FF')
+        topPanel.SetBackgroundColour('#00BF8F')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         #sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(Body(topPanel),0,wx.EXPAND|wx.ALL,border=10)
@@ -53,7 +53,7 @@ class Body(wx.Panel):
         'Constructor de la interfaz que recibe su contenedor'
 #--------------Inicializacion Panel Padre--------------
         wx.Panel.__init__(self,parent)
-        self.SetBackgroundColour("3399FF")
+        self.SetBackgroundColour("#00BF8F")
 #--------------Instancia Clase Componente--------------
         Component = Componentes.Component(self) 
         self.parent=parent
@@ -82,7 +82,7 @@ class Body(wx.Panel):
 
         PanelComponentsLabel.SetSizer(sizerPanelLabel)
 #--------------Asignacion de color a panel--------------
-        PanelComponentsLabel.SetBackgroundColour("3399FF")
+        PanelComponentsLabel.SetBackgroundColour("#00BF8F")
 		                
          
         if len(self.examenescurso) == 0:

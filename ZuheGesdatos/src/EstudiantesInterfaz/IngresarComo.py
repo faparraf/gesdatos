@@ -12,7 +12,7 @@ class IngresarComo(wx.Panel):
                 'Inicio la interfaz, que recibe a parent como contenedor'
 #--------------Inicializacion Panel Padre--------------
 		wx.Panel.__init__(self,parent) 
-		self.SetBackgroundColour("3399FF")
+		self.SetBackgroundColour("#00BF8F")
 #--------------Instancia Clase Componente--------------
 		Component = Componentes.Component(self) 
 		self.parent=parent
