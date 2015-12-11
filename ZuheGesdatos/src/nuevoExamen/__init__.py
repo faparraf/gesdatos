@@ -112,6 +112,7 @@ class interfazpanelpaso():
             self.sizer = sizertopPanel
             self.nuevoexamen = examen.examen(str(iddocente))
             self.iddocente=iddocente
+            self.puerto = localport
             self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",localport)#se rquerie de datos para conexion a motor
             self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             queryidexamen = "select count(*) from examen;"
@@ -213,7 +214,7 @@ class interfazpanelpaso():
                 self.cambiarpanel(termino)
         
         def verexamen(self,e):
-            verexamen = InterfazExamen.__init__.iniciarverexamen(self.idexamen)
+            verexamen = InterfazExamen.__init__.iniciarverexamen(self.idexamen,self.puerto)
             #verexamen = InterfazExamen.__init__.DialogoExamen(self.father,1)
             #res = verexamen.ShowModal()
             
