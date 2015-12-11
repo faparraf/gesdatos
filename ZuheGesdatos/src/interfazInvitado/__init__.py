@@ -140,12 +140,30 @@ class interfazpanelpaso():
             return self.conexion.connection
         
         def iniciarinterfazExamen(self,idexamen):
-            verexamen = InterfazExamen.__init__.iniciarverexamen(idexamen,self.puerto)
-            res = verexamen.ShowModal()
-            if res == wx.ID_OK:
-                print("examen contestado")
-            verexamen.Destroy()
-            
+            panelexamen = InterfazExamen.__init__.DialogoExamen(self.topanel,idexamen,self.puerto)
+            self.cambiarpanel(panelexamen)
+        
+        def cambiarpanel(self,nuevopanel):
+            """Metodo usado para cambiar un panel en el que ya se
+             registró la informacion para el nuevo examen y se requiere
+             que el siguiente paso en el registro de un nuevo examen se muestre
+             requiere como parametro el nuevo panel "nuevopanel" en el que se va a
+             reemplazar el ya utlizado"""
+            #siempre se cambia en la poscion 2 ya que es la del body
+            sizer = self.sizer
+            sizer.Hide(0)
+            sizer.Remove(0)
+            sizer.Hide(0)
+            sizer.Remove(0)
+            sizer.Hide(0)
+            sizer.Remove(0)
+            sizer.Add(HeadLow.Head(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
+            sizer.Add(nuevopanel,0,wx.EXPAND|wx.ALL,border=10)
+            sizer.Add(HeadLow.Low(self.topanel),0,wx.EXPAND|wx.ALL,border=10)
+            self.topanel.SetSizer(self.sizer)
+            self.father.SetSizer(sizer)
+            self.father.GetSizer().Layout()
+            self.father.Fit()
 #app=wx.App(False)
 #displaySize= wx.DisplaySize()
 #frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))

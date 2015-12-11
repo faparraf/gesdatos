@@ -7,29 +7,18 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 
-def iniciarverexamen(idexamen,puerto):
+def iniciarverexamen(toppanel,idexamen,puerto):
     'Permite ver el examen creado'
-    app=wx.App(False)
-    displaySize= wx.DisplaySize()
-    frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-    dlg = DialogoExamen(frame,idexamen,puerto)
-    frame.Show()
-    app.MainLoop()
-    res = dlg.ShowModal()
-    #dlg.Destroy()
-    if res == wx.ID_OK or res == wx.EVT_CLOSE:
-        print("saliendo de interfaz examen")
-    dlg.Destroy()
-    frame.Destroy()
+    dlg = DialogoExamen(toppanel,idexamen,puerto)
+    return dlg
 
 #----------------------------------------------------------------------------
 
-class DialogoExamen(wx.Dialog):
+class DialogoExamen(wx.Panel):
     #----------------------------------------------------------------------
     def __init__(self,parent,idexamen,puerto):
         """Constructor"""
-        displaySize= wx.DisplaySize()
-        wx.Dialog.__init__(self, parent, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
+        wx.Panel.__init__(self,parent) # Inicialización Panel Padre
         self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(puerto))#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         query ="select examen.titulo_exa, persona.nom_pers || ' ' ||persona.apellido_pers, examen.tiempo_exa_inicio, examen.tiempo_exa_fin "
@@ -37,8 +26,7 @@ class DialogoExamen(wx.Dialog):
         self.generalidadexamen = (self.conectordatabase).ExecuteQuery(query) #consulta de todos los tipos de examen
         print str(self.generalidadexamen)
         gs = wx.GridSizer(3, 2, 1, 1) #Creacion grilla de tamaÃ±o
-        topPanel= scrolled.ScrolledPanel(parent)
-        panel =wx.Panel(topPanel)
+        panel =wx.Panel(self)
         self.lblname = wx.StaticText(panel, label="Nombre Examen : "+str(self.generalidadexamen[0][0]), pos=(0, 35))
         self.docente = wx.StaticText(panel, label="Docente :"+str(self.generalidadexamen[0][1]), pos=(100, 35))
         self.lblhoraini = wx.StaticText(panel, label="Hora Inicio :"+str(self.generalidadexamen[0][2]), pos=(0, 65))
@@ -52,14 +40,9 @@ class DialogoExamen(wx.Dialog):
         #sizer.Add(self.enviar, proportion=1,flag=wx.FIXED_MINSIZE)
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         panel.SetSizer(sizer)
-        topPanel.SetupScrolling(scroll_y=True)
-        topPanel.SetBackgroundColour('3399FF')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-        sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(panel, 0,wx.EXPAND|wx.ALL,border=10)
-        sizertopPanel.Add(InterfazExamen(topPanel,idexamen,self.conectordatabase,self.conexion),0,wx.EXPAND|wx.ALL,border=10)
-        sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-        topPanel.SetSizer(sizertopPanel)
+        sizertopPanel.Add(InterfazExamen(self,idexamen,self.conectordatabase,self.conexion),0,wx.EXPAND|wx.ALL,border=10)
         self.SetSizer(sizertopPanel)
 
 class InterfazExamen(wx.Panel):
