@@ -51,9 +51,8 @@ class MenuPrincipalDocente(wx.Frame):
         menuBar.Append(menu, "&Ayuda")
         self.SetMenuBar(menuBar)
         self.Show()
-        app.MainLoop()
-        self.GetSizer().Layout()
         self.Fit()
+        app.MainLoop()
     
     def OnClose(self, event):
         dlg = wx.MessageDialog(self, 
@@ -133,11 +132,11 @@ class Body(wx.Panel):
         self.SetSizer(sizer)
             
 
-iddocente = "4"
+#iddocente = "4"
 #with SSHTunnelForwarder(
 #	('200.69.103.79', 22),
 #	ssh_password="gesdatosestudent",
 #	ssh_username="estgesdatos",
 #	remote_bind_address=('127.0.0.1', 5432)) as server:
 #            MenuPrincipalDocente(iddocente,server.local_bind_port,server)
-MenuPrincipalDocente(iddocente,5434)
+#MenuPrincipalDocente(iddocente,5434)
