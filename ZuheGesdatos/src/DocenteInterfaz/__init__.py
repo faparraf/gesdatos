@@ -8,9 +8,11 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 import nuevoExamen.__init__
+import resultados_examen.__init__
 #from sshtunnel import SSHTunnelForwarder
 # Identificdores en el menu
 ID_AGREGAR_EXAMEN = wx.NewId ()
+ID_RESULTADOS_EXAMEN = wx.NewId ()
 
 class MenuPrincipalDocente(wx.Frame):
     def __init__(self,iddocente,localport):
@@ -42,8 +44,10 @@ class MenuPrincipalDocente(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnClose, m_exit)
         menuBar.Append(menu, "&Archivo")
         menu = wx.Menu()
-        m_agregartema = menu.Append(ID_AGREGAR_EXAMEN,"&Examen", "Agregar nuevo Examen")
+        m_agregartema = menu.Append(ID_AGREGAR_EXAMEN,"&Agregar nuevo Examen", "Agregar nuevo Examen")
         self.Bind(wx.EVT_MENU, self.agregar, m_agregartema, id=ID_AGREGAR_EXAMEN)
+        m_agregartema = menu.Append(ID_RESULTADOS_EXAMEN,"&ExamenVer resultados de examenes", "Ver resultados de examenes")
+        self.Bind(wx.EVT_MENU, self.resultados, m_agregartema, id=ID_RESULTADOS_EXAMEN)
         menuBar.Append(menu, "&Examen")
         menu = wx.Menu()
         m_about = menu.Append(wx.ID_ABOUT, "&Sobre nosotros", "Information about this program")
@@ -75,6 +79,13 @@ class MenuPrincipalDocente(wx.Frame):
             interfaz = nuevoExamen.__init__.interfazpanelpaso(self,self.iddocente,self.topPanel,self.sizer,self.localport)
             panelagregar = nuevoExamen.__init__.BodyNuevoExamen(self.topPanel,interfaz,self.iddocente)
         self.cambiarpanel(panelagregar)
+    
+    def resultados(self,event):
+        'metodo oyente de obtener resultados de examenes en el menu'
+        parametro = event.GetId()
+        if parametro == ID_RESULTADOS_EXAMEN:
+            panelresultados = resultados_examen.__init__.Panelgeneral(self,self.localport,self.iddocente)
+            self.cambiarpanel(panelresultados)
     
     def getconexion(self):
             """consutlor que retorna la clase administradora de la base de datos"""
