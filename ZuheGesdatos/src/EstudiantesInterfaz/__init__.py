@@ -142,15 +142,15 @@ class Body(wx.Panel):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
         
-idestudiante = "3"
-with SSHTunnelForwarder(
+#idestudiante = "3"
+#with SSHTunnelForwarder(
 
-	('200.69.103.79', 22),
-	ssh_password="gesdatosestudent",
-	ssh_username="estgesdatos",
+#	('200.69.103.79', 22),
+#	ssh_password="gesdatosestudent",
+#	ssh_username="estgesdatos",
        
-	remote_bind_address=('127.0.0.1', 5432)) as server:
-            MenuPrincipalEstudiante(idestudiante,server.local_bind_port)
+#	remote_bind_address=('127.0.0.1', 5432)) as server:
+ #           MenuPrincipalEstudiante(idestudiante,server.local_bind_port)
 #MenuPrincipalEstudiante(server, idestudiante,5434)
             
 #idestudiante = "3"

@@ -3,7 +3,8 @@
 import wx
 import Componentes
 import interfazInvitado.__init__ as invitado
-#import login.Logeo
+import resultados_examen.__init__
+import login.__init__
 import Presentacion
 
 class Panel1(wx.Panel):
@@ -67,7 +68,7 @@ class Panel1(wx.Panel):
 	#def Modificar(self,event):
 	#	self.parent.setpanel(panel3.Panel3(self.parent))	
 	def ingresar(self,event):
-            Login = login.Logeo.Body(self.parent,self.port)
+            Login = login.__init__.Body(self.parent,self.port)
             self.parent.setpanel(Login)
         def ingresarcomoinvitado(self,event):
             manipulador = invitado.interfazpanelpaso(self.parent,self.topPanel,self.sizertopPanel,self.port)

@@ -8,7 +8,7 @@ import Correo
 import wx
 import administradorInterfaz.__init__
 import DocenteInterfaz.__init__
-import EstudianteInterfaz._init_
+import EstudiantesInterfaz.__init__
 import wx.lib.scrolledpanel as scrolled
 import smtplib 
 import HeadLow
@@ -68,7 +68,7 @@ class Body(wx.Panel):
         self.SetBackgroundColour('3399FF')
         
         # parametros basicos generales del registro 
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.puerto)#se requerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",str(self.puerto))#se requerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
             
         self.lblusuario = wx.StaticText(self, label="Usuario: ", pos=(100,35))
