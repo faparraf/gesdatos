@@ -44,7 +44,7 @@ frame = wx.Frame(None, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(display
 menubar = wx.MenuBar()
 topPanel= scrolled.ScrolledPanel(frame)
 topPanel.SetupScrolling(scroll_y=True)
-topPanel.SetBackgroundColour('3399FF')
+topPanel.SetBackgroundColour('#00BF8F')
 sizertopPanel=wx.BoxSizer(wx.VERTICAL)
 
 sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)

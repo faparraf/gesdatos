@@ -19,11 +19,12 @@ def iniciarverexamen(idexamen):
 
 class DialogoExamen(wx.Dialog):
     #----------------------------------------------------------------------
-    def __init__(self,parent,idexamen):
+    def __init__(self,parent,idexamen, localport):
         """Constructor"""
         displaySize= wx.DisplaySize()
+        self.localport = str(localport)
         wx.Dialog.__init__(self, parent, wx.ID_ANY, 'Full display size', pos=(0, 0), size=(displaySize[0], displaySize[1]))
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.localport)
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         query ="select examen.titulo_exa, persona.nom_pers || ' ' ||persona.apellido_pers, examen.tiempo_exa_inicio, examen.tiempo_exa_fin "
         query += "from persona, examen, docente where docente.id_persona = persona.id_persona and examen.id_dcnte = docente.id_persona and examen.id_exa = "+str(idexamen)+";"    

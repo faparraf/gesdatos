@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: cp1252 -*-
-__author__ = "Gesdatos"
-__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import wx.animate

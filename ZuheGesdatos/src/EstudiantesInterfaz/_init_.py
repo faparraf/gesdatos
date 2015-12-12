@@ -8,14 +8,15 @@ import wx.lib.scrolledpanel as scrolled
 import HeadLow
 import Componentes
 import Curso
+from sshtunnel import SSHTunnelForwarder
 ID_CURSO = wx.NewId ()
 ID_BUSCAR_CURSO  = wx.NewId ()
 
 class MenuPrincipalEstudiante(wx.Frame):
-    def __init__(self,idestudiante):
+    def __init__(self,idestudiante,localport):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
-        
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.localport = str(localport)
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.localport)#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         self.idestudiante = idestudiante
         app=wx.App(False)
@@ -27,7 +28,7 @@ class MenuPrincipalEstudiante(wx.Frame):
         topPanel.SetBackgroundColour('#00BF8F')
         sizertopPanel=wx.BoxSizer(wx.VERTICAL)
         sizertopPanel.Add(HeadLow.Head(topPanel),0,wx.EXPAND|wx.ALL,border=10)
-        sizertopPanel.Add(Body(topPanel,idestudiante),0,wx.EXPAND|wx.ALL,border=10)
+        sizertopPanel.Add(Body(topPanel,idestudiante, self.localport),0,wx.EXPAND|wx.ALL,border=10)
         sizertopPanel.Add(HeadLow.Low(topPanel),0,wx.EXPAND|wx.ALL,border=10)
         topPanel.SetSizer(sizertopPanel)
         self.sizer = sizertopPanel
@@ -56,9 +57,9 @@ class MenuPrincipalEstudiante(wx.Frame):
         menuBar.Append(menu, "&Ayuda")
         self.SetMenuBar(menuBar)
         self.Show()
-        app.MainLoop()
-        self.GetSizer().Layout()
         self.Fit()
+        app.MainLoop()
+
     
     def OnClose(self, event):
         dlg = wx.MessageDialog(self, 
@@ -77,13 +78,13 @@ class MenuPrincipalEstudiante(wx.Frame):
     def abrirmiscursos(self,event):
         parametro = event.GetId()
         if parametro == ID_CURSO:
-            interfaz = Curso.miscursos(self.topPanel,self.idestudiante,self)            
+            interfaz = Curso.miscursos(self, self.idestudiante,self.topPanel, self.localport)            
         self.cambiarpanel(interfaz)
     
     def buscarCursos(self,event):
         parametro = event.GetId()
         if parametro == ID_BUSCAR_CURSO:
-            interfaz = Curso.buscarcursos(self.topPanel,self.idestudiante,self)            
+            interfaz = Curso.buscarcursos(self, self.idestudiante, self.topPanel, self.localport)            
         self.cambiarpanel(interfaz)        
     
     def getconexion(self):
@@ -91,7 +92,7 @@ class MenuPrincipalEstudiante(wx.Frame):
             return self.conexion.connection
     
     def regresarpanelprincipal(self):
-        panel_original = Body(self.topPanel,self.idestudiante)
+        panel_original = Body(self, self.idestudiante, self.topPanel, self.localport)
         self.cambiarpanel(panel_original)
     
     def cambiarpanel(self,nuevopanel):
@@ -122,11 +123,11 @@ class Body(wx.Panel):
     """ Una clase personalizada de frame donde el usuario que desee registrar un nuevo examen
         podra ingresar datos como el nombre del examen, la fecha del examen,
         el puntaje extra del examen, el tipo del examen y la cantidad de preguntas que este tendra."""
-    def __init__(self, parent, iddocente):
+    def __init__(self, parent, idestudiante, localport):
         'contructor requiere de parent como interfaz contenedor y manipulador como clase que accedera a la informacion'
         wx.Panel.__init__(self,parent) # Inicializaci�n Panel Padre
-        self.SetBackgroundColour('3399FF')
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.SetBackgroundColour('#00BF8F')
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",localport)#se rquerie de datos para conexion a motor
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         queryidexamen = "select (nom_pers||' '||apellido_pers) from persona where id_persona = "+idestudiante+";"
         self.nombre = self.conexion.connection.ExecuteQuery(queryidexamen)
@@ -140,6 +141,17 @@ class Body(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL) #Adición de la grilla de tamaños al panel padre
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
         self.SetSizer(sizer)
-            
+        
 idestudiante = "3"
-MenuPrincipalEstudiante(idestudiante)
+with SSHTunnelForwarder(
+
+	('200.69.103.79', 22),
+	ssh_password="gesdatosestudent",
+	ssh_username="estgesdatos",
+       
+	remote_bind_address=('127.0.0.1', 5432)) as server:
+            MenuPrincipalEstudiante(idestudiante,server.local_bind_port)
+#MenuPrincipalEstudiante(server, idestudiante,5434)
+            
+#idestudiante = "3"
+#MenuPrincipalEstudiante(idestudiante)

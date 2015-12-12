@@ -49,7 +49,7 @@ class ElegirExamen(wx.Frame):
 ## Body
 ##-----------------------------------------------------------el):
 class Body(wx.Panel):
-    def __init__(self,parent,idestudiante,idcurso):
+    def __init__(self,parent,idestudiante,idcurso, localport):
         'Constructor de la interfaz que recibe su contenedor'
 #--------------Inicializacion Panel Padre--------------
         wx.Panel.__init__(self,parent)
@@ -59,13 +59,13 @@ class Body(wx.Panel):
         self.parent=parent
         self.idestudiante=idestudiante
         self.idcurso = idcurso
+        self.localport = str(localport)
 
         queryexamencurso = "select examen.id_exa, examen.titulo_exa, tipoexamen.desc_tipoexa, examen.fecha,  "
         queryexamencurso += "examen.tiempo_exa_inicio, examen.tiempo_exa_fin from examen, curso_examen, tipoexamen "
         queryexamencurso += "where curso_examen.id_curso = "+ str(self.idcurso)+" and curso_examen.id_examen = examen.id_exa "
         queryexamencurso += "and examen.tipoexa = tipoexamen.id_tipoexa order by examen.fecha, examen.tiempo_exa_inicio "
-
-        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen","5434")#se rquerie de datos para conexion a motor
+        self.conectordatabase = ConnectionDataBase.Connection("localhost","examen","adminexamen","pasexamen",self.localport)
         self.conexion = ConnSchema.ConnSchema(self.conectordatabase)
         self.examenescurso = self.conexion.connection.ExecuteQuery(queryexamencurso)
 
