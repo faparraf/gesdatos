@@ -10,7 +10,7 @@ import administradorInterfaz.__init__
 import DocenteInterfaz.__init__
 import EstudiantesInterfaz.__init__
 import wx.lib.scrolledpanel as scrolled
-import smtplib 
+import smtplib
 import HeadLow
 import Componentes
 
