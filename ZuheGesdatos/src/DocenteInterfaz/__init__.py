@@ -46,7 +46,7 @@ class MenuPrincipalDocente(wx.Frame):
         menu = wx.Menu()
         m_agregartema = menu.Append(ID_AGREGAR_EXAMEN,"&Agregar nuevo Examen", "Agregar nuevo Examen")
         self.Bind(wx.EVT_MENU, self.agregar, m_agregartema, id=ID_AGREGAR_EXAMEN)
-        m_agregartema = menu.Append(ID_RESULTADOS_EXAMEN,"&ExamenVer resultados de examenes", "Ver resultados de examenes")
+        m_agregartema = menu.Append(ID_RESULTADOS_EXAMEN,"&Ver resultados de examenes", "Ver resultados de examenes")
         self.Bind(wx.EVT_MENU, self.resultados, m_agregartema, id=ID_RESULTADOS_EXAMEN)
         menuBar.Append(menu, "&Examen")
         menu = wx.Menu()
@@ -84,8 +84,8 @@ class MenuPrincipalDocente(wx.Frame):
         'metodo oyente de obtener resultados de examenes en el menu'
         parametro = event.GetId()
         if parametro == ID_RESULTADOS_EXAMEN:
-            panelresultados = resultados_examen.__init__.Panelgeneral(self,self.localport,self.iddocente)
-            self.cambiarpanel(panelresultados)
+            panelresultados = resultados_examen.__init__.Panelgeneral(self.topPanel,self.localport,self.iddocente)
+        self.cambiarpanel(panelresultados)
     
     def getconexion(self):
             """consutlor que retorna la clase administradora de la base de datos"""
@@ -143,11 +143,11 @@ class Body(wx.Panel):
         self.SetSizer(sizer)
             
 
-#iddocente = "4"
+iddocente = "4"
 #with SSHTunnelForwarder(
 #	('200.69.103.79', 22),
 #	ssh_password="gesdatosestudent",
 #	ssh_username="estgesdatos",
 #	remote_bind_address=('127.0.0.1', 5432)) as server:
 #            MenuPrincipalDocente(iddocente,server.local_bind_port,server)
-#MenuPrincipalDocente(iddocente,5434)
+MenuPrincipalDocente(iddocente,5434)
