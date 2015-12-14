@@ -17,7 +17,7 @@ class PanelCompiler(wx.Panel,):
         self.button = wx.Button(self, label="Compilar", pos=(35, 110), size=(80,50))
         self.Bind(wx.EVT_BUTTON, self.Compilar,self.button)
 
-        self.button_2 = wx.Button(self, label="Enviar", pos=(35, 170),size=(80,50))
+        self.button_2 = wx.Button(self, wx.ID_OK, label="Enviar", pos=(35, 170),size=(80,50))
         self.Bind(wx.EVT_BUTTON, self.Enviar,self.button_2)
         
         self.grid_panel = wx.Panel(self,pos=(200,20),size=(620,300))

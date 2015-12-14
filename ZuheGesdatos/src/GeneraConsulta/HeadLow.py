@@ -1,20 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+__author__ = "Gesdatos"
+__date__ = "$20-jul-2015 18:52:55$"
 import wx
 import wx.grid
 import wx.animate
-
+import sys, os
 
 
 class Head(wx.Panel,):
     def __init__(self,parent):
+        'Inicia la parte del encabezado.'
         #Encabezado
        	wx.Panel.__init__(self, parent)
-	self.SetBackgroundColour('3399FF')
+	self.SetBackgroundColour("#00BF8F")
 	
 	PanelImage1 = wx.Panel(self)
-	self.image = wx.Image("Imagenes/Udistrital.png")
-	self.image.Rescale(80, 100) 
+	script_dir = sys.path[0]
+        img_path = os.path.join(script_dir, "../Imagenes/Udistrital.png")
+       	self.image = wx.Image(img_path)
+        self.image.Rescale(80, 100) 
 	self.imageUd = wx.BitmapFromImage(self.image) 
 	self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
 	PanelImage1.SetBackgroundColour('3399FF')
@@ -35,7 +40,9 @@ class Head(wx.Panel,):
 	PanelText.SetBackgroundColour('3399FF')
 	
 	PanelImage2 = wx.Panel(self)
-	self.gif = wx.animate.Animation("Imagenes/sologesdatos.gif")
+        script_dir = sys.path[0]
+        img_path = os.path.join(script_dir, "../Imagenes/sologesdatos.gif")
+        self.gif = wx.animate.Animation(img_path)
         ctrl = wx.animate.AnimationCtrl(PanelImage2, -1, self.gif)
         ctrl.SetUseWindowBackgroundColour()
         ctrl.Play()
@@ -51,12 +58,14 @@ class Head(wx.Panel,):
         sizer.Add(gs, proportion=1, flag=wx.EXPAND)
 	self.SetSizer(sizer)
 
+##-----------------------------------------------------------
 
 class Low(wx.Panel,):
     def __init__(self,parent):
+        'Inicia la parte del pie de página.'
         #Pie de Pagina
       	wx.Panel.__init__(self, parent)
-	self.SetBackgroundColour("3399FF")
+	self.SetBackgroundColour("#F7F7F7")
 	Paneltext = wx.Panel(self)
 
 	sizertext = wx.BoxSizer(wx.VERTICAL)
@@ -78,12 +87,13 @@ class Low(wx.Panel,):
 	Paneltext.SetBackgroundColour("3399FF")
 	
 	PanelImage1 = wx.Panel(self)
-	self.image = wx.Image("Imagenes/simbolo.png")
-	self.image.Rescale(50, 50) 
+	script_dir = sys.path[0]
+        img_path = os.path.join(script_dir, "../Imagenes/simbolo.png")
+        self.image = wx.Image(img_path)
+        self.image.Rescale(50, 50) 
 	self.imageUd = wx.BitmapFromImage(self.image) 
 	self.imagen1 = wx.StaticBitmap(PanelImage1, -1, self.imageUd,style=wx.BITMAP_TYPE_PNG)
 	PanelImage1.SetBackgroundColour('3399FF')
-	
 	
 	gs = wx.GridSizer(2, 1, 5, 5)
 
@@ -92,10 +102,3 @@ class Low(wx.Panel,):
 	sizerPanel = wx.BoxSizer(wx.VERTICAL)
 	sizerPanel.Add(gs, 0, wx.ALIGN_CENTER)
 	self.SetSizer(sizerPanel)
-
-
-
-
-
-
-

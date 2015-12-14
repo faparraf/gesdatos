@@ -55,3 +55,5 @@ class BodyQuery(wx.Panel):
 		self.sizer.Add(self.gs, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(self.sizer)
 
+        def getsqlresult(self):
+            return self.panelQuery.getValue()

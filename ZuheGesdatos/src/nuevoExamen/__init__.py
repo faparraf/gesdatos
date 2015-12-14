@@ -292,6 +292,9 @@ class interfazpanelpaso():
         def getconexion(self):
             """consutlor que retorna la clase administradora de la base de datos"""
             return self.conexion.connection
+        
+        def getpuerto(self):
+            return self.puerto
 
         def cambiarpanel(self,nuevopanel):
             """Metodo usado para cambiar un panel en el que ya se
