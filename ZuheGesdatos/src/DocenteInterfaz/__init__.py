@@ -150,4 +150,4 @@ iddocente = "4"
 #	ssh_username="estgesdatos",
 #	remote_bind_address=('127.0.0.1', 5432)) as server:
 #            MenuPrincipalDocente(iddocente,server.local_bind_port,server)
-MenuPrincipalDocente(iddocente,5434)
+#MenuPrincipalDocente(iddocente,5434)

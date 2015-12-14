@@ -16,7 +16,7 @@ class VentanaConfigUsuario(wx.Panel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("white")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-                self.solicitud = Request()         
+                self.solicitud = Request(puerto)         
                 self.rconf= RequestConfig.RequestConfig(idusuario,puerto)
                 self.persona=self.rconf.ver_persona()
                 

@@ -26,16 +26,16 @@ class Head(wx.Panel):
 ## Body
 ##-----------------------------------------------------------
 class Body(wx.Panel):
-	def __init__(self,parent):
+	def __init__(self,parent,port):
                 'Inicia el cuerpo de la interfaz'
 		self.parent=parent
-		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
-		#self.panel=VentanaRegistroUsuarios.VentanaRegistroUsuarios(self) ## En esta linea se Agrega el Panel de inicio
-		self.panel=VentanaConfigUsuario.VentanaConfigUsuario(self,2)
-                #self.panel=VentanaRoles.VentanaRoles(self)
+                wx.Panel.__init__(self,parent) # Inicialización Panel Padre
+		self.panel1=VentanaRegistroUsuarios.VentanaRegistroUsuarios(self,port) ## En esta linea se Agrega el Panel de inicio
+		self.panel=VentanaConfigUsuario.VentanaConfigUsuario(self,2,port)
+                self.panel=VentanaRoles.VentanaRoles(self,port)
                 self.SetBackgroundColour("white") # Color de Fondo del panel
 		self.sizerbody=wx.BoxSizer(wx.VERTICAL)
-		self.sizerbody.Add(self.panel,0,wx.EXPAND|wx.ALL,border=5)
+		self.sizerbody.Add(self.panel1,0,wx.EXPAND|wx.ALL,border=5)
 		self.SetSizer(self.sizerbody)
 		
 	#metodo setpanel, se encarga de reemplazar el panel actual por otro
@@ -65,19 +65,19 @@ class Low(wx.Panel):
 
 ##-----------------------------------------------------------
 
-app=wx.App(False)
-frame = wx.Frame(None, wx.ID_ANY, 'ZUHÉ - UD', pos=(0, 0), size=( wx.EXPAND|wx.ALL,wx.EXPAND|wx.ALL))
-menubar = wx.MenuBar()
-topPanel= scrolled.ScrolledPanel(frame)
-topPanel.SetupScrolling(scroll_y=True)
-topPanel.SetBackgroundColour("#696969")
-sizertopPanel=wx.BoxSizer(wx.VERTICAL)
-Body= Body(topPanel)
-sizertopPanel.Add(Head(topPanel),0,wx.EXPAND|wx.ALL,border=0)
-sizertopPanel.Add(Body,0,wx.EXPAND|wx.ALL,border=0)
-sizertopPanel.Add(Low(topPanel),wx.ALIGN_BOTTOM,wx.ALIGN_CENTER)
-topPanel.SetSizer(sizertopPanel)
-frame.Show()
-frame.Update()
-frame.Layout()
-app.MainLoop()
+#app=wx.App(False)
+#frame = wx.Frame(None, wx.ID_ANY, 'ZUHÉ - UD', pos=(0, 0), size=( wx.EXPAND|wx.ALL,wx.EXPAND|wx.ALL))
+#menubar = wx.MenuBar()
+#topPanel= scrolled.ScrolledPanel(frame)
+#topPanel.SetupScrolling(scroll_y=True)
+#topPanel.SetBackgroundColour("#696969")
+#sizertopPanel=wx.BoxSizer(wx.VERTICAL)
+#Body= Body(topPanel)
+#sizertopPanel.Add(Head(topPanel),0,wx.EXPAND|wx.ALL,border=0)
+#sizertopPanel.Add(Body,0,wx.EXPAND|wx.ALL,border=0)
+#sizertopPanel.Add(Low(topPanel),wx.ALIGN_BOTTOM,wx.ALIGN_CENTER)
+#topPanel.SetSizer(sizertopPanel)
+#frame.Show()
+#frame.Update()
+#frame.Layout()
+#app.MainLoop()

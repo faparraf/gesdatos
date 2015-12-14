@@ -11,9 +11,9 @@ class Conexion:
     'Clase que permitira la comunicacion con la base de datos'   
     
     
-    host = "200.69.103.79" #127.0.0.1     <---- No se cual era          
-    user = "gesdatosestudent"
-    passwd = "estgesdatos"
+    host = "localhost" #127.0.0.1     <---- No se cual era          
+    user = "adminexamen"
+    passwd = "pasexamen"
     #port="5432"
     db = "examen"
     
@@ -23,7 +23,7 @@ class Conexion:
                                            user= self.user,
                                            password= self.passwd,
                                            host= self.host,
-                                           port = puerto
+                                           port = str(puerto)
                                            )
         self.cur = self.connection.cursor()  #cursor
 

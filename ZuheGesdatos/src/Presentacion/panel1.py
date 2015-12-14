@@ -6,13 +6,14 @@ import interfazInvitado.__init__ as invitado
 import resultados_examen.__init__
 import login.__init__
 import Presentacion
+import Registro_Interfaz.FramePrincipal as registro
 
 class Panel1(wx.Panel):
 	def __init__(self,parent,port,frame,topPanel,sizertopPanel):
 		wx.Panel.__init__(self,parent) # Inicialización Panel Padre
 		self.SetBackgroundColour("#32506D")
 		Component = Componentes.Component(self) # Instancia Clase Componente
-		self.parent=parent
+		self.parent= parent
 		self.topPanel = topPanel
                 self.sizertopPanel = sizertopPanel
                 self.port = port
@@ -75,4 +76,5 @@ class Panel1(wx.Panel):
             panelinvitado = invitado.Body(self.parent, manipulador)
             self.parent.setpanel(panelinvitado)
         def registrarse(self,event):
-            Registro_Interfaz.__init__.Body(self)
+            panelregistro = registro.Body(self.parent,self.port)
+            self.parent.setpanel(panelregistro)
